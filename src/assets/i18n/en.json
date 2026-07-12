@@ -155,61 +155,32 @@
     "DASHBOARD_PAGE": {
         "TITLE": "Dashboard",
         "BM": {
-            "FILTERS": {
-                "DATE_RANGE_LABEL": "Date Range",
-                "APPLY": "Apply",
-                "RESET": "Reset"
-            },
             "QUICK_ACTIONS": {
                 "TITLE": "Quick Actions",
-                "REGISTER_SUBSCRIPTION": "Register Subscription",
-                "NEW_REGISTRATION": "New Registration",
-                "SEND_MESSAGE": "Send Message",
-                "ATTEND_PLAYERS": "Attend Players",
-                "ATTEND_COACHES": "Attend Coaches",
-                "REGISTER_RENTAL": "Register Rental",
-                "REGISTER_EXPENSE": "Register Expense",
-                "STORE": "Store"
+                "NEW_COURSE": "New Course",
+                "VIEW_COURSES": "View Courses",
+                "NEW_INSTRUCTOR": "New Instructor",
+                "VIEW_INSTRUCTORS": "View Instructors",
+                "NEW_STUDENT": "New Student",
+                "VIEW_STUDENTS": "View Students"
             },
-            "FINANCE_CARD": {
-                "TITLE": "Finance",
-                "REVENUE": "Revenue",
-                "EXPENSES": "Expenses",
-                "END_DAY_BALANCE": "End Day Balance",
-                "BADGE": "This Month"
-            },
-            "SUBSCRIPTIONS_CARD": {
-                "TITLE": "Subscriptions",
+            "COURSES_CARD": {
+                "TITLE": "Courses",
                 "ACTIVE": "Active",
-                "NEAR_EXPIRY": "Near Expiry",
-                "REFUNDED": "Refunded",
-                "UNIT": "Subscriptions",
-                "BADGE": "This Month"
+                "DRAFT": "Draft",
+                "ARCHIVED": "Archived"
             },
-            "PLAYERS_CARD": {
-                "TITLE": "Players",
-                "DAILY": "Daily",
-                "WEEKLY": "Weekly",
-                "MONTHLY": "Monthly",
-                "LEGEND": "Players",
-                "WEEK_SHORT": "W{{week}}"
-            },
-            "FACILITIES_CARD": {
-                "TITLE": "Facilities",
-                "SELECT_FACILITY": "Select Facility",
-                "REVENUE_LABEL": "Revenue",
-                "BOOKED": "Booked",
-                "AVAILABLE": "Available"
-            },
-            "ATTENDANCE_CARD": {
-                "TITLE": "Attendance",
-                "PRESENT": "Present",
-                "ABSENT": "Absent"
-            },
-            "ACTIVITIES_CARD": {
-                "TITLE": "Activities",
+            "STUDENTS_CARD": {
+                "TITLE": "Students",
                 "ACTIVE": "Active",
-                "INACTIVE": "Inactive"
+                "INACTIVE": "Inactive",
+                "TOTAL": "Total"
+            },
+            "INSTRUCTORS_CARD": {
+                "TITLE": "Instructors",
+                "ACTIVE": "Active",
+                "PENDING": "Pending",
+                "TOTAL": "Total"
             }
         },
         "TRAINER": {

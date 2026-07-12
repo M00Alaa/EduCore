@@ -1,69 +1,5 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h4 class="mb-0">{{ 'DASHBOARD_PAGE.TITLE' | translate }}</h4>
-
-  <!-- Date Range Filter -->
-  <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
-    <div class="d-flex align-items-center gap-2 rounded-1 px-3 border">
-      <span class="fs-0_875rem text-gray-600">
-        {{ 'DASHBOARD_PAGE.BM.FILTERS.DATE_RANGE_LABEL' | translate }}:
-      </span>
-      <div class="d-flex align-items-center gap-2">
-        <div
-          class="input-group d-flex align-items-center rounded-2"
-          style="max-width: 110px"
-        >
-          <input
-            class="form-control text-primary h-40px border-0 px-0 fw-medium fs-0_875rem"
-            placeholder="yyyy-mm-dd"
-            name="bmDateFrom"
-            [(ngModel)]="dateFrom"
-            ngbDatepicker
-            #bmDpFrom="ngbDatepicker"
-            [markDisabled]="isDisabled"
-            readonly
-          />
-          <span
-            class="isax isax-calendar-2 input-group-text bg-transparent border-0 px-0 pointer"
-            (click)="bmDpFrom.toggle()"
-          ></span>
-        </div>
-        <span class="text-primary-50">-</span>
-        <div
-          class="input-group d-flex align-items-center rounded-2"
-          style="max-width: 110px"
-        >
-          <input
-            class="form-control text-primary h-40px border-0 px-0 fw-medium fs-0_875rem"
-            placeholder="yyyy-mm-dd"
-            name="bmDateTo"
-            [(ngModel)]="dateTo"
-            ngbDatepicker
-            #bmDpTo="ngbDatepicker"
-            [markDisabled]="isDisabled"
-            readonly
-          />
-          <span
-            class="isax isax-calendar-2 input-group-text bg-transparent border-0 px-0 pointer"
-            (click)="bmDpTo.toggle()"
-          ></span>
-        </div>
-      </div>
-    </div>
-    <button
-      class="btn btn-primary-gradient h-40px"
-      (click)="applyDateRange()"
-      [disabled]="isLoading"
-    >
-      {{ 'DASHBOARD_PAGE.BM.FILTERS.APPLY' | translate }}
-    </button>
-    <button
-      class="btn btn-white h-40px border"
-      (click)="resetDateRange()"
-      [disabled]="isLoading"
-    >
-      {{ 'DASHBOARD_PAGE.BM.FILTERS.RESET' | translate }}
-    </button>
-  </div>
 </div>
 
 <!-- Quick Actions -->
@@ -102,307 +38,87 @@
   </div>
 }
 
-<!-- Row 1: Finance + Subscriptions -->
+<!-- Row 1: Courses + Students -->
 <div class="row row-cols-1 row-cols-md-2 g-0 gy-3 g-md-3 mb-4">
-  <!-- Finance Card -->
+  <!-- Courses Card -->
   <div class="col">
     <div class="card shadow-none border h-100">
       <div class="card-body d-flex flex-column">
         <h4 class="mb-4 fw-medium">
-          {{ 'DASHBOARD_PAGE.BM.FINANCE_CARD.TITLE' | translate }}
+          {{ 'DASHBOARD_PAGE.BM.COURSES_CARD.TITLE' | translate }}
         </h4>
-        <div class="row g-0 row-cols-3 flex-grow-1">
-          <div class="col">
-            <div class="d-flex flex-column px-4">
-              <div
-                class="d-inline-flex align-items-center justify-content-center rounded-2 border h-40px w-40px mb-2"
-              >
-                <span
-                  class="isax isax-money-add text-primary fs-1_25rem"
-                ></span>
-              </div>
-              <span class="fw-medium">{{
-                'DASHBOARD_PAGE.BM.FINANCE_CARD.REVENUE' | translate
-              }}</span>
-              <div class="d-flex align-items-center gap-1">
-                <span class="fw-medium fs-1_25rem">{{
-                  financeRevenue | number: '1.0-0'
-                }}</span>
-                <img
-                  src="assets/images/icon/SR_light.svg"
-                  alt="SR"
-                  width="14"
-                />
-              </div>
-              <span class="text-primary fs-0_75rem">
-                {{ 'DASHBOARD_PAGE.BM.FINANCE_CARD.BADGE' | translate }}
-              </span>
-            </div>
-          </div>
-          <div class="col border-start">
-            <div class="d-flex flex-column px-4">
-              <div
-                class="d-inline-flex align-items-center justify-content-center rounded-2 border h-40px w-40px mb-2"
-              >
-                <span class="isax isax-money text-primary fs-1_25rem"></span>
-              </div>
-              <span class="fw-medium">{{
-                'DASHBOARD_PAGE.BM.FINANCE_CARD.EXPENSES' | translate
-              }}</span>
-              <div class="d-flex align-items-center gap-1">
-                <span class="fw-medium fs-1_25rem">{{
-                  financeExpenses | number: '1.0-0'
-                }}</span>
-                <img
-                  src="assets/images/icon/SR_light.svg"
-                  alt="SR"
-                  width="14"
-                />
-              </div>
-              <span class="text-primary fs-0_75rem">
-                {{ 'DASHBOARD_PAGE.BM.FINANCE_CARD.BADGE' | translate }}
-              </span>
-            </div>
-          </div>
-          <div class="col">
-            <div class="d-flex flex-column px-4">
-              <div
-                class="d-inline-flex align-items-center justify-content-center rounded-2 border h-40px w-40px mb-2"
-              >
-                <span class="isax isax-money-3 text-primary fs-1_25rem"></span>
-              </div>
-              <span class="fw-medium">{{
-                'DASHBOARD_PAGE.BM.FINANCE_CARD.END_DAY_BALANCE' | translate
-              }}</span>
-              <div class="d-flex align-items-center gap-1">
-                <span class="fw-medium fs-1_25rem">{{
-                  financeBalance | number: '1.0-0'
-                }}</span>
-                <img
-                  src="assets/images/icon/SR_light.svg"
-                  alt="SR"
-                  width="14"
-                />
-              </div>
-              <span class="text-primary fs-0_75rem">
-                {{ 'DASHBOARD_PAGE.BM.FINANCE_CARD.BADGE' | translate }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Subscriptions Card -->
-  <div class="col">
-    <div class="card shadow-none border h-100">
-      <div class="card-body d-flex flex-column">
-        <h4 class="mb-4 fw-medium">
-          {{ 'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.TITLE' | translate }}
-        </h4>
-        <div class="row g-0 row-cols-3 flex-grow-1">
-          <div class="col">
-            <div class="d-flex flex-column px-4">
-              <div
-                class="d-inline-flex align-items-center justify-content-center rounded-2 border h-40px w-40px mb-2"
-              >
-                <span class="isax isax-refresh text-primary fs-1_25rem"></span>
-              </div>
-              <span class="fw-medium">{{
-                'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.ACTIVE' | translate
-              }}</span>
-              <div class="d-flex align-items-center gap-1">
-                <span class="fw-medium fs-1_25rem">{{
-                  subscriptionsActive | number: '1.0-0'
-                }}</span>
-                <span class="text-gray-600 fs-0_75rem">{{
-                  'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.UNIT' | translate
-                }}</span>
-              </div>
-              <span class="text-primary fs-0_75rem">
-                {{ 'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.BADGE' | translate }}
-              </span>
-            </div>
-          </div>
-          <div class="col border-start">
-            <div class="d-flex flex-column px-4">
-              <div
-                class="d-inline-flex align-items-center justify-content-center rounded-2 border h-40px w-40px mb-2"
-              >
-                <span class="isax isax-refresh text-danger fs-1_25rem"></span>
-              </div>
-              <span class="fw-medium">{{
-                'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.NEAR_EXPIRY' | translate
-              }}</span>
-              <div class="d-flex align-items-center gap-1">
-                <span class="fw-medium fs-1_25rem">{{
-                  subscriptionsNearExpiry | number: '1.0-0'
-                }}</span>
-                <span class="text-gray-600 fs-0_75rem">{{
-                  'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.UNIT' | translate
-                }}</span>
-              </div>
-              <span class="text-primary fs-0_75rem">
-                {{ 'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.BADGE' | translate }}
-              </span>
-            </div>
-          </div>
-          <div class="col">
-            <div class="d-flex flex-column px-4">
-              <div
-                class="d-inline-flex align-items-center justify-content-center rounded-2 border h-40px w-40px mb-2"
-              >
-                <span class="isax isax-refresh text-gray-600 fs-1_25rem"></span>
-              </div>
-              <span class="fw-medium">{{
-                'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.REFUNDED' | translate
-              }}</span>
-              <div class="d-flex align-items-center gap-1">
-                <span class="fw-medium fs-1_25rem">{{
-                  subscriptionsRefunded | number: '1.0-0'
-                }}</span>
-                <span class="text-gray-600 fs-0_75rem">{{
-                  'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.UNIT' | translate
-                }}</span>
-              </div>
-              <span class="text-primary fs-0_75rem">
-                {{ 'DASHBOARD_PAGE.BM.SUBSCRIPTIONS_CARD.BADGE' | translate }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Row 2: Players + Facilities -->
-<div class="row row-cols-1 row-cols-md-2 g-0 gy-3 g-md-3 mb-4">
-  <!-- Players Card -->
-  <div class="col">
-    <div class="card shadow-none border h-100">
-      <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between mb-3">
-          <h4 class="fw-medium mb-0">
-            {{ 'DASHBOARD_PAGE.BM.PLAYERS_CARD.TITLE' | translate }}
-          </h4>
-          <ng-select
-            class="max-w-150px min-w-auto"
-            [(ngModel)]="bmPlayersPeriod"
-            (ngModelChange)="onPlayersPeriodChange()"
-          >
-            <ng-option value="daily">{{
-              'DASHBOARD_PAGE.BM.PLAYERS_CARD.DAILY' | translate
-            }}</ng-option>
-            <ng-option value="weekly">{{
-              'DASHBOARD_PAGE.BM.PLAYERS_CARD.WEEKLY' | translate
-            }}</ng-option>
-            <ng-option value="monthly">{{
-              'DASHBOARD_PAGE.BM.PLAYERS_CARD.MONTHLY' | translate
-            }}</ng-option>
-          </ng-select>
-        </div>
-
-        @if (bmPlayersAreaOptions.series) {
-          <apx-chart
-            [series]="bmPlayersAreaOptions.series!"
-            [chart]="bmPlayersAreaOptions.chart!"
-            [stroke]="bmPlayersAreaOptions.stroke!"
-            [fill]="bmPlayersAreaOptions.fill!"
-            [colors]="bmPlayersAreaOptions.colors!"
-            [dataLabels]="bmPlayersAreaOptions.dataLabels!"
-            [xaxis]="bmPlayersAreaOptions.xaxis!"
-            [yaxis]="bmPlayersAreaOptions.yaxis!"
-            [grid]="bmPlayersAreaOptions.grid!"
-            [legend]="bmPlayersAreaOptions.legend!"
-            [tooltip]="bmPlayersAreaOptions.tooltip!"
-          ></apx-chart>
-        }
-
-        <div class="d-flex justify-content-center gap-2 text-gray-600 mt-2">
-          <span class="d-inline-flex align-items-center gap-1">
-            <span class="legend-dot" style="background-color: #faad14"></span>
-            {{ 'DASHBOARD_PAGE.BM.PLAYERS_CARD.LEGEND' | translate }}
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Facilities Card -->
-  <div class="col">
-    <div class="card shadow-none border h-100">
-      <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between mb-3">
-          <h4 class="fw-medium mb-0">
-            {{ 'DASHBOARD_PAGE.BM.FACILITIES_CARD.TITLE' | translate }}
-          </h4>
-          <ng-select
-            class="max-w-150px min-w-auto"
-            [(ngModel)]="bmSelectedFacility"
-            (ngModelChange)="onFacilityChange()"
-            [placeholder]="
-              'DASHBOARD_PAGE.BM.FACILITIES_CARD.SELECT_FACILITY' | translate
-            "
-          >
-            <ng-option
-              *ngFor="let facility of bmFacilityOptions"
-              [value]="facility.id"
-            >
-              {{ facility.name }}
-            </ng-option>
-          </ng-select>
-        </div>
-
-        <div
-          class="card shadow-none border border-f3f4f6 bg-body bg-opacity-50"
-        >
-          <div class="card-body">
-            <div class="d-flex align-items-center gap-1">
-              <span class="fw-medium">{{
-                facilityRevenue | number: '1.0-0'
-              }}</span>
-              <img src="assets/images/icon/SR_light.svg" alt="SR" width="14" />
-            </div>
-            <p class="fs-0_875rem">
-              {{
-                'DASHBOARD_PAGE.BM.FACILITIES_CARD.REVENUE_LABEL' | translate
-              }}
-            </p>
-          </div>
-        </div>
-
         <div class="d-flex align-items-center">
-          <!-- Chart on the left -->
-          @if (bmFacilitiesDonutOptions.series) {
+          @if (coursesDonutOptions.series) {
             <apx-chart
-              [series]="bmFacilitiesDonutOptions.series!"
-              [chart]="bmFacilitiesDonutOptions.chart!"
-              [labels]="bmFacilitiesDonutOptions.labels!"
-              [colors]="bmFacilitiesDonutOptions.colors!"
-              [legend]="bmFacilitiesDonutOptions.legend!"
-              [plotOptions]="bmFacilitiesDonutOptions.plotOptions!"
-              [dataLabels]="bmFacilitiesDonutOptions.dataLabels!"
-              [stroke]="bmFacilitiesDonutOptions.stroke!"
+              [series]="coursesDonutOptions.series!"
+              [chart]="coursesDonutOptions.chart!"
+              [labels]="coursesDonutOptions.labels!"
+              [colors]="coursesDonutOptions.colors!"
+              [legend]="coursesDonutOptions.legend!"
+              [dataLabels]="coursesDonutOptions.dataLabels!"
+              [plotOptions]="coursesDonutOptions.plotOptions!"
+              [stroke]="coursesDonutOptions.stroke!"
             ></apx-chart>
           }
           <!-- Legend on the right -->
           <div class="d-flex flex-column gap-3 flex-shrink-0">
-            <div
-              class="d-flex align-items-center gap-2"
-              *ngFor="
-                let label of bmFacilitiesDonutOptions.labels || [];
-                let i = index
-              "
-            >
-              <span
-                class="h-7px w-15px rounded-1"
-                [style.backgroundColor]="
-                  bmFacilitiesDonutOptions.colors?.[i] || '#6b7280'
-                "
-              ></span>
-              <span class="fw-medium fs-0_875rem">{{ label }}</span>
+            <div class="d-flex align-items-center gap-2">
+              <span class="h-7px w-15px rounded-1 bg-primary"></span>
+              <span class="fw-medium fs-0_875rem">{{
+                'DASHBOARD_PAGE.BM.COURSES_CARD.ACTIVE' | translate
+              }}</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="h-7px w-15px rounded-1 bg-warning"></span>
+              <span class="fw-medium fs-0_875rem">{{
+                'DASHBOARD_PAGE.BM.COURSES_CARD.DRAFT' | translate
+              }}</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="h-7px w-15px rounded-1 bg-gray-600"></span>
+              <span class="fw-medium fs-0_875rem">{{
+                'DASHBOARD_PAGE.BM.COURSES_CARD.ARCHIVED' | translate
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Students Card -->
+  <div class="col">
+    <div class="card shadow-none border h-100">
+      <div class="card-body d-flex flex-column">
+        <h4 class="mb-4 fw-medium">
+          {{ 'DASHBOARD_PAGE.BM.STUDENTS_CARD.TITLE' | translate }}
+        </h4>
+        <div class="d-flex align-items-center">
+          @if (studentsDonutOptions.series) {
+            <apx-chart
+              [series]="studentsDonutOptions.series!"
+              [chart]="studentsDonutOptions.chart!"
+              [labels]="studentsDonutOptions.labels!"
+              [colors]="studentsDonutOptions.colors!"
+              [legend]="studentsDonutOptions.legend!"
+              [dataLabels]="studentsDonutOptions.dataLabels!"
+              [plotOptions]="studentsDonutOptions.plotOptions!"
+              [stroke]="studentsDonutOptions.stroke!"
+            ></apx-chart>
+          }
+          <!-- Legend on the right -->
+          <div class="d-flex flex-column gap-3 flex-shrink-0">
+            <div class="d-flex align-items-center gap-2">
+              <span class="h-7px w-15px rounded-1 bg-success"></span>
+              <span class="fw-medium fs-0_875rem">{{
+                'DASHBOARD_PAGE.BM.STUDENTS_CARD.ACTIVE' | translate
+              }}</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="h-7px w-15px rounded-1 bg-danger"></span>
+              <span class="fw-medium fs-0_875rem">{{
+                'DASHBOARD_PAGE.BM.STUDENTS_CARD.INACTIVE' | translate
+              }}</span>
             </div>
           </div>
         </div>
@@ -411,39 +127,40 @@
   </div>
 </div>
 
-<!-- Row 3: Attendance + Activities -->
+<!-- Row 2: Instructors + Courses Chart -->
 <div class="row row-cols-1 row-cols-md-2 g-0 gy-3 g-md-3 mb-4">
-  <!-- Attendance Card -->
+  <!-- Instructors Card -->
   <div class="col">
     <div class="card shadow-none border h-100">
-      <div class="card-body">
-        <h4 class="fw-medium border-bottom pb-3 mb-3">
-          {{ 'DASHBOARD_PAGE.BM.ATTENDANCE_CARD.TITLE' | translate }}
+      <div class="card-body d-flex flex-column">
+        <h4 class="mb-4 fw-medium">
+          {{ 'DASHBOARD_PAGE.BM.INSTRUCTORS_CARD.TITLE' | translate }}
         </h4>
         <div class="d-flex align-items-center">
-          @if (bmAttendanceDonutOptions.series) {
+          @if (instructorsDonutOptions.series) {
             <apx-chart
-              [series]="bmAttendanceDonutOptions.series!"
-              [chart]="bmAttendanceDonutOptions.chart!"
-              [labels]="bmAttendanceDonutOptions.labels!"
-              [colors]="bmAttendanceDonutOptions.colors!"
-              [legend]="bmAttendanceDonutOptions.legend!"
-              [plotOptions]="bmAttendanceDonutOptions.plotOptions!"
-              [dataLabels]="bmAttendanceDonutOptions.dataLabels!"
-              [stroke]="bmAttendanceDonutOptions.stroke!"
+              [series]="instructorsDonutOptions.series!"
+              [chart]="instructorsDonutOptions.chart!"
+              [labels]="instructorsDonutOptions.labels!"
+              [colors]="instructorsDonutOptions.colors!"
+              [legend]="instructorsDonutOptions.legend!"
+              [dataLabels]="instructorsDonutOptions.dataLabels!"
+              [plotOptions]="instructorsDonutOptions.plotOptions!"
+              [stroke]="instructorsDonutOptions.stroke!"
             ></apx-chart>
           }
+          <!-- Legend on the right -->
           <div class="d-flex flex-column gap-3 flex-shrink-0">
             <div class="d-flex align-items-center gap-2">
-              <span class="h-7px w-15px rounded-1 bg-primary"></span>
+              <span class="h-7px w-15px rounded-1 bg-info"></span>
               <span class="fw-medium fs-0_875rem">{{
-                'DASHBOARD_PAGE.BM.ATTENDANCE_CARD.PRESENT' | translate
+                'DASHBOARD_PAGE.BM.INSTRUCTORS_CARD.ACTIVE' | translate
               }}</span>
             </div>
             <div class="d-flex align-items-center gap-2">
-              <span class="h-7px w-15px rounded-1 bg-fa4b42"></span>
+              <span class="h-7px w-15px rounded-1 bg-warning"></span>
               <span class="fw-medium fs-0_875rem">{{
-                'DASHBOARD_PAGE.BM.ATTENDANCE_CARD.ABSENT' | translate
+                'DASHBOARD_PAGE.BM.INSTRUCTORS_CARD.PENDING' | translate
               }}</span>
             </div>
           </div>
@@ -452,41 +169,28 @@
     </div>
   </div>
 
-  <!-- Activities Card -->
+  <!-- Courses Area Chart -->
   <div class="col">
     <div class="card shadow-none border h-100">
       <div class="card-body">
-        <h4 class="fw-medium border-bottom pb-3 mb-3">
-          {{ 'DASHBOARD_PAGE.BM.ACTIVITIES_CARD.TITLE' | translate }}
+        <h4 class="mb-4 fw-medium">
+          {{ 'DASHBOARD_PAGE.BM.COURSES_CARD.TITLE' | translate }}
         </h4>
-        <div class="d-flex align-items-center">
-          @if (bmActivitiesDonutOptions.series) {
-            <apx-chart
-              [series]="bmActivitiesDonutOptions.series!"
-              [chart]="bmActivitiesDonutOptions.chart!"
-              [labels]="bmActivitiesDonutOptions.labels!"
-              [colors]="bmActivitiesDonutOptions.colors!"
-              [legend]="bmActivitiesDonutOptions.legend!"
-              [plotOptions]="bmActivitiesDonutOptions.plotOptions!"
-              [dataLabels]="bmActivitiesDonutOptions.dataLabels!"
-              [stroke]="bmActivitiesDonutOptions.stroke!"
-            ></apx-chart>
-          }
-          <div class="d-flex flex-column gap-3 flex-shrink-0">
-            <div class="d-flex align-items-center gap-2">
-              <span class="h-7px w-15px rounded-1 bg-primary"></span>
-              <span class="fw-medium fs-0_875rem">{{
-                'DASHBOARD_PAGE.BM.ACTIVITIES_CARD.ACTIVE' | translate
-              }}</span>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-              <span class="h-7px w-15px rounded-1 bg-fa4b42"></span>
-              <span class="fw-medium fs-0_875rem">{{
-                'DASHBOARD_PAGE.BM.ACTIVITIES_CARD.INACTIVE' | translate
-              }}</span>
-            </div>
-          </div>
-        </div>
+        @if (coursesAreaOptions.series) {
+          <apx-chart
+            [series]="coursesAreaOptions.series!"
+            [chart]="coursesAreaOptions.chart!"
+            [stroke]="coursesAreaOptions.stroke!"
+            [fill]="coursesAreaOptions.fill!"
+            [colors]="coursesAreaOptions.colors!"
+            [dataLabels]="coursesAreaOptions.dataLabels!"
+            [xaxis]="coursesAreaOptions.xaxis!"
+            [yaxis]="coursesAreaOptions.yaxis!"
+            [grid]="coursesAreaOptions.grid!"
+            [legend]="coursesAreaOptions.legend!"
+            [tooltip]="coursesAreaOptions.tooltip!"
+          ></apx-chart>
+        }
       </div>
     </div>
   </div>
