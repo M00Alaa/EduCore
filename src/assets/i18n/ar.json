@@ -114,5 +114,42 @@
         "PDF_ERROR": "حدث خطأ أثناء التصدير",
         "PDF_SUCCESS": "تم تصدير PDF بنجاح",
         "ELEMENT_NOT_FOUND": "العنصر المطلوب غير موجود"
+    },
+    "LOGIN": {
+        "LOGIN_BUTTON": "تسجيل الدخول",
+        "USERNAME_LABEL": "اسم المستخدم",
+        "USERNAME_PLACEHOLDER": "أدخل اسم المستخدم",
+        "PASSWORD_LABEL": "كلمة المرور",
+        "PASSWORD_PLACEHOLDER": "أدخل كلمة المرور",
+        "REMEMBER_ME": "تذكرني",
+        "FORGOT_PASSWORD": "نسيت كلمة المرور؟"
+    },
+    "AUTH_RECOVER_PASSWORD": {
+        "TITLE": "إعادة تعيين كلمة المرور",
+        "EMAIL_LABEL": "البريد الإلكتروني",
+        "EMAIL_PLACEHOLDER": "أدخل بريدك الإلكتروني",
+        "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب",
+        "NEW_PASSWORD_LABEL": "كلمة المرور الجديدة",
+        "PASSWORD_PLACEHOLDER": "أدخل كلمة المرور الجديدة",
+        "PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
+        "CONFIRM_PASSWORD_LABEL": "تأكيد كلمة المرور",
+        "CONFIRM_PASSWORD_REQUIRED": "يرجى تأكيد كلمة المرور",
+        "SUBMIT_BUTTON": "إرسال",
+        "BACK_TO_LOGIN": "العودة لتسجيل الدخول"
+    },
+    "AUTH_VERIFICATION": {
+        "SENT_CODE": "لقد أرسلنا رمز التحقق إلى {{phone}}",
+        "NO_CODE_RECEIVED": "لم تستقبل الرمز؟",
+        "RESEND": "إعادة الإرسال",
+        "RESEND_IN": "إعادة الإرسال خلال",
+        "SECONDS": "ثوانٍ"
+    },
+    "PAGE_404": {
+        "TITLE": "الصفحة غير موجودة",
+        "GO_HOME": "الذهاب إلى الصفحة الرئيسية"
+    },
+    "PAGE_403": {
+        "TITLE": "غير مسموح بالمرور من هنا",
+        "GO_HOME": "الصفحة الشخصية"
     }
 }

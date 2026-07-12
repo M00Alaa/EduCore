@@ -60,13 +60,13 @@ _custom-functions → custom structure/components/plugins/pages
 
 | Variable     | Value               | Usage            |
 | ------------ | ------------------- | ---------------- |
-| `$primary`   | `#09b260` (green)   | Main brand color |
-| `$secondary` | `#ff5000` (orange)  | Secondary/accent |
-| `$info`      | `#1990ff` (blue)    | Info elements    |
-| `$danger`    | `#b42318`           | Errors/deletes   |
-| `$warning`   | `#dc6803`           | Warnings         |
-| `$success`   | `#53c31b`           | Success states   |
-| `$dark`      | `#131313`           | Dark bg          |
+| `$primary`   | `#4f7cff` (green)   | Main brand color |
+| `$secondary` | `#49B6FF` (orange)  | Secondary/accent |
+| `$info`      | `#49B6FF` (blue)    | Info elements    |
+| `$danger`    | `#F31260`           | Errors/deletes   |
+| `$warning`   | `#F5A524`           | Warnings         |
+| `$success`   | `#17C964`           | Success states   |
+| `$dark`      | `#121826`           | Dark bg          |
 | `$body-bg`   | `$f3f4f6` (#f3f4f6) | Page background  |
 
 ### 2.3. Custom Utility Classes Available

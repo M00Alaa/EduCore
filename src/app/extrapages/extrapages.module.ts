@@ -27,13 +27,12 @@ import { IsRequiredPipe } from '../shared/pipes/is-required.pipe';
 // Step 2: Add the following line...
 register();
 @NgModule({
-  declarations: [Page404Component, Page403Component,],
   imports: [
     CommonModule,
     TranslateModule,
     ExtrapagesRoutingModule,
     SwiperDirective,
-    CarouselModule, 
+    CarouselModule,
     NgOtpInputModule,
     NgbPaginationModule,
     NzTableModule,
@@ -53,7 +52,9 @@ register();
     TranslateModule,
     NzCheckboxModule,
     NgSelectModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    Page404Component,
+    Page403Component
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

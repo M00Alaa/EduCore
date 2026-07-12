@@ -66,20 +66,20 @@ $colors: (
 );
 // scss-docs-end colors-map
 
-$transparent-primary: #f2f3f5;
-$primary: #09b260;
-$primary-dark: #01180d;
-$info: #1990ff;
-$primary-50: #09b2608b;
-$primary-35: #09b26065;
+$transparent-primary: rgba(61, 126, 255, 0.12);
+$primary: #4f7cff;
+$primary-dark: #2d5bdb;
+$info: #49b6ff;
+$primary-50: #4f7cff8b;
+$primary-35: #4f7cff65;
 $primary-25: rgb(237, 242, 239);
-$light: #e6e6e6;
-$dark: #131313;
+$light: #f7f9fc;
+$dark: #121826;
 
-$secondary: #ff5000;
+$secondary: #49b6ff;
 $danger: #fe4d4f;
-$warning: #dc6803;
-$success: #53c31b;
+$warning: #f5a524;
+$success: #17c964;
 
 $neutral-color: #111927;
 
@@ -267,7 +267,7 @@ $variable-prefix: bs-;
 $gradient: linear-gradient(
   296.99deg,
   rgba(8, 178, 96, 0.95) 7.5%,
-  #01180d 139.12%
+  #2d5bdb 139.12%
 );
 
 // Spacing
@@ -320,8 +320,8 @@ $position-values: (
 //
 // Settings for the `<body>` element.
 
-$body-bg: #1f2a37;
-$body-color: $white;
+$body-bg: #0f172a;
+$body-color: #f0f6fc;
 $body-text-align: null;
 
 // Links
@@ -1107,7 +1107,7 @@ $card-cap-bg: rgba($black, 0.03);
 $card-cap-color: null;
 $card-height: null;
 $card-color: null;
-$card-bg: #0b192c;
+$card-bg: #162033;
 
 $card-title-desc: $gray-600;
 

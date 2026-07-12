@@ -71,7 +71,7 @@ export class AcademyAdminDashboardComponent implements OnInit {
         private authService: AuthenticationService,
     ) { }
 
-    readonly branchColors = ['#1990ff', '#faad14', '#09b260', '#6b7280', '#faad14', '#7850f0'];
+    readonly branchColors = ['#49B6FF', '#faad14', '#4f7cff', '#6b7280', '#faad14', '#7850f0'];
     readonly progressTypes = ['info', 'success', 'warning'];
 
     isLoading = false;
@@ -311,7 +311,7 @@ export class AcademyAdminDashboardComponent implements OnInit {
             plotOptions: { bar: { columnWidth: "38%", borderRadius: 6 } },
             dataLabels: { enabled: false },
             stroke: { show: true, width: 0, colors: ["transparent"] },
-            colors: ["#1990ff", "#09b260"],
+            colors: ["#49B6FF", "#4f7cff"],
             xaxis: { categories: data.subscriptions_chart.categories },
             yaxis: { labels: { formatter: (value) => `${value}` } },
             grid: { strokeDashArray: 3 },
@@ -351,7 +351,7 @@ export class AcademyAdminDashboardComponent implements OnInit {
                 this.translate.instant("DASHBOARD_PAGE.ACTIVITIES_CARD.ACTIVE"),
                 this.translate.instant("DASHBOARD_PAGE.ACTIVITIES_CARD.INACTIVE"),
             ],
-            colors: ["#64bdc6", "#1990ff"],
+            colors: ["#64bdc6", "#49B6FF"],
             legend: { show: false },
             dataLabels: { enabled: false },
             stroke: { width: 4, colors: ["#ffffff"] },

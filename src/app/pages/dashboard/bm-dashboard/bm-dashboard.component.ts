@@ -335,7 +335,7 @@ export class BmDashboardComponent implements OnInit {
                 this.translate.instant('DASHBOARD_PAGE.BM.FACILITIES_CARD.BOOKED'),
                 this.translate.instant('DASHBOARD_PAGE.BM.FACILITIES_CARD.AVAILABLE'),
             ],
-            colors: ['#faad14', '#09b260'],
+            colors: ['#faad14', '#4f7cff'],
             plotOptions: {
                 pie: {
                     donut: {
@@ -353,7 +353,7 @@ export class BmDashboardComponent implements OnInit {
                 this.translate.instant('DASHBOARD_PAGE.BM.ACTIVITIES_CARD.INACTIVE'),
                 this.translate.instant('DASHBOARD_PAGE.BM.ACTIVITIES_CARD.ACTIVE'),
             ],
-            colors: ['#fa4b42', '#09b260'],
+            colors: ['#fa4b42', '#4f7cff'],
             plotOptions: {
                 pie: {
                     donut: {
@@ -371,7 +371,7 @@ export class BmDashboardComponent implements OnInit {
                 this.translate.instant('DASHBOARD_PAGE.BM.ATTENDANCE_CARD.PRESENT'),
                 this.translate.instant('DASHBOARD_PAGE.BM.ATTENDANCE_CARD.ABSENT'),
             ],
-            colors: ['#09b260', '#fa4b42'],
+            colors: ['#4f7cff', '#fa4b42'],
             plotOptions: {
                 pie: {
                     donut: {
@@ -423,7 +423,7 @@ export class BmDashboardComponent implements OnInit {
                 this.translate.instant('DASHBOARD_PAGE.BM.FACILITIES_CARD.BOOKED'),
                 this.translate.instant('DASHBOARD_PAGE.BM.FACILITIES_CARD.AVAILABLE'),
             ],
-            colors: ['#faad14', '#09b260'],
+            colors: ['#faad14', '#4f7cff'],
             plotOptions: {
                 pie: {
                     donut: {
@@ -449,7 +449,7 @@ export class BmDashboardComponent implements OnInit {
                 this.translate.instant('DASHBOARD_PAGE.BM.ACTIVITIES_CARD.INACTIVE'),
                 this.translate.instant('DASHBOARD_PAGE.BM.ACTIVITIES_CARD.ACTIVE'),
             ],
-            colors: ['#fa4b42', '#09b260'],
+            colors: ['#fa4b42', '#4f7cff'],
             plotOptions: {
                 pie: {
                     donut: {
@@ -476,7 +476,7 @@ export class BmDashboardComponent implements OnInit {
                 this.translate.instant('DASHBOARD_PAGE.BM.ATTENDANCE_CARD.PRESENT'),
                 this.translate.instant('DASHBOARD_PAGE.BM.ATTENDANCE_CARD.ABSENT'),
             ],
-            colors: ['#09b260', '#fa4b42'],
+            colors: ['#4f7cff', '#fa4b42'],
             plotOptions: {
                 pie: {
                     donut: {

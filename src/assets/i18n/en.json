@@ -114,5 +114,42 @@
         "PDF_ERROR": "An error occurred during export",
         "PDF_SUCCESS": "PDF exported successfully",
         "ELEMENT_NOT_FOUND": "Element not found"
+    },
+    "LOGIN": {
+        "LOGIN_BUTTON": "Login",
+        "USERNAME_LABEL": "Username",
+        "USERNAME_PLACEHOLDER": "Enter your username",
+        "PASSWORD_LABEL": "Password",
+        "PASSWORD_PLACEHOLDER": "Enter your password",
+        "REMEMBER_ME": "Remember me",
+        "FORGOT_PASSWORD": "Forgot password?"
+    },
+    "AUTH_RECOVER_PASSWORD": {
+        "TITLE": "Reset Password",
+        "EMAIL_LABEL": "Email",
+        "EMAIL_PLACEHOLDER": "Enter your email",
+        "EMAIL_REQUIRED": "Email is required",
+        "NEW_PASSWORD_LABEL": "New Password",
+        "PASSWORD_PLACEHOLDER": "Enter new password",
+        "PASSWORD_REQUIRED": "Password is required",
+        "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+        "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password",
+        "SUBMIT_BUTTON": "Submit",
+        "BACK_TO_LOGIN": "Back to Login"
+    },
+    "AUTH_VERIFICATION": {
+        "SENT_CODE": "We have sent a verification code to {{phone}}",
+        "NO_CODE_RECEIVED": "Didn't receive the code?",
+        "RESEND": "Resend",
+        "RESEND_IN": "Resend in",
+        "SECONDS": "seconds"
+    },
+    "PAGE_404": {
+        "TITLE": "Page Not Found",
+        "GO_HOME": "Go to Home"
+    },
+    "PAGE_403": {
+        "TITLE": "Access Denied",
+        "GO_HOME": "Go to Home"
     }
 }
