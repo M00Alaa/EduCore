@@ -151,5 +151,79 @@
     "PAGE_403": {
         "TITLE": "غير مسموح بالمرور من هنا",
         "GO_HOME": "الصفحة الشخصية"
+    },
+    "DASHBOARD_PAGE": {
+        "TITLE": "لوحة التحكم",
+        "BM": {
+            "FILTERS": {
+                "DATE_RANGE_LABEL": "نطاق التاريخ",
+                "APPLY": "تطبيق",
+                "RESET": "إعادة تعيين"
+            },
+            "QUICK_ACTIONS": {
+                "TITLE": "إجراءات سريعة",
+                "REGISTER_SUBSCRIPTION": "تسجيل اشتراك",
+                "NEW_REGISTRATION": "تسجيل جديد",
+                "SEND_MESSAGE": "إرسال رسالة",
+                "ATTEND_PLAYERS": "حضور اللاعبين",
+                "ATTEND_COACHES": "حضور المدربين",
+                "REGISTER_RENTAL": "تسجيل إيجار",
+                "REGISTER_EXPENSE": "تسجيل مصروف",
+                "STORE": "المتجر"
+            },
+            "FINANCE_CARD": {
+                "TITLE": "المالية",
+                "REVENUE": "الإيرادات",
+                "EXPENSES": "المصروفات",
+                "END_DAY_BALANCE": "رصيد نهاية اليوم",
+                "BADGE": "هذا الشهر"
+            },
+            "SUBSCRIPTIONS_CARD": {
+                "TITLE": "الاشتراكات",
+                "ACTIVE": "نشط",
+                "NEAR_EXPIRY": "قريب من الانتهاء",
+                "REFUNDED": "مسترد",
+                "UNIT": "اشتراكات",
+                "BADGE": "هذا الشهر"
+            },
+            "PLAYERS_CARD": {
+                "TITLE": "اللاعبين",
+                "DAILY": "يومي",
+                "WEEKLY": "أسبوعي",
+                "MONTHLY": "شهري",
+                "LEGEND": "اللاعبين",
+                "WEEK_SHORT": "أ{{week}}"
+            },
+            "FACILITIES_CARD": {
+                "TITLE": "المرافق",
+                "SELECT_FACILITY": "اختر المرفق",
+                "REVENUE_LABEL": "الإيرادات",
+                "BOOKED": "محجوز",
+                "AVAILABLE": "متاح"
+            },
+            "ATTENDANCE_CARD": {
+                "TITLE": "الحضور",
+                "PRESENT": "حاضر",
+                "ABSENT": "غائب"
+            },
+            "ACTIVITIES_CARD": {
+                "TITLE": "الأنشطة",
+                "ACTIVE": "نشط",
+                "INACTIVE": "غير نشط"
+            }
+        },
+        "TRAINER": {
+            "CARDS": {
+                "PLAYERS": "اللاعبين",
+                "TEAMS": "الفرق"
+            },
+            "SECTIONS": {
+                "ATTENDANCE": "الحضور",
+                "TEAMS": "الفرق"
+            },
+            "BUTTONS": {
+                "VIEW_ALL": "عرض الكل"
+            }
+        }
     }
 }

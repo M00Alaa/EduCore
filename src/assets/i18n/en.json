@@ -151,5 +151,79 @@
     "PAGE_403": {
         "TITLE": "Access Denied",
         "GO_HOME": "Go to Home"
+    },
+    "DASHBOARD_PAGE": {
+        "TITLE": "Dashboard",
+        "BM": {
+            "FILTERS": {
+                "DATE_RANGE_LABEL": "Date Range",
+                "APPLY": "Apply",
+                "RESET": "Reset"
+            },
+            "QUICK_ACTIONS": {
+                "TITLE": "Quick Actions",
+                "REGISTER_SUBSCRIPTION": "Register Subscription",
+                "NEW_REGISTRATION": "New Registration",
+                "SEND_MESSAGE": "Send Message",
+                "ATTEND_PLAYERS": "Attend Players",
+                "ATTEND_COACHES": "Attend Coaches",
+                "REGISTER_RENTAL": "Register Rental",
+                "REGISTER_EXPENSE": "Register Expense",
+                "STORE": "Store"
+            },
+            "FINANCE_CARD": {
+                "TITLE": "Finance",
+                "REVENUE": "Revenue",
+                "EXPENSES": "Expenses",
+                "END_DAY_BALANCE": "End Day Balance",
+                "BADGE": "This Month"
+            },
+            "SUBSCRIPTIONS_CARD": {
+                "TITLE": "Subscriptions",
+                "ACTIVE": "Active",
+                "NEAR_EXPIRY": "Near Expiry",
+                "REFUNDED": "Refunded",
+                "UNIT": "Subscriptions",
+                "BADGE": "This Month"
+            },
+            "PLAYERS_CARD": {
+                "TITLE": "Players",
+                "DAILY": "Daily",
+                "WEEKLY": "Weekly",
+                "MONTHLY": "Monthly",
+                "LEGEND": "Players",
+                "WEEK_SHORT": "W{{week}}"
+            },
+            "FACILITIES_CARD": {
+                "TITLE": "Facilities",
+                "SELECT_FACILITY": "Select Facility",
+                "REVENUE_LABEL": "Revenue",
+                "BOOKED": "Booked",
+                "AVAILABLE": "Available"
+            },
+            "ATTENDANCE_CARD": {
+                "TITLE": "Attendance",
+                "PRESENT": "Present",
+                "ABSENT": "Absent"
+            },
+            "ACTIVITIES_CARD": {
+                "TITLE": "Activities",
+                "ACTIVE": "Active",
+                "INACTIVE": "Inactive"
+            }
+        },
+        "TRAINER": {
+            "CARDS": {
+                "PLAYERS": "Players",
+                "TEAMS": "Teams"
+            },
+            "SECTIONS": {
+                "ATTENDANCE": "Attendance",
+                "TEAMS": "Teams"
+            },
+            "BUTTONS": {
+                "VIEW_ALL": "View All"
+            }
+        }
     }
 }

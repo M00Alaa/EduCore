@@ -1,7 +1,11 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnInit, inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { NgbCalendar, NgbDate, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
-import { TranslateService } from "@ngx-translate/core";
+import { NgbCalendar, NgbDate, NgbDateStruct, NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { FormsModule } from "@angular/forms";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { NgApexchartsModule } from "ng-apexcharts";
 import { of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import {
@@ -65,7 +69,15 @@ type QuickAction = {
 @Component({
     selector: 'app-bm-dashboard',
     templateUrl: './bm-dashboard.component.html',
-    standalone: false,
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        FormsModule,
+        NgSelectModule,
+        NgApexchartsModule,
+        NgbDatepickerModule
+    ]
 })
 export class BmDashboardComponent implements OnInit {
     private router = inject(Router);

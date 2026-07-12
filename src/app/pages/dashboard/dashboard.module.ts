@@ -8,14 +8,11 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { DashboardComponent } from './dashboard.component';
-import { AcademyAdminDashboardComponent } from './academy-admin-dashboard/academy-admin-dashboard.component';
 import { BmDashboardComponent } from './bm-dashboard/bm-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RoleDirective } from 'src/app/shared/directives/app-permissions.directive';
-import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
 
 @NgModule({
-  declarations: [DashboardComponent, AcademyAdminDashboardComponent, BmDashboardComponent, TrainerDashboardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -33,7 +30,8 @@ import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard
     NgbDatepickerModule,
     NgSelectModule,
     NgbProgressbarModule,
-    RoleDirective
+    RoleDirective,
+    BmDashboardComponent,
   ],
 })
 export class DashboardModule { }

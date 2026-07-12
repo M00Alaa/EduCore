@@ -1535,49 +1535,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   color: var(--bs-body-color) !important;
 }
 
-// .apexcharts-legend-marker {
-//   display: inline-block !important;
-//   width: 14px !important;
-//   height: 8px !important;
-//   border-radius: 999px !important;
-//   -webkit-border-radius: 999px !important;
-//   -moz-border-radius: 999px !important;
-//   -ms-border-radius: 999px !important;
-//   -o-border-radius: 999px !important;
-//   display: flex !important;
-
-//   svg {
-//     clip-path: inset(0% round 20%);
-//   }
-// }
-
-.mo-gradient {
-  background: linear-gradient(157.45deg, #089e55 -30.78%, #03381e 129.21%);
-  position: relative;
-  overflow: hidden;
-
-  .card-body {
-    z-index: 2;
-  }
-
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../../assets/images/login_overlay.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 1;
-  }
-}
-
-// .ant-checkbox-checked .ant-checkbox-inner::after {
-//   border-color: $primary !important;
-// }
-
 .ant-checkbox-checked .ant-checkbox-inner {
   background-color: $primary !important;
   border-color: $primary !important;
@@ -1592,33 +1549,6 @@ div:where(.swal2-container) div:where(.swal2-popup) {
   margin: 0 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
-}
-
-// Customize owl carousel dots for better visibility
-.mo-gradient {
-  .owl-carousel {
-    .owl-dots {
-      margin-top: 20px;
-      text-align: center;
-
-      .owl-dot {
-        span {
-          background: rgba(255, 255, 255, 0.4);
-          width: 8px;
-          height: 8px;
-          margin: 5px 4px;
-          border-radius: 50%;
-          transition: all 0.3s ease;
-        }
-
-        &.active span {
-          background: rgba(255, 255, 255, 0.9);
-          width: 24px;
-          border-radius: 4px;
-        }
-      }
-    }
-  }
 }
 
 .otp-container {

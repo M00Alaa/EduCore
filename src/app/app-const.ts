@@ -66,10 +66,10 @@ export const ROLES = {
 
 /** Any of these grants access to Activities → Deductions tab (and /activities route). */
 export const logo = {
-  light: '/assets/images/logo.svg',
-  dark: '/assets/images/logo.svg',
-  light_sm: '/assets/images/logo.svg',
-  dark_sm: '/assets/images/logo.svg',
+  light: '/assets/images/logo.png',
+  dark: '/assets/images/logo.png',
+  light_sm: '/assets/images/logo.png',
+  dark_sm: '/assets/images/logo.png',
 }
 
 
