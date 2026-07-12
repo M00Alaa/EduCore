@@ -3,7 +3,7 @@ import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ROLES, errorCallback, logo, noWhitespaceValidator } from 'src/app/app-const';
-import { SpinnerService } from 'src/app/core/services/spinner.service';
+import { SpinnerService } from '../../../core/services/spinner.service';
 import { AuthenticationService } from '../../../core/services/auth.service';
 
 

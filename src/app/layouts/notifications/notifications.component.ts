@@ -1,19 +1,26 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { SimplebarAngularComponent } from 'simplebar-angular';
+import { CommonModule } from '@angular/common';
+import { SimplebarAngularComponent, SimplebarAngularModule } from 'simplebar-angular';
 import { environment } from 'src/environments/environment';
-import { FirebaseMessagingService } from 'src/app/core/services/firebase-messaging.service';
+import { FirebaseMessagingService, FirebaseMessagePayload } from 'src/app/core/services/firebase-messaging.service';
 import { NotificationsService } from 'src/app/core/backend/common/services/notifications.service';
-import { ChatNotificationBridgeService } from 'src/app/core/services/chat-notification-bridge.service';
+import { ChatNotificationBridgeService, ChatNotificationEvent } from 'src/app/core/services/chat-notification-bridge.service';
 import { Subject, takeUntil } from 'rxjs';
-import { MessagePayload } from 'firebase/messaging';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'sahely-notifications',
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    SimplebarAngularModule,
+    NzDropDownModule
+  ],
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss'],
-  standalone: false
+  styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
   @ViewChild('simplebar') simplebar?: SimplebarAngularComponent;
@@ -65,7 +72,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     this.chatBridge.startListening();
     this.chatBridge.newMessage$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((event) => {
+      .subscribe((event: ChatNotificationEvent) => {
         const item = {
           id: `chat_${Date.now()}`,
           title: this.translate.instant('UI_MESSAGES.NOTIFICATIONS.NEW_MESSAGE_FROM', { senderName: event.senderName }),
@@ -131,7 +138,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       // Listen to foreground messages
       this.firebaseMessaging.listenToMessages()
         .pipe(takeUntil(this.destroy$))
-        .subscribe((payload: MessagePayload) => {
+        .subscribe((payload: FirebaseMessagePayload) => {
           console.log('Firebase notification received:', payload);
 
           // Play notification sound
@@ -162,7 +169,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   /**
    * Add Firebase notification to local list
    */
-  private addFirebaseNotificationToList(payload: MessagePayload): void {
+  private addFirebaseNotificationToList(payload: FirebaseMessagePayload): void {
     const notification = {
       id: Date.now().toString(),
       title: payload.notification?.title || 'Notification',

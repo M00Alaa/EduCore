@@ -1,0 +1,59 @@
+{
+    "courses": [
+        {
+            "id": 1,
+            "courseName": "Angular Fundamentals",
+            "instructorName": "Ahmed Ali",
+            "category": "Frontend",
+            "duration": 20,
+            "price": 1500,
+            "status": "Active",
+            "description": "Learn the fundamentals of Angular framework including components, services, and routing.",
+            "createdDate": "2026-06-01"
+        },
+        {
+            "id": 2,
+            "courseName": "Node.js Backend Development",
+            "instructorName": "Sara Mohamed",
+            "category": "Backend",
+            "duration": 25,
+            "price": 1800,
+            "status": "Active",
+            "description": "Complete guide to building RESTful APIs with Node.js and Express.",
+            "createdDate": "2026-06-05"
+        },
+        {
+            "id": 3,
+            "courseName": "UI/UX Design Principles",
+            "instructorName": "Mona Hassan",
+            "category": "Design",
+            "duration": 15,
+            "price": 1200,
+            "status": "Draft",
+            "description": "Master the principles of user interface and user experience design.",
+            "createdDate": "2026-06-10"
+        },
+        {
+            "id": 4,
+            "courseName": "React Advanced Patterns",
+            "instructorName": "Khaled Ibrahim",
+            "category": "Frontend",
+            "duration": 30,
+            "price": 2000,
+            "status": "Archived",
+            "description": "Advanced patterns and best practices for React development.",
+            "createdDate": "2026-05-15"
+        },
+        {
+            "id": 5,
+            "courseName": "Mobile App Development with Flutter",
+            "instructorName": "Nour Ahmed",
+            "category": "Mobile",
+            "duration": 35,
+            "price": 2200,
+            "status": "Active",
+            "description": "Build cross-platform mobile applications using Flutter and Dart.",
+            "createdDate": "2026-06-12"
+        }
+    ]
+}

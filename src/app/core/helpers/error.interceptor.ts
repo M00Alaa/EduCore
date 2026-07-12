@@ -15,21 +15,21 @@ export const errorInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, n
         return throwError(() => err);
       }
 
-      if (err.status === 401) {
-        // For auth/login endpoints a 401 means wrong credentials — let the
-        // component's errorCallback handle it so the real message is shown.
-        if (isLoginRequest(request.url)) {
-          return throwError(() => err);
-        }
+      // if (err.status === 401) {
+      //   // For auth/login endpoints a 401 means wrong credentials — let the
+      //   // component's errorCallback handle it so the real message is shown.
+      //   if (isLoginRequest(request.url)) {
+      //     return throwError(() => err);
+      //   }
 
-        if (isSessionReplacedError(err)) {
-          promptSessionEndedAndReload();
-          return throwError(() => ({ errorCode: 'SESSION_REPLACED' }));
-        }
+      //   if (isSessionReplacedError(err)) {
+      //     promptSessionEndedAndReload();
+      //     return throwError(() => ({ errorCode: 'SESSION_REPLACED' }));
+      //   }
 
-        promptSessionExpiredAndReload();
-        return throwError(() => ({ errorCode: 'SESSION_EXPIRED' }));
-      }
+      //   promptSessionExpiredAndReload();
+      //   return throwError(() => ({ errorCode: 'SESSION_EXPIRED' }));
+      // }
 
       const error = normalizeErrorPayload(err);
       if (error?.isLockout) {

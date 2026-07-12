@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { EventService } from '../../core/services/event.service';
 import { TOPBAR } from "../layouts.model";
+import { TopbarComponent } from '../topbar/topbar.component';
 
 @Component({
   selector: 'app-horizontal',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    TranslateModule,
+    TopbarComponent
+  ],
   templateUrl: './horizontal.component.html',
-  styleUrls: ['./horizontal.component.scss'],
-  standalone: false
+  styleUrls: ['./horizontal.component.scss']
 })
-
-/**
- * Horizontal-layout component
- */
 export class HorizontalComponent implements OnInit {
 
   topbar = '';

@@ -1,3 +1,5 @@
-<div id="loader_wrapper" *ngIf="spinner?.show">
+<ng-container *ngIf="show$ | async">
+  <div id="loader_wrapper">
     <span class="loader"></span>
-  </div> 
+  </div>
+</ng-container>

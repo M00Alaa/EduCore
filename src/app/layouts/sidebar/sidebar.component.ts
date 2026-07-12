@@ -1,21 +1,34 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MetisMenu } from 'metismenujs';
 import { EventService } from '../../core/services/event.service';
 import { HttpClient } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { logo } from 'src/app/app-const';
 import { AuthenticationService, MgUser } from 'src/app/core/services/auth.service';
 import { LanguageService } from 'src/app/core/services/language.service';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
-import { SimplebarAngularComponent } from 'simplebar-angular';
+import { SimplebarAngularComponent, SimplebarAngularModule } from 'simplebar-angular';
+import { CommonModule } from '@angular/common';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { HasItemsPipe } from './has-items.pipe';
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    TranslateModule,
+    SimplebarAngularModule,
+    NzDropDownModule,
+    NgbDropdownModule,
+    HasItemsPipe
+  ],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
-  standalone: false
+  styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('componentRef') scrollRef!: SimplebarAngularComponent;

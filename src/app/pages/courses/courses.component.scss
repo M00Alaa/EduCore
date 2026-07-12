@@ -1,0 +1,24 @@
+.min-h-300 {
+  min-height: 300px;
+}
+
+.fs-64px {
+  font-size: 64px;
+}
+
+.courses-table {
+  th {
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+@media (max-width: 768px) {
+  .min-w-250px {
+    min-width: 100%;
+  }
+
+  .min-w-200px {
+    min-width: 100%;
+  }
+}

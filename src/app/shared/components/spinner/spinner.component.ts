@@ -1,15 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { SpinnerService } from 'src/app/core/services/spinner.service';
+import { SpinnerService } from '../../../core/services/spinner.service';
 
 @Component({
-    selector: 'mg-spinner',
-    imports: [CommonModule],
-    templateUrl: './spinner.component.html',
-    styleUrls: ['./spinner.component.scss']
+  selector: 'mg-spinner',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './spinner.component.html',
+  styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent {
-constructor(
-  public spinner: SpinnerService
-){}
+  show$ = this.spinner.spinner$;
+
+  constructor(
+    public spinner: SpinnerService
+  ) { }
 }

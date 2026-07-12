@@ -9,9 +9,10 @@ import { ROLES } from 'src/app/app-const';
 
 @Component({
   selector: 'mg-account-dropdown',
+  standalone: true,
+  imports: [CommonModule, RouterModule, NgbDropdownModule, TranslateModule],
   templateUrl: './account-dropdown.component.html',
-  styleUrls: ['./account-dropdown.component.scss'],
-  imports: [CommonModule, RouterModule, NgbDropdownModule, TranslateModule]
+  styleUrls: ['./account-dropdown.component.scss']
 })
 export class AccountDropdownComponent {
   @Input() light: boolean = false;

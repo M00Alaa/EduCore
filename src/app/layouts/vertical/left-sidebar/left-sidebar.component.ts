@@ -1,5 +1,9 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, Inject, Injectable, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { SimplebarAngularModule } from 'simplebar-angular';
 import { BehaviorSubject } from 'rxjs';
 import { logo } from 'src/app/app-const';
 
@@ -20,10 +24,16 @@ export class LeftSiderService {
 
 }
 @Component({
-    selector: 'mg-left-sidebar',
-    templateUrl: './left-sidebar.component.html',
-    styleUrls: ['./left-sidebar.component.scss'],
-    standalone: false
+  selector: 'mg-left-sidebar',
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    NgbTooltipModule,
+    SimplebarAngularModule
+  ],
+  templateUrl: './left-sidebar.component.html',
+  styleUrls: ['./left-sidebar.component.scss']
 })
 export class LeftSidebarComponent {
   @ViewChild('sider') sider!: ElementRef<HTMLDivElement>;
@@ -45,15 +55,15 @@ export class LeftSidebarComponent {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     public leftSiderService: LeftSiderService
-    ) {
-      leftSiderService.shown.subscribe(
-        (value) => {
-          setTimeout(() => {
-            this.open = value;
-          }, 10);
-        }
-      )
-     }
+  ) {
+    leftSiderService.shown.subscribe(
+      (value) => {
+        setTimeout(() => {
+          this.open = value;
+        }, 10);
+      }
+    )
+  }
 
   toggleView() {
     this.sider.nativeElement.classList.toggle('active')

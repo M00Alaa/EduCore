@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { EIDDESIGN, logo } from 'src/app/app-const';
 import { AuthenticationService, MgUser } from 'src/app/core/services/auth.service';
@@ -8,17 +8,30 @@ import { StylesChangerService } from '../../core/services/style.service';
 import { LeftSiderService } from '../vertical/left-sidebar/left-sidebar.component';
 import { BranchManagementPortalUiService } from 'src/app/core/backend/academy/services';
 import { BranchManagementPortalUiListBranchesResponseDataItem } from 'src/app/core/backend/academy/models';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AccountDropdownComponent } from './account-dropdown/account-dropdown.component';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-topbar',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    TranslateModule,
+    NzDropDownModule,
+    NgbDropdownModule,
+    NgSelectModule,
+    AccountDropdownComponent,
+    NotificationsComponent
+  ],
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss'],
-  standalone: false
+  styleUrls: ['./topbar.component.scss']
 })
-
-/**
- * Topbar component
- */
 export class TopbarComponent implements OnInit, OnDestroy {
   @Input() withLogo: boolean = false;
 

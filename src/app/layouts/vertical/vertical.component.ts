@@ -1,23 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-
-import { EventService } from '../../core/services/event.service';
-
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { EIDDESIGN } from 'src/app/app-const';
 import { SIDEBAR_TYPE } from "../layouts.model";
 import { AuthenticationService, MgUser } from 'src/app/core/services/auth.service';
+import { EventService } from '../../core/services/event.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { TopbarComponent } from '../topbar/topbar.component';
+import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
 
 @Component({
   selector: 'app-vertical',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    TranslateModule,
+    SidebarComponent,
+    TopbarComponent,
+    LeftSidebarComponent
+  ],
   templateUrl: './vertical.component.html',
-  styleUrls: ['./vertical.component.scss'],
-  standalone: false
+  styleUrls: ['./vertical.component.scss']
 })
-
-/**
- * Vertical component
- */
 export class VerticalComponent implements OnInit {
   EIDDESIGN = EIDDESIGN;
   isCondensed = false;
@@ -62,7 +69,6 @@ export class VerticalComponent implements OnInit {
     const ua = navigator.userAgent;
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua);
   }
-
 
 
   checkTrialStatus(user: MgUser | null): void {

@@ -61,227 +61,152 @@
           }
 
           @for (item of menuItems; track item) {
-            <ng-container *appRole="item.roles || []">
-              <ng-template
-                [appPermission]="item.permission || ''"
-                [appPermissionUnless]="item.unlessPermission || ''"
-              >
-                @if (item.isTitle) {
-                  <li class="menu-title">
-                    <div class="d-flex align-items-center">
+            @if (item.isTitle) {
+              <li class="menu-title">
+                <div class="d-flex align-items-center">
+                  <span
+                    class="flex-fill bg-light opacity-50 d-inline-flex"
+                    style="height: 1px"
+                  ></span>
+                  <span class="px-2">{{ item?.label || '' | translate }}</span>
+                  <span
+                    class="flex-fill bg-light opacity-50 d-inline-flex"
+                    style="height: 1px"
+                  ></span>
+                </div>
+              </li>
+            }
+            @if (!item.isTitle && !item.isLayout) {
+              <li (click)="clickElWhenCollapsed()">
+                @if (item | hasItems) {
+                  <a
+                    href="javascript:void(0);"
+                    class="is-parent"
+                    [ngClass]="{
+                      'has-arrow': !item.badge,
+                      'has-dropdown': item.badge,
+                    }"
+                  >
+                    @if (item.icon) {
+                      <i
+                        style="width: 20px"
+                        class="text-center me-1 {{ item.icon }}"
+                      ></i>
+                    }
+                    <span>{{ item.label || '' | translate }}</span>
+                    @if (item.badge) {
                       <span
-                        class="flex-fill bg-light opacity-50 d-inline-flex"
-                        style="height: 1px"
-                      ></span>
-                      <span class="px-2">{{
-                        item?.label || '' | translate
-                      }}</span>
-                      <span
-                        class="flex-fill bg-light opacity-50 d-inline-flex"
-                        style="height: 1px"
-                      ></span>
-                    </div>
-                  </li>
+                        class="badge rounded-pill float-end bg-{{
+                          item.badge.variant
+                        }}"
+                      >
+                        {{ item.badge.text | translate }}
+                      </span>
+                    }
+                  </a>
                 }
-                @if (!item.isTitle && !item.isLayout) {
-                  <li (click)="clickElWhenCollapsed()">
-                    @if (item | hasItems) {
-                      <a
-                        href="javascript:void(0);"
-                        class="is-parent"
-                        [ngClass]="{
-                          'has-arrow': !item.badge,
-                          'has-dropdown': item.badge,
-                        }"
-                      >
-                        @if (item.icon) {
-                          <i
-                            style="width: 20px"
-                            class="text-center me-1 {{ item.icon }}"
-                          ></i>
-                        }
-                        <span>{{ item.label || '' | translate }}</span>
-                        @if (item.badge) {
-                          <span
-                            class="badge rounded-pill float-end bg-{{
-                              item.badge.variant
-                            }}"
-                          >
-                            {{ item.badge.text | translate }}
-                          </span>
-                        }
-                      </a>
+                @if (!(item | hasItems)) {
+                  <a
+                    [routerLink]="item.link"
+                    class="side-nav-link-ref"
+                    [routerLinkActiveOptions]="{ exact: !!item?.exact }"
+                    routerLinkActive="active"
+                  >
+                    @if (item.icon) {
+                      <i
+                        style="width: 20px"
+                        class="text-center me-1 {{ item.icon }}"
+                      ></i>
                     }
-                    @if (!(item | hasItems)) {
-                      <a
-                        [routerLink]="item.link"
-                        class="side-nav-link-ref"
-                        [routerLinkActiveOptions]="{ exact: !!item?.exact }"
-                        routerLinkActive="active"
+                    <span>{{ item.label || '' | translate }}</span>
+                    @if (item.badge) {
+                      <span
+                        class="badge rounded-pill bg-{{
+                          item.badge.variant
+                        }} float-end"
                       >
-                        @if (item.icon) {
-                          <i
-                            style="width: 20px"
-                            class="text-center me-1 {{ item.icon }}"
-                          ></i>
-                        }
-                        <span>{{ item.label || '' | translate }}</span>
-                        @if (item.badge) {
-                          <span
-                            class="badge rounded-pill bg-{{
-                              item.badge.variant
-                            }} float-end"
-                          >
-                            {{ item.badge.text | translate }}
-                          </span>
-                        }
-                      </a>
+                        {{ item.badge.text | translate }}
+                      </span>
                     }
+                  </a>
+                }
 
-                    @if (item | hasItems) {
-                      <ul class="sub-menu" aria-expanded="false">
-                        @for (subitem of item.subItems; track subitem) {
-                          @if (subitem.isTitle) {
-                            <ng-template
-                              [appPermission]="subitem.permission || ''"
-                              [appPermissionUnless]="
-                                subitem.unlessPermission || ''
-                              "
+                @if (item | hasItems) {
+                  <ul class="sub-menu" aria-expanded="false">
+                    @for (subitem of item.subItems; track subitem) {
+                      @if (subitem.isTitle) {
+                        <li class="sub-menu-title">
+                          <div class="d-flex align-items-center">
+                            <span
+                              class="flex-fill opacity-25 d-inline-flex"
+                              style="height: 1px; background: currentColor"
+                            ></span>
+                            <span class="px-2 small">{{
+                              subitem.label || '' | translate
+                            }}</span>
+                            <span
+                              class="flex-fill opacity-25 d-inline-flex"
+                              style="height: 1px; background: currentColor"
+                            ></span>
+                          </div>
+                        </li>
+                      }
+                      @if (!subitem.isTitle) {
+                        <li>
+                          @if (!(subitem | hasItems)) {
+                            <a
+                              [routerLink]="subitem.link"
+                              class="side-nav-link-ref fw-semibold"
+                              [attr.data-parent]="subitem.parentId"
+                              [routerLinkActiveOptions]="{
+                                exact: !!subitem?.exact,
+                              }"
+                              routerLinkActive="active"
                             >
-                              <li class="sub-menu-title">
-                                <div class="d-flex align-items-center">
-                                  <span
-                                    class="flex-fill opacity-25 d-inline-flex"
-                                    style="
-                                      height: 1px;
-                                      background: currentColor;
-                                    "
-                                  ></span>
-                                  <span class="px-2 small">{{
-                                    subitem.label || '' | translate
-                                  }}</span>
-                                  <span
-                                    class="flex-fill opacity-25 d-inline-flex"
-                                    style="
-                                      height: 1px;
-                                      background: currentColor;
-                                    "
-                                  ></span>
-                                </div>
-                              </li>
-                            </ng-template>
+                              {{ subitem.label || '' | translate }}
+                            </a>
                           }
-                          @if (!subitem.isTitle) {
-                            <ng-container *appRole="subitem.roles || []">
-                              <ng-template
-                                [appPermission]="subitem.permission || ''"
-                                [appPermissionUnless]="
-                                  subitem.unlessPermission || ''
-                                "
-                              >
+                          @if (subitem | hasItems) {
+                            <a
+                              class="side-nav-link-a-ref has-arrow"
+                              href="javascript:void(0);"
+                              [attr.data-parent]="subitem.parentId"
+                            >
+                              {{ subitem.label || '' | translate }}
+                            </a>
+                            <ul
+                              class="sub-menu mm-collapse"
+                              aria-expanded="false"
+                            >
+                              @for (
+                                subSubitem of subitem.subItems;
+                                track subSubitem
+                              ) {
                                 <li>
-                                  @if (!(subitem | hasItems)) {
-                                    <a
-                                      [routerLink]="subitem.link"
-                                      class="side-nav-link-ref fw-semibold"
-                                      [attr.data-parent]="subitem.parentId"
-                                      [routerLinkActiveOptions]="{
-                                        exact: !!subitem?.exact,
-                                      }"
-                                      routerLinkActive="active"
-                                    >
-                                      {{ subitem.label || '' | translate }}
-                                    </a>
-                                  }
-                                  @if (subitem | hasItems) {
-                                    <a
-                                      class="side-nav-link-a-ref has-arrow"
-                                      href="javascript:void(0);"
-                                      [attr.data-parent]="subitem.parentId"
-                                    >
-                                      {{ subitem.label || '' | translate }}
-                                    </a>
-                                    <ul
-                                      class="sub-menu mm-collapse"
-                                      aria-expanded="false"
-                                    >
-                                      @for (
-                                        subSubitem of subitem.subItems;
-                                        track subSubitem
-                                      ) {
-                                        <ng-container
-                                          *appRole="subSubitem.roles || []"
-                                        >
-                                          <ng-template
-                                            [appPermission]="
-                                              subSubitem.permission || ''
-                                            "
-                                            [appPermissionUnless]="
-                                              subSubitem.unlessPermission || ''
-                                            "
-                                          >
-                                            <li>
-                                              <a
-                                                [attr.data-parent]="
-                                                  subSubitem.parentId
-                                                "
-                                                [routerLinkActiveOptions]="{
-                                                  exact: !!subSubitem?.exact,
-                                                }"
-                                                [routerLink]="subSubitem.link"
-                                                routerLinkActive="active"
-                                                class="side-nav-link-ref"
-                                              >
-                                                {{
-                                                  subSubitem.label || ''
-                                                    | translate
-                                                }}
-                                              </a>
-                                            </li>
-                                          </ng-template>
-                                        </ng-container>
-                                      }
-                                    </ul>
-                                  }
+                                  <a
+                                    [attr.data-parent]="subSubitem.parentId"
+                                    [routerLinkActiveOptions]="{
+                                      exact: !!subSubitem?.exact,
+                                    }"
+                                    [routerLink]="subSubitem.link"
+                                    routerLinkActive="active"
+                                    class="side-nav-link-ref"
+                                  >
+                                    {{ subSubitem.label || '' | translate }}
+                                  </a>
                                 </li>
-                              </ng-template>
-                            </ng-container>
+                              }
+                            </ul>
                           }
-                        }
-                      </ul>
+                        </li>
+                      }
                     }
-                  </li>
+                  </ul>
                 }
-              </ng-template>
-            </ng-container>
+              </li>
+            }
           }
         </ul>
-
-        <div class="card shadow-none">
-          <div class="card-body">
-            <div class="d-flex align-items-center gap-1 mb-2">
-              <span
-                class="bg-gray-600 bg-opacity-75 w-5px h-5px rounded-circle"
-              ></span>
-              <span class="text-gray-600 fs-0_875rem">الباقة الحالية</span>
-            </div>
-
-            <span class="text-primary fw-medium fs-30px">الباقة المتقدمة</span>
-
-            <div class="mt-40px">
-              <button
-                class="btn btn-primary-gradient w-100 d-flex align-items-center justify-content-center gap-2 fw-medium mb-2"
-              >
-                <span class="isax isax-crown-1"></span>
-                <span>ترقية</span>
-              </button>
-
-              <button class="btn btn-white w-100 fw-medium">
-                تجديد الحالية
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </ngx-simplebar>

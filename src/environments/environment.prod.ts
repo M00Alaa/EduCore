@@ -1,14 +1,13 @@
 export const environment = {
-  production: true,
-  api: 'https://systemapi.govult.com',
-
-  firebase: {
-    apiKey: "AIzaSyBLmt8NuYKbdof_r0C7nDSqpjKOXM6QHKI",
-    authDomain: "vult-21fed.firebaseapp.com",
-    projectId: "vult-21fed",
-    storageBucket: "vult-21fed.firebasestorage.app",
-    messagingSenderId: "267753510442",
-    appId: "1:267753510442:web:c365e5d2ae89cc1177d553",
-    measurementId: "G-J4B15X3DV8"
-  }
+    production: true,
+    api: 'http://vult.api.localhost',
+    firebase: {
+        apiKey: "AIzaSyC9uzf-5wJYK1cq4pi10YP73tAijFM2tYc",
+        authDomain: "mawhoob-28a9f.firebaseapp.com",
+        projectId: "mawhoob-28a9f",
+        storageBucket: "mawhoob-28a9f.firebasestorage.app",
+        messagingSenderId: "267529043097",
+        appId: "1:267529043097:web:d6f96643b62f4066f08c08",
+        measurementId: "G-XWQL55FVNK"
+    }
 };
