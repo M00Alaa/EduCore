@@ -1,0 +1,73 @@
+//
+//  Sweetalert2
+//
+
+.swal2-container {
+  .swal2-title {
+    font-size: 20px;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.swal2-modal {
+  font-size: 14px;
+}
+
+.swal2-icon {
+  &.swal2-question {
+    border-color: $info;
+    color: $info;
+  }
+
+  &.swal2-success {
+    [class^='swal2-success-line'] {
+      background-color: $success;
+    }
+
+    .swal2-success-ring {
+      border-color: rgba($success, 0.3);
+    }
+  }
+
+  &.swal2-warning {
+    border-color: $warning;
+    color: $warning;
+  }
+}
+
+.swal2-styled {
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.swal2-progress-steps {
+  .swal2-progress-step {
+    background: $primary;
+
+    &.swal2-active-progress-step {
+      background: $primary;
+
+      & ~ .swal2-progress-step,
+      & ~ .swal2-progress-step-line {
+        background: rgba($primary, 0.3);
+      }
+    }
+  }
+
+  .swal2-progress-step-line {
+    background: $primary;
+  }
+}
+
+.swal2-loader {
+  border-color: $primary transparent $primary transparent;
+}
+
+.swal2-popup.swal2-toast.swal2-show {
+  animation: swal2-toast-show 0.5s;
+  border: 1px solid var(--bs-border-color);
+  top: 15px;
+  padding: 8px 4px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}

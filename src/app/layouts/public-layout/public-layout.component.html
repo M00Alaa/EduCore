@@ -1,0 +1,119 @@
+<div class="position-relative grid_wrapper">
+    <div class="position-absolute bg-secondary text-white ribbon ">
+        <small>
+            نسخــة تجريبيـــة
+        </small>
+    </div>
+    <nav class="py-2  sticky-top " [ngClass]="{'shadow bg-primary': scrolled || !transparentNav}">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <span routerLink="/" class="d-inline-flex flex-column pointer">
+                    <img class="d-none d-lg-block" [src]="logo.light" style="max-height: 50px;" alt="">
+                    <img class=" d-lg-none" [src]="logo.light" style="max-height:   30px;" alt="">
+                  
+                </span>
+
+                <div class="d-flex align-items-center gap-2">
+                    <div *ngIf="!acc" ngbDropdown class="d-inline-block">
+                        <button ngbDropdownToggle class="btn px-3 px-lg-4 rounded-pill btn-secondary btn-sm">
+                            <span class="isax isax-user-add align-middle fs-6"></span>
+                            <span class="">
+                                انضم الآن
+                            </span>
+                            <span class="isax isax-arrow-down align-middle"></span>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button routerLink="/account/register" ngbDropdownItem>
+                                <span class="isax isax-user-add align-middle"></span>
+                                انضم كطالب
+                            </button>
+                            <button routerLink="/account/parent-register" ngbDropdownItem>
+                                <span class="isax isax-user-square align-middle"></span>
+                                انضم كولي أمر
+                            </button>
+                            <button routerLink="/teacher-request" ngbDropdownItem>
+                                <span class="isax isax-user-octagon align-middle"></span>
+                                انضم لمعلم
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <button *ngIf="acc" (click)="redirectUser()" class="btn btn-secondary btn-sm ">
+                        <span class="isax isax-user-tag align-middle"></span>
+                        صفحتي الشخصية
+                    </button>
+                    <button *ngIf="!acc" routerLink="/account/login"
+                        class="btn px-3 px-lg-4 rounded-pill btn-info btn-sm">
+                        <span class="isax isax-login align-middle fs-6"></span>
+                        <span class="">
+                            تسجيل دخول
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        <router-outlet></router-outlet>
+
+        <a [href]="'https://wa.me/+201003630708'" *ngIf="true" class="whatsapp_fixed" target="_blank">
+            <i class='bx bxl-whatsapp'></i>
+        </a>
+    </div>
+    <footer dir="ltr" style="z-index: 1;" class=" py-3 position-relative border-top bg-primary text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div class="col-12 col-md-4 justify-content-center justify-content-md-start d-flex align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-white text-decoration-none lh-1">
+                        <img src="../../../assets/images/logo-light.svg" style="height: 70px;" alt="">
+                    </a>
+
+                </div>
+                <div class="col-12 col-md-4 justify-content-center  d-flex align-items-center">
+                    <ul dir="rtl" class="nav justify-content-center mb-3 mb-md-0">
+                        <li class="nav-item"><a routerLink="/" [routerLinkActiveOptions]="{exact: true}"
+                                routerLinkActive="active" class="nav-link text-fbfbfb px-2 ">
+                                الرئيسية
+                            </a></li>
+                        <li class="nav-item"><a routerLink="/teachers" routerLinkActive="active"
+                                class="nav-link text-fbfbfb px-2 ">
+                                المعلمون
+                            </a></li>
+                        <li class="nav-item"><a routerLink="/courses" routerLinkActive="active"
+                                class="nav-link text-fbfbfb px-2 ">
+                                المناهج
+                            </a></li>
+                        <li class="nav-item"><a routerLink="/account/register" routerLinkActive="active"
+                                class="nav-link text-fbfbfb px-2 ">
+                                انضم الآن
+                            </a></li>
+                    </ul>
+
+                </div>
+
+                <ul class="nav col-12 col-md-4 justify-content-center justify-content-md-end list-unstyled d-flex">
+                    <li class="ms-3"><a class="text-white" href="#">
+                            <span class="bxl-facebook bx"></span>
+                        </a></li>
+                    <li class="ms-3"><a class="text-white" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
+                                text-rendering="geometricPrecision" image-rendering="optimizeQuality"
+                                fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 462.799" style="height: 15px;">
+                                <path fill-rule="nonzero"
+                                    d="M403.229 0h78.506L310.219 196.04 512 462.799H354.002L230.261 301.007 88.669 462.799h-78.56l183.455-209.683L0 0h161.999l111.856 147.88L403.229 0zm-27.556 415.805h43.505L138.363 44.527h-46.68l283.99 371.278z"
+                                    style="fill: #fff;" />
+                            </svg>
+
+                        </a></li>
+                    <li class="ms-3"><a class="text-white" href="#">
+                            <span class="bx bxl-instagram"></span>
+
+                        </a></li>
+                </ul>
+
+            </div>
+        </div>
+    </footer>
+</div>

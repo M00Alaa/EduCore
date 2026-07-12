@@ -1,0 +1,40 @@
+// Date Range Picker Styles
+.custom-day {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #e9ecef;
+  }
+
+  &.focused {
+    background-color: #e9ecef;
+  }
+
+  &.range,
+  &.faded {
+    background-color: rgb(2, 117, 216);
+    color: white;
+    border-radius: 0;
+  }
+
+  &.range:first-child {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+  }
+
+  &.range:last-child {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  &.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+  }
+}

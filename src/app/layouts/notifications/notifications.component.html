@@ -1,0 +1,158 @@
+<div class="d-inline-block">
+  <a
+    style="height: auto"
+    class="lh-1 p-0 noti-icon position-relative"
+    id="page-header-notifications-dropdown"
+    nz-dropdown
+    [nzDropdownMenu]="menu"
+    [nzTrigger]="'click'"
+    [nzPlacement]="'bottomRight'"
+    [nzOverlayStyle]="{ width: '320px' }"
+  >
+    <span class="icon-box">
+      <span class="isax isax-notification-bing text-primary fs-5"> </span>
+    </span>
+
+    @if (unreadCount > 0) {
+      <span
+        class="bg-danger h-7px w-7px rounded-circle d-inline-block position-absolute top-20 start-20 translate-middle"
+      >
+      </span>
+    }
+  </a>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="dropdown-menu-lg p-0 bg-white shadow rounded-3 overflow-hidden">
+      <div class="p-3 border-bottom">
+        <div class="row align-items-center">
+          <div class="col">
+            <h6 class="m-0">{{ 'الإشعارات' | translate }}</h6>
+          </div>
+          <div class="col-auto">
+            <a
+              href="javascript: void(0);"
+              (click)="readAll()"
+              class="small text-decoration-none"
+              >{{ 'تحديد الكل كـ مقروءة' | translate }}</a
+            >
+          </div>
+        </div>
+      </div>
+      <ngx-simplebar
+        #simplebar
+        [options]="scrollbarOptions"
+        style="position: relative; max-height: 350px"
+      >
+        <div
+          *ngFor="let item of notifs"
+          class="text-reset border-bottom notification-item"
+        >
+          <!-- (click)="redirectTo(item)" -->
+          <div
+            class="media pointer align-items-center position-relative p-3"
+            [ngClass]="{ 'bg-light': !item.read }"
+          >
+            <span
+              (click)="readNotification(item); $event.stopPropagation()"
+              *ngIf="!item.read"
+              class="noti-check pointer position-absolute end-0 top-0 m-2"
+              title="تحديد كمقروء"
+            >
+              <span class="bx bx-check-circle font-size-18 text-primary"></span>
+            </span>
+            <span
+              *ngIf="item.read"
+              class="noti-check pointer position-absolute end-0 top-0 m-2"
+              title="مقروء"
+            >
+              <span
+                class="bx bx-check-double font-size-18 text-gray-600"
+              ></span>
+            </span>
+
+            <div class="d-flex align-items-start">
+              <div class="avatar-xs me-3 flex-shrink-0">
+                <ng-template
+                  [ngTemplateOutlet]="iconTemp"
+                  [ngTemplateOutletContext]="{ type: item?.type }"
+                ></ng-template>
+              </div>
+              <div class="media-body flex-grow-1">
+                <p class="mt-0 mb-1 small fw-medium">
+                  {{ item?.title }}
+                </p>
+                <div class="font-size-12 text-gray-600">
+                  <p class="mb-0">
+                    <i class="bx bx-time-five align-middle me-1"></i>
+                    {{ item?.createdate | date: 'd MMMM yyyy hh:mm a' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="gettingNotifs" class="text-center py-5 h-100">
+          <div role="status" class="spinner-border text-primary m-1">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div *ngIf="!notifs" class="text-center py-5 h-100">
+          <div role="status" class="spinner-border text-primary m-1">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div
+          *ngIf="notifs && notifs.length === 0"
+          class="text-center py-5 h-100 text-gray-600"
+        >
+          لا يوجد إشعارات جديدة
+        </div>
+      </ngx-simplebar>
+    </div>
+  </nz-dropdown-menu>
+</div>
+
+<!-- ?? icon  -->
+<ng-template #iconTemp let-type="type">
+  <ng-container [ngSwitch]="type">
+    <ng-container *ngSwitchCase="'chat_message'">
+      <span class="avatar-title bg-success rounded-circle font-size-16">
+        <i class="bx bx-message-rounded-dots"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchCase="NotificationType.AcceptComment">
+      <span class="avatar-title bg-info rounded-circle font-size-16">
+        <i class="bx bx-comment"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchCase="NotificationType.AcceptCourse">
+      <span class="avatar-title bg-info rounded-circle font-size-16">
+        <i class="bx bx-book-add"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchCase="NotificationType.AcceptRegistration">
+      <span class="avatar-title bg-info rounded-circle font-size-16">
+        <i class="bx bx-user-check"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchCase="NotificationType.NewComment">
+      <span class="avatar-title bg-info rounded-circle font-size-16">
+        <i class="bx bx-comment-add"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchCase="NotificationType.RejectComment">
+      <span class="avatar-title bg-info rounded-circle font-size-16">
+        <i class="bx bx-comment-error"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchCase="NotificationType.RejectCourse">
+      <span class="avatar-title bg-info rounded-circle font-size-16">
+        <i class="bx bx-bookmark-alt-minus"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchCase="NotificationType.RejectRegistration">
+      <span class="avatar-title bg-info rounded-circle font-size-16">
+        <i class="bx bx-user-minus"></i>
+      </span>
+    </ng-container>
+  </ng-container>
+</ng-template>

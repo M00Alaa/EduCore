@@ -1,0 +1,351 @@
+.timeline {
+    & {
+        position: relative;
+
+        @include media-breakpoint-up(xs) {
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+
+        }
+
+        @include media-breakpoint-up(xl) {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+        }
+
+
+    }
+
+
+    .timeline_content {
+        display: flex;
+        gap: 25px;
+        justify-content: space-between;
+        width: 100%;
+
+        @include media-breakpoint-up(xs) {
+            flex-direction: column;
+            align-items: end;
+            font-size: 14px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            flex-direction: row;
+            max-width: none;
+            align-items: normal;
+            font-size: inherit;
+        }
+    }
+
+    .stage_wrapper,
+    .stage_wrapper2 {
+        --bg: #E77A62;
+        
+        &:hover {
+            .stage_header {
+                border: 3px solid #fff;
+                outline: 1px solid var(--bg);
+            }
+        }
+        
+        & {
+            & {
+                min-width: 250px;
+                transition: all 0.3s;
+                display: grid;
+                grid-template-rows: auto 1fr;
+                position: relative;
+                cursor: pointer;
+                -webkit-transition: all 0.3s;
+                -moz-transition: all 0.3s;
+                -ms-transition: all 0.3s;
+                -o-transition: all 0.3s;
+            }
+
+            @include media-breakpoint-up(xs) {
+                border-block-start: 2px dashed var(--bg);
+                width: 100%;
+                padding-left: 50px;
+            }
+
+            @include media-breakpoint-up(md) {
+                border-block-start: 2px dashed var(--bg);
+                width: 100%;
+                padding-left: 50px;
+            }
+
+            @include media-breakpoint-up(xl) {
+                border-inline-end: 2px dashed var(--bg);
+                border-block-start: none;
+                width: fit-content;
+                padding-left: 0;
+
+            }
+        }
+
+        @include media-breakpoint-up(xs) {
+            min-width: 250px;
+            display: block;
+
+        }
+
+        @include media-breakpoint-up(xl) {
+            min-height: 150px;
+            min-width: none;
+            display: grid;
+
+        }
+
+        & {
+            --bg: #818181;
+        }
+
+        &.PENDING {
+            & {
+                opacity: .6;
+                transition: .3s;
+                -webkit-transition: .3s;
+                -moz-transition: .3s;
+                -ms-transition: .3s;
+                -o-transition: .3s;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &.INPROGRESS {
+            --bg: var(--bs-warning);
+        }
+
+
+        &.DONE {
+            --bg: var(--bs-success);
+        }
+
+
+        .stage_content {
+
+            padding-inline-end: 15px;
+            padding-top: 15px;
+
+
+        }
+
+        .stage_header {
+            padding: 12px 20px;
+            color: #fff;
+            background: var(--bg);
+            width: 100%;
+            border: 3px solid transparent;
+            outline: 1px solid transparent;
+
+            @include media-breakpoint-up(xs) {
+                border-radius: 3px 3px 3px 25px;
+                -webkit-border-radius: 3px 3px 3px 25px;
+                -moz-border-radius: 3px 3px 3px 25px;
+                -ms-border-radius: 3px 3px 3px 25px;
+                -o-border-radius: 3px 3px 3px 25px;
+                width: auto;
+                width: fit-content;
+                position: relative;
+                top: -2px;
+            }
+
+            @include media-breakpoint-up(xl) {
+                top: 0;
+                border-radius: 3px 25px 3px 3px;
+                -webkit-border-radius: 3px 25px 3px 3px;
+                -moz-border-radius: 3px 25px 3px 3px;
+                -ms-border-radius: 3px 25px 3px 3px;
+                -o-border-radius: 3px 25px 3px 3px;
+                width: 101%;
+            }
+        }
+
+        .indicator {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+            position: absolute;
+
+            background-color: rgba(243, 246, 252, 1);
+            z-index: 1;
+            padding: 5px;
+
+            @include media-breakpoint-up(xs) {
+                top: -10.5px;
+                bottom: auto;
+                left: -15.5px;
+            }
+
+            @include media-breakpoint-up(xl) {
+                bottom: -16.5px;
+                top: auto;
+                left: -11.5px;
+            }
+
+            span {
+                display: block;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: var(--bg);
+            }
+        }
+
+
+    }
+
+
+    .SELECTED .stage_wrapper,
+    .SELECTED .stage_wrapper2 {
+        // --bg: var(--bs-info);
+
+        & {
+            background-color: rgba($color: $light, $alpha: .8);
+
+            opacity: 1;
+
+            .stage_content {
+                padding-inline-start: 5px;
+            }
+
+            & {
+                border-radius: 0 20px 0 0;
+                -webkit-border-radius: 0 20px 0 0;
+                -moz-border-radius: 0 20px 0 0;
+                -ms-border-radius: 0 20px 0 0;
+                -o-border-radius: 0 20px 0 0;
+}
+
+            .stage_header {
+                border: 3px solid #fff;
+                outline: 1px solid var(--bg);
+            }
+        }
+    }
+
+    .end_date {
+        position: absolute;
+        width: 100%;
+
+
+        @include media-breakpoint-up(xs) {
+            bottom: -50px;
+            left: 16px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            bottom: -40px;
+            left: 16px;
+
+        }
+    }
+
+
+    .progress_bar {
+        position: static;
+
+        overflow: hidden;
+        border-radius: 12px;
+        background-color: $light;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        -ms-border-radius: 12px;
+        -o-border-radius: 12px;
+
+        @include media-breakpoint-up(xs) {
+            height: auto;
+            width: 10px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            height: 10px;
+            width: 100%;
+        }
+
+        .progress_buffer {
+            & {
+                transition: width 1s linear;
+                -webkit-transition: width 1s linear;
+                -moz-transition: width 1s linear;
+                -ms-transition: width 1s linear;
+                -o-transition: width 1s linear;
+            }
+
+            @include media-breakpoint-up(xs) {
+                width: 100%;
+            }
+
+            @include media-breakpoint-up(xl) {
+                height: 100%;
+                width: 0;
+            }
+
+            border-radius: 12px;
+            background: $success;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            -ms-border-radius: 12px;
+            -o-border-radius: 12px;
+        }
+    }
+}
+
+
+.timeline.opposite {
+
+
+    & {
+        @include media-breakpoint-up(xs) {
+            padding-top: 5px;
+        }
+
+        @include media-breakpoint-up(xl) {
+            flex-direction: column-reverse;
+            padding-top: 0;
+
+        }
+    }
+
+    @include media-breakpoint-up(xl) {
+        .stage_content {
+            order: 1;
+        }
+
+        .stage_header {
+            order: 2;
+        }
+    }
+
+    .end_date {
+        top: -40px;
+        bottom: auto;
+    }
+
+    .stage_wrapper,
+    .stage_wrapper2 {
+        & {
+            grid-template-rows: 1fr auto;
+        }
+
+        .indicator {
+            @include media-breakpoint-up(xl) {
+                bottom: auto;
+                top: -14.5px;
+                left: -12.5px;
+            }
+        }
+    }
+
+
+}

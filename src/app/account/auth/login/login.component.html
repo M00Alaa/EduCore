@@ -1,0 +1,67 @@
+<img [src]="logo" alt="Vult Logo" height="50" class="d-block mx-auto" />
+
+<h2 class="text-center fw-bold my-4">{{ 'LOGIN.LOGIN_BUTTON' | translate }}</h2>
+
+<form
+  nz-form
+  (keypress.enter)="onSubmit()"
+  class="custom_form mx-auto"
+  style="max-width: 500px"
+  [formGroup]="loginForm"
+>
+  <nz-form-item class="mb-3" nzRequired>
+    <nz-form-control>
+      <nz-form-label [nzRequired]="true">
+        {{ 'LOGIN.USERNAME_LABEL' | translate }}
+      </nz-form-label>
+      <input
+        formControlName="userName"
+        nz-input
+        class="bg-transparent h-50px"
+        nzSize="large"
+        name="username"
+        [placeholder]="'LOGIN.USERNAME_PLACEHOLDER' | translate"
+        type="text"
+        id="username"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="mb-1" nzRequired>
+    <nz-form-control>
+      <nz-form-label [nzRequired]="true">
+        {{ 'LOGIN.PASSWORD_LABEL' | translate }}
+      </nz-form-label>
+      <app-password-input
+        formControlName="password"
+        [placeholder]="'LOGIN.PASSWORD_PLACEHOLDER' | translate"
+      ></app-password-input>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <label nz-checkbox formControlName="rememberMe">
+          <small>{{ 'LOGIN.REMEMBER_ME' | translate }}</small>
+        </label>
+      </div>
+      <div>
+        <a
+          routerLink="/account/reset-password"
+          class="text-decoration-underline text-body"
+        >
+          <small>{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</small>
+        </a>
+      </div>
+    </div>
+  </div>
+  <button
+    (click)="onSubmit()"
+    [disabled]="loading"
+    class="col-12 btn btn-primary-gradient fw-medium h-50px mt-4"
+  >
+    <span class="bx bx-loader bx-spin" *ngIf="loading"></span>
+    <!-- <span class="bx bx-lock-open align-middle" *ngIf="!loading"></span> -->
+
+    {{ 'LOGIN.LOGIN_BUTTON' | translate }}
+  </button>
+</form>

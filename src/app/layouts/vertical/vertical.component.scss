@@ -1,0 +1,46 @@
+.main-content{
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.sheap_moved {
+    & {
+        max-width: 30vw;
+        transform: translateX(-120vw);
+        animation: moving 10s linear infinite forwards;
+        -webkit-animation: moving 10s linear infinite forwards;
+        -webkit-transform: translateX(-120vw);
+        -moz-transform: translateX(-120vw);
+        -ms-transform: translateX(-120vw);
+        -o-transform: translateX(-120vw);
+        animation-delay: 2s;
+}
+
+
+
+
+    &._2 {
+        max-height: 80px;
+        bottom: 50px;
+        animation-delay: 0s;
+    }
+}
+
+
+@keyframes moving {
+    0% {
+        transform: translateX(-100vw);
+        -webkit-transform: translateX(-100vw);
+        -moz-transform: translateX(-100vw);
+        -ms-transform: translateX(-100vw);
+        -o-transform: translateX(-100vw);
+    }
+
+    100% {
+        transform: translateX(100vw);
+        -webkit-transform: translateX(100vw);
+        -moz-transform: translateX(100vw);
+        -ms-transform: translateX(100vw);
+        -o-transform: translateX(100vw);
+    }
+}

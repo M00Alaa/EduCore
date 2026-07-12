@@ -1,0 +1,31 @@
+.noti-title {
+    & {
+        position: relative;
+    }
+
+    .noti-badge {
+        position: absolute;
+        left: 5px;
+
+        display: block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+    }
+}
+
+.noti-check{
+    position: absolute;
+    left: 15px;
+    bottom: 5px;
+
+    &:hover{
+        .bx-check-circle::before{
+            content: "\ec12";
+        }
+    }
+}

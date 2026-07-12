@@ -1,0 +1,98 @@
+<header id="page-topbar">
+  <div
+    class="navbar-header position-relative border-bottom pb-3 flex-wrap-reverse"
+  >
+    <!-- <div class="overlay"></div> -->
+
+    <div *ngIf="EIDDESIGN" class="position-absolute bottom-0 end-0">
+      <img
+        src="../../../assets/images/eid-adha.png"
+        style="max-height: 40px"
+        alt=""
+      />
+      <img
+        src="../../../assets/images/mosque.png"
+        style="max-height: 40px; opacity: 0.5"
+        alt=""
+      />
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <a
+        style="height: auto"
+        class="lh-1 p-0 noti-icon d-lg-none"
+        id="page-header-notifications-dropdown"
+        (click)="toggleMobileMenu($event)"
+      >
+        <span class="notif_circle">
+          <i class="isax isax-menu-1 text-primary fs-5"></i>
+        </span>
+      </a>
+
+      @if (withLogo) {
+        <span class="">
+          <img [src]="logos.light" class="" style="width: auto; height: 50px" />
+        </span>
+      } @else {
+        <a class="lh-1 p-0" routerLink="/">
+          <i class="isax isax-home text-gray-600 fs-5"></i>
+        </a>
+      }
+    </div>
+
+    <div class="d-flex align-items-center mb-3 mb-md-0">
+      <div class="d-flex gap-2 gap-md-3 align-items-center me-3 me-md-60px">
+        <!-- Branch Selector -->
+        <ng-select
+          *ngIf="isBranchMode && branches.length > 0"
+          [items]="branches"
+          bindLabel="title"
+          [(ngModel)]="selectedBranch"
+          (change)="onBranchSelect($event)"
+          [placeholder]="'BRANCHES.SELECT_BRANCH' | translate"
+          [clearable]="false"
+          [searchable]="true"
+          style="min-width: 120px"
+        >
+        </ng-select>
+
+        <!-- Dark Mode Toggle Button -->
+        <a
+          class="icon-box p-0"
+          (click)="toggleDarkMode()"
+          [attr.title]="
+            isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'
+          "
+        >
+          <i [class]="isDarkMode ? 'bx bx-sun fs-5' : 'bx bx-moon fs-5'"></i>
+        </a>
+
+        <!-- Language Switcher Button -->
+        <a
+          class="icon-box p-0"
+          (click)="toggleLanguage()"
+          [attr.title]="
+            currentLang === 'ar' ? 'Switch to English' : 'التبديل للعربية'
+          "
+        >
+          {{ currentLang === 'ar' ? 'EN' : 'AR' }}
+        </a>
+
+        <sahely-notifications
+          class="d-inline-block align-middle align-self-center"
+        ></sahely-notifications>
+      </div>
+
+      <!-- ?? user -->
+      <mg-account-dropdown
+        [isBranchContext]="isBranchMode"
+        [branchContext]="selectedBranch"
+      ></mg-account-dropdown>
+
+      <!-- <div class="dropdown d-none d-lg-inline-block ms-1">
+        <button type="button" class="btn header-item noti-icon" data-toggle="fullscreen" (click)="fullscreen()">
+          <i class="bx bx-fullscreen"></i>
+        </button>
+      </div> -->
+    </div>
+  </div>
+</header>

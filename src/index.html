@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>ڤولت - نظام إدارة الأكاديميات</title>
+    <base href="/" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="ڤولت... لأن إدارة الموهبة تستحق العناية خيارك الأمثل لتبسيط أعمالك وإدارتها بكل سهولة"
+    />
+    <meta
+      name="keywords"
+      content="ڤولت, إدارة الأكاديميات, أكاديميات, نظم إدارة, التعليم, إدارة تعليمية, إدارة مدارس, نظم تعليمية, برامج تعليمية, إدارة طلاب, إدارة مدرسية, أكاديميات ڤولت, تطوير أكاديمي, حلول تعليمية"
+    />
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link href="favicon.ico" rel="apple-touch-icon" />
+    <style>
+      #loader_wrapper {
+        position: fixed;
+        background-color: #f5f5f5;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+      }
+
+      .loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: inline-block;
+        border-top: 4px solid #09b260;
+        border-right: 4px solid transparent;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      .loader::after {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border-bottom: 4px solid #f19731;
+        border-left: 4px solid transparent;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <app-root>
+      <div id="loader_wrapper">
+        <span class="loader"></span>
+      </div>
+    </app-root>
+  </body>
+</html>

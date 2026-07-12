@@ -1,0 +1,53 @@
+@if (url) {
+<ng-container>
+  <div class="">
+    <div class="image-zoom" *ngIf="type === 'IMG'">
+      <img nz-image (error)="img.src = '/assets/images/no-img.svg'" #img [nzSrc]="domain + url" alt="preview-img"
+        class="preview-img" />
+      <ngx-dropzone-remove-badge *ngIf="removable" (click)="_remove($event)">
+      </ngx-dropzone-remove-badge>
+      <div (click)="img.click()" class="overlay">
+        <span class="aya-search-plus icon"></span>
+      </div>
+    </div>
+    <div class="file_preview" *ngIf="type === 'FILE'">
+      <ngx-dropzone-remove-badge *ngIf="removable" (click)="_remove($event)">
+      </ngx-dropzone-remove-badge>
+      <a [title]="fileName" (click)="$event.stopPropagation();" [href]="domain + url" target="_blank" download
+        rel="noopener noreferrer"
+        class="preview-file d-flex text-body gap-2  align-items-center justify-content-center">
+        <small class="aya-download me-1 file_icon align-middle"></small>
+        <small class="file_name" dir="ltr">
+          {{fileName}}
+        </small>
+        <span class="isax isax-trash text-danger delete-icon" *ngIf="removable" (click)="_remove($event)">
+
+        </span>
+      </a>
+    </div>
+  </div>
+  <ng-content select="ngx-dropzone-label"></ng-content>
+
+</ng-container>
+}@else {
+@if (type === 'IMG') {
+<div class="d-flex w-100 gap-1 flex-column align-items-center justify-content-center">
+  <img height="100" class="m-auto" src="/assets/images/no-img.svg" alt="">
+  <strong class="text-danger">
+    لا توجد صور
+  </strong>
+</div>
+}@else {
+<div class="d-flex w-100 gap-1 flex-column align-items-center justify-content-center">
+  <strong class="">
+    لا توجد ملفات
+  </strong>
+</div>
+}
+}
+
+<div *ngIf="loading" style="z-index: 8;" class="position-absolute
+                                   bg-secondary text-white bg-opacity-75 rounded-3 top-0 left-0 w-100
+                                   d-flex align-items-center justify-content-center h-100 loading-spin">
+  <span class="bx bx-loader bx-spin font-size-24"></span>
+</div>

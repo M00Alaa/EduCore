@@ -1,0 +1,327 @@
+<div class="table-v2">
+  <div
+    class="mg-toolbar d-flex flex-wrap gap-3 justify-content-between align-items-center"
+  >
+    <!-- Search and Filter Component -->
+    <mg-search-filter
+      [filters]="filterConfigs"
+      [searchPlaceholder]="'EQUIPMENT.SEARCH_CAT' | translate"
+      [showSearch]="true"
+      [showFilter]="false"
+      (onSearch)="onSearch($event)"
+      (onApplyFilters)="onApplyFilters($event)"
+      (onResetFilters)="onResetFilters()"
+    ></mg-search-filter>
+
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button
+        *appPermission="'equipment.classifications.add'"
+        class="btn btn-primary-gradient h-40px d-flex align-items-center gap-2"
+        (click)="openAddClassificationModal()"
+      >
+        <span class="bx bx-plus"></span>
+        {{ 'EQUIPMENT.NEW_CLASSIFICATION' | translate }}
+      </button>
+      <button
+        class="btn btn-white h-40px d-flex align-items-center gap-2"
+        (click)="onExport($event)"
+      >
+        <span class="isax isax-export"></span>
+        {{ 'EQUIPMENT.EXPORT' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <mg-scroll-x>
+    <nz-table
+      nzSize="small"
+      class="v2"
+      #basicTable
+      [nzBordered]="false"
+      [nzTableLayout]="'auto'"
+      [nzData]="filteredClassifications"
+      [nzLoading]="isLoading"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+    >
+      <thead>
+        <tr>
+          <th>{{ 'EQUIPMENT.TABLE_CLASSIFICATION.NAME' | translate }}</th>
+          <th>
+            {{ 'EQUIPMENT.TABLE_CLASSIFICATION.DESCRIPTION' | translate }}
+          </th>
+          <th>
+            {{
+              'EQUIPMENT.TABLE_CLASSIFICATION.SUB_CLASSIFICATIONS' | translate
+            }}
+          </th>
+          <th>{{ 'EQUIPMENT.TABLE_CLASSIFICATION.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of basicTable.data; track item.id) {
+          <tr>
+            <td>{{ item.display_name || item.name_ar }}</td>
+            <td>{{ item.description || '-' }}</td>
+            <td>
+              <span
+                class="text-info pointer text-decoration-underline"
+                (click)="viewSubClassifications(item)"
+              >
+                {{ 'EQUIPMENT.VIEW_SUB_CLASSIFICATIONS' | translate }}
+              </span>
+            </td>
+            <td>
+              <div class="d-flex gap-1">
+                <button
+                  *appPermission="'equipment.classifications.edit'"
+                  class="btn btn-icon btn-soft-secondary"
+                  (click)="editClassification(item)"
+                >
+                  <span class="isax isax-edit fs-1_25rem"></span>
+                </button>
+                <button
+                  *appPermission="'equipment.classifications.delete'"
+                  class="btn btn-icon btn-soft-danger"
+                  (click)="deleteClassification(item)"
+                >
+                  <span class="isax isax-trash fs-1_25rem"></span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+  </mg-scroll-x>
+</div>
+
+<!-- Pagination -->
+<div class="mt-4 d-flex justify-content-between align-items-center">
+  <ngb-pagination
+    [maxSize]="4"
+    [boundaryLinks]="false"
+    [collectionSize]="_total"
+    [page]="_page"
+    [pageSize]="_pageSize"
+    (pageChange)="loadData($event)"
+  />
+
+  <div>
+    <span class="fw-medium">
+      {{ 'EQUIPMENT.PAGINATION.SHOWING' | translate }}
+      <span class="text-primary">{{ _pageSize }}</span>
+      {{ 'EQUIPMENT.PAGINATION.OF' | translate }} {{ _total }}
+      {{ 'EQUIPMENT.PAGINATION.RESULTS' | translate }}
+    </span>
+  </div>
+</div>
+
+<!-- Add Classification Modal -->
+<ng-template #addClassificationModal let-modal>
+  <div class="modal-body p-4">
+    <div
+      class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4"
+    >
+      <h4 class="modal-title mb-0 fw-semibold">
+        {{
+          (editingCategoryId
+            ? 'EQUIPMENT.ADD_CLASSIFICATION_MODAL.EDIT_TITLE'
+            : 'EQUIPMENT.ADD_CLASSIFICATION_MODAL.TITLE'
+          ) | translate
+        }}
+      </h4>
+      <button
+        type="button"
+        class="btn-close mx-0"
+        (click)="modal.dismiss()"
+      ></button>
+    </div>
+
+    <nz-form class="row custom_form g-3" [formGroup]="classificationForm">
+      @if (isLoadingSubCategories) {
+        <div class="d-flex justify-content-center align-items-center py-5">
+          <span class="spinner-border text-primary"></span>
+        </div>
+      } @else {
+        <nz-form-item class="col-md-12">
+          <nz-form-label
+            [nzRequired]="classificationForm | isRequired: 'name_ar'"
+            >{{
+              'EQUIPMENT.ADD_CLASSIFICATION_MODAL.NAME' | translate
+            }}</nz-form-label
+          >
+          <nz-form-control [nzErrorTip]="nzErrorTip">
+            <input
+              nz-input
+              formControlName="name_ar"
+              [placeholder]="
+                'EQUIPMENT.ADD_CLASSIFICATION_MODAL.NAME_PLACEHOLDER'
+                  | translate
+              "
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="col-md-12">
+          <nz-form-label
+            [nzRequired]="classificationForm | isRequired: 'description'"
+            >{{
+              'EQUIPMENT.ADD_CLASSIFICATION_MODAL.DESCRIPTION' | translate
+            }}</nz-form-label
+          >
+          <nz-form-control [nzErrorTip]="nzErrorTip">
+            <textarea
+              nz-input
+              formControlName="description"
+              rows="3"
+              [placeholder]="
+                'EQUIPMENT.ADD_CLASSIFICATION_MODAL.DESCRIPTION_PLACEHOLDER'
+                  | translate
+              "
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="col-md-12">
+          <nz-form-label [nzRequired]="true">
+            {{
+              'EQUIPMENT.ADD_CLASSIFICATION_MODAL.SUB_CLASSIFICATION'
+                | translate
+            }}
+          </nz-form-label>
+          <div class="w-100" formArrayName="subClassifications">
+            @for (
+              sub of subClassificationsArray.controls;
+              track $index;
+              let i = $index
+            ) {
+              <div [formGroupName]="i" class="mb-2">
+                <div class="row align-items-start g-2">
+                  <div class="col">
+                    <nz-form-control [nzErrorTip]="nzErrorTip">
+                      <input
+                        nz-input
+                        formControlName="name_ar"
+                        [placeholder]="
+                          'EQUIPMENT.ADD_CLASSIFICATION_MODAL.SUB_CLASSIFICATION_PLACEHOLDER'
+                            | translate
+                        "
+                      />
+                    </nz-form-control>
+                  </div>
+                  @if (subClassificationsArray.length > 0) {
+                    <div class="col-auto">
+                      <button
+                        type="button"
+                        class="btn btn-icon btn-outline-danger"
+                        (click)="removeSubClassification(i)"
+                        [title]="'EQUIPMENT.DELETE' | translate"
+                        [disabled]="isSaving"
+                      >
+                        <span class="isax isax-trash pointer fs-1_6rem"></span>
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-white d-flex align-items-center justify-content-center gap-2 mt-2"
+            (click)="addSubClassification()"
+            [disabled]="isSaving"
+          >
+            {{
+              'EQUIPMENT.ADD_CLASSIFICATION_MODAL.ADD_SUB_CLASSIFICATION'
+                | translate
+            }}
+          </button>
+        </nz-form-item>
+      }
+    </nz-form>
+  </div>
+  <div class="modal-footer border-0">
+    <button
+      *appPermission="[
+        'equipment.classifications.add',
+        'equipment.classifications.edit',
+      ]"
+      class="btn btn-primary-gradient px-4"
+      (click)="saveClassification()"
+      [disabled]="isSaving"
+    >
+      @if (isSaving) {
+        <span class="spinner-border spinner-border-sm text-primary"></span>
+      }
+      {{ 'EQUIPMENT.SAVE' | translate }}
+    </button>
+    <button class="btn btn-white" (click)="modal.dismiss()">
+      {{ 'EQUIPMENT.CANCEL' | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<!-- View Sub-classifications Modal -->
+<ng-template #viewSubClassificationsModal let-modal>
+  <div class="modal-body p-4">
+    <div
+      class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4"
+    >
+      <h5 class="modal-title mb-0 fw-semibold">
+        {{ 'EQUIPMENT.VIEW_SUB_CLASSIFICATIONS' | translate }}
+      </h5>
+      <button
+        type="button"
+        class="btn-close mx-0"
+        (click)="modal.dismiss()"
+      ></button>
+    </div>
+
+    <!-- Loading -->
+    @if (isLoadingSubClassifications) {
+      <div class="d-flex justify-content-center align-items-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    } @else {
+      <div class="rounded-3 border overflow-hidden">
+        <table class="table table-borderless mb-0">
+          <thead class="border-bottom">
+            <tr>
+              <th class="bg-neutral-color py-3">
+                {{ 'EQUIPMENT.TABLE_CLASSIFICATION.NAME' | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (
+              sub of selectedClassification?.subClassifications || [];
+              track sub.id
+            ) {
+              <tr class="border-bottom">
+                <td class="bg-neutral-color py-3">{{ sub.name }}</td>
+              </tr>
+            }
+            @if (
+              (selectedClassification?.subClassifications || []).length === 0
+            ) {
+              <tr>
+                <td colspan="1" class="bg-neutral-color py-3 text-center">
+                  {{ 'EQUIPMENT.NO_SUB_CLASSIFICATIONS' | translate }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #nzErrorTip let-control>
+  <app-nz-control-error-temp [control]="control"></app-nz-control-error-temp>
+</ng-template>

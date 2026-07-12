@@ -1,0 +1,25 @@
+@if (scrollbar.isHorizontallyScrollable()) {
+  @if (scrollState == 'left' || scrollState == 'both') {
+    <span class="left_shadow"></span>
+  }
+
+  @if (scrollState == 'right' || scrollState == 'both') {
+    <span class="right_shadow"></span>
+  }
+}
+<ng-scrollbar
+  [ngClass]="{
+    'is-scrollable': scrollbar.isHorizontallyScrollable,
+    isMoving: isMoving,
+    both: scrollState == 'both',
+  }"
+  class="scrollBar"
+  #scrollbar
+  [position]="'invertX'"
+  [appearance]="'native'"
+  [visibility]="'hover'"
+  autoHeightDisabled="false"
+  (afterUpdate)="updateShadows()"
+>
+  <ng-content></ng-content>
+</ng-scrollbar>

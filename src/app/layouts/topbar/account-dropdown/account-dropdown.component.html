@@ -1,0 +1,50 @@
+<div
+  class="dropdown d-block"
+  display="dynamic"
+  [container]="'body'"
+  ngbDropdown
+>
+  <a
+    style="grid-auto-flow: column"
+    type="button"
+    class="d-grid align-items-center p-0"
+    ngbDropdownToggle
+    id="page-header-user-dropdown"
+  >
+    <span class="icon-box me-1">
+      <span class="isax isax-user text-primary fs-5"> </span>
+    </span>
+    <div
+      class="d-none text-truncate text d-xl-inline-block small ms-1"
+      [ngClass]="{ 'text-white': light }"
+    >
+      <p class="text-truncate text-body lh-1 mb-0">
+        {{ acc?.full_name || acc?.username }}
+      </p>
+      <p class="text-truncate text-gray-700 mb-0 fs-0_75rem">
+        {{ acc?.user_type?.name! | translate }}
+      </p>
+    </div>
+    <i class="text-body ms-2 radix-caret-down d-none d-xl-inline-block"></i>
+  </a>
+  <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+    <!-- item-->
+    <!-- <a
+      class="dropdown-item"
+      href="javascript: void(0);"
+      routerLink="/account-setting"
+      ><i class="bx bx-cog align-middle me-1"></i>
+      إعدادات الحســاب
+    </a> -->
+    <a
+      class="dropdown-item text-danger"
+      href="javascript: void(0);"
+      (click)="logout()"
+      ><i class="bx bx-power-off align-middle me-1 text-danger"></i>
+      تسجيل الخروج
+    </a>
+  </div>
+</div>
+<!-- <div *ngIf="acc">
+
+</div> -->

@@ -1,0 +1,66 @@
+.scrollBar {
+    user-select: text;
+
+    &.isMoving {
+        pointer-events: none;
+        user-select: none;
+    }
+
+    &.is-scrollable ::ng-deep {
+        & {
+            cursor: grab;
+            user-select: none;
+        }
+
+
+    }
+}
+
+
+
+
+
+:host {
+    display: grid;
+    position: relative;
+    --scrollbar-thickness: 8;
+    --scrollbar-offset: 1;
+    --scrollbar-border-radius: 4px !important;
+    --scrollbar-padding: 4px !important;
+    --scrollbar-track-color: #00000014 !important;
+    --scrollbar-thumb-color: #ababab !important;
+    --scrollbar-thumb-hover-color: var(--scrollbar-thumb-color);
+    --scrollbar-size: 8px !important;
+    --scrollbar-hover-thickness	: 16 !important;
+    --scrollbar-overscroll-behavior: initial;
+}
+
+
+.ng-scroll-content {
+    & {
+        overflow: hidden;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -o-border-radius: 4px;
+    }
+}
+
+.left_shadow,
+.right_shadow {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    box-shadow: inset 6px 0px 5px rgba(123, 122, 122, 0.4);
+    z-index: 2;
+}
+
+.right_shadow {
+    box-shadow: inset -6px 0px 5px rgba(123, 122, 122, 0.4);
+    left: auto;
+    right: 0;
+}

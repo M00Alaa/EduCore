@@ -1,0 +1,14 @@
+<div id="layout-wrapper" class="container-fluid d-flex">
+  <div class="p-4 w-100">
+    <div class="w-100 main-content card shadow-none p-3 p-md-4 h-100">
+      <!-- class="sticky-lg-top" -->
+      <app-topbar class="horizontal" [withLogo]="true"> </app-topbar>
+      <div class="mw-1920px w-100 mx-auto mt-3">
+        <!-- content -->
+        <router-outlet> </router-outlet>
+      </div>
+      <!-- footer -->
+      <!-- <app-footer></app-footer> -->
+    </div>
+  </div>
+</div>

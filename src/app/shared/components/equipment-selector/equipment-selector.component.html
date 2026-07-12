@@ -1,0 +1,23 @@
+<ng-select class="w-100" [readonly]="disabled" [loading]="loading" [ngClass]="classes" [placeholder]="placeholder"
+  [(ngModel)]="value" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)" [items]="equipments"
+  [groupBy]="groupByFn" bindValue="id" bindLabel="nameAr">
+
+  <!-- Custom template for options -->
+  <ng-template ng-option-tmp let-item="item">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <span style="max-width: 150px;" class="text-truncate d-inline-block">
+        {{item.nameAr}}
+      </span>
+      <small class="text-gray-600"
+        *ngIf="item.vehicleRegistrationLetters && item.vehicleRegistrationNumber;else noVehicle">
+        ({{item.vehicleRegistrationLetters + " " + item.vehicleRegistrationNumber}})
+      </small>
+      <ng-template #noVehicle>
+        <small class="text-gray-600">
+          ({{item.localNumber}})
+        </small>
+      </ng-template>
+
+    </div>
+  </ng-template>
+</ng-select>

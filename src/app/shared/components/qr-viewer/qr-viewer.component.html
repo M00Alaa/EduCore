@@ -1,0 +1,61 @@
+<div
+  id="QR-print-section-{{ QRValue }}"
+  *ngIf="QRValue"
+  [ngClass]="{ pointer: Printable, 'p-3 border ratio-1x1  rounded-3': boxMode }"
+  class="d-flex d-print-flex text-center flex-column w-100 QR_Box position-relative align-items-center justify-content-center gap-1"
+>
+  <ng-container *ngIf="Printable">
+    <div class="d-none text-center d-print-block">
+      <img
+        src="/assets/images/logo.svg"
+        class="mb-3"
+        style="height: 100px"
+        alt=""
+      />
+      <h5 *ngIf="PrintLabel">
+        {{ PrintLabel }}
+      </h5>
+    </div>
+    <div class="tool_box d-print-none">
+      <button
+        (click)="print()"
+        *ngIf="Printable"
+        class="btn btn btn-sm btn-icon btn-info text-white p-2 rounded-circle"
+        type="button"
+      >
+        <span class="isax isax-printer font-size-18"></span>
+      </button>
+      <a
+        [download]="'qrcode-' + QRValue"
+        [href]="qrCodeDownloadLink"
+        class="btn btn btn-sm btn-icon btn-warning text-white p-2 rounded-circle"
+        type="button"
+      >
+        <span class="isax isax-document-download font-size-18"></span>
+      </a>
+    </div>
+  </ng-container>
+
+  <div class="d-flex d-print-none justify-content-center">
+    <qrcode
+      [elementType]="'svg'"
+      class="mx-auto"
+      [qrdata]="QRValue"
+      [width]="size"
+      errorCorrectionLevel="M"
+      (qrCodeURL)="onChangeURL($event)"
+    ></qrcode>
+  </div>
+
+  <div class="d-print-flex d-none justify-content-center">
+    <img [src]="qrCodeDownloadLink" style="height: 200px" alt="" />
+  </div>
+
+  <h6
+    class="mb-0 text-center"
+    [ngClass]="{ 'd-none d-print-block': !showText && Printable }"
+    *ngIf="showText || Printable"
+  >
+    {{ QRValue }}
+  </h6>
+</div>

@@ -1,0 +1,20 @@
+<nz-tabset
+  [nzSelectedIndex]="selectedIndex"
+  (nzSelectedIndexChange)="onTabChange($event)"
+  class="custom_tabs"
+>
+  <nz-tab
+    *appPermission="'equipment.management.view'"
+    [nzTitle]="'EQUIPMENT.TABS.EQUIPMENT_LIST' | translate"
+  >
+    <mo-equipment-list *ngIf="selectedIndex === 0"></mo-equipment-list>
+  </nz-tab>
+  <nz-tab
+    *appPermission="'equipment.classifications.view'"
+    [nzTitle]="'EQUIPMENT.TABS.CLASSIFICATIONS' | translate"
+  >
+    <mo-classifications
+      *ngIf="selectedIndex === classificationsTabIndex"
+    ></mo-classifications>
+  </nz-tab>
+</nz-tabset>

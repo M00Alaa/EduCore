@@ -1,0 +1,43 @@
+@import '../../../node_modules/ng-zorro-antd/style/variable.less'; /* Import base styles */
+@import 'ngzorro_variables.less'; /* Import base styles */
+@import '../../../node_modules/ng-zorro-antd/style/entry.less'; /* Import base styles */
+
+// ? Components styles
+@import '../../../node_modules/ng-zorro-antd/button/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/table/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/select/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/form/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/image/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/input/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/tooltip/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/timeline/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/input-number/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/collapse/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/switch/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/checkbox/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/date-picker/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/upload/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/segmented/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/divider/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/slider/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/steps/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/skeleton/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/color-picker/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/popover/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/popconfirm/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/auto-complete/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/calendar/style/entry.less';
+@import '../../../node_modules/ng-zorro-antd/tabs/style/entry.less';
+
+.ant-input-group-addon {
+  background-color: @input-bg;
+}
+html[dir='rtl'] {
+  .ant-input-group > .ant-input:last-child,
+  .ant-input-group-addon:last-child {
+    border-top-left-radius: @border-radius-base;
+    border-bottom-left-radius: @border-radius-base;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}

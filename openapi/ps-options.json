@@ -1,0 +1,11 @@
+{
+    "input": "./openapi/portal/postman-collection.json",
+    "output": "./openapi/portal/openapi.json",
+    "defaultTag": "General",
+    "info": {
+        "title": "Portal API",
+        "version": "1.0.0",
+        "description": "OpenAPI specification for Portal API"
+    },
+    "examples": true
+}

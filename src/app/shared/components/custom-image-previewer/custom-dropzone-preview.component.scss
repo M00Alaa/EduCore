@@ -1,0 +1,131 @@
+:host {
+  padding: 0px !important;
+  max-width: unset !important;
+  max-height: unset;
+  min-height: 50px !important;
+  display: inline-block !important;
+  height: auto !important;
+  min-height: 25px !important;
+  min-width: 25px !important;
+  overflow: hidden;
+  z-index: 50;
+
+  ngx-dropzone-remove-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 11;
+    background-color: var(--bs-danger) !important;
+  }
+
+  &:hover,
+  &:focus {
+    ngx-dropzone-remove-badge {
+      opacity: 1;
+    }
+  }
+
+  ngx-dropzone-remove-badge {
+    opacity: 0;
+  }
+
+  &.FILE {
+    min-height: 35px !important;
+    border: 1px solid var(--bs-secondary);
+    background-color: #f8fffa;
+    color: var(--bs-body-color);
+    border-radius: 12px !important;
+    -webkit-border-radius: 12px !important;
+    -moz-border-radius: 12px !important;
+    -ms-border-radius: 12px !important;
+    -o-border-radius: 12px !important;
+    min-height: 25px !important;
+    min-width: unset !important;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+
+    .file_name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .preview-file {
+      padding: 10px 16px 10px 16px !important;
+
+      .file_icon {
+        &:hover {
+          content: '\e94d';
+          color: var(--bs-primary);
+        }
+      }
+    }
+
+    &:hover {
+      .file_icon::before {
+        content: '\e94d';
+      }
+    }
+
+    ngx-dropzone-remove-badge {
+      display: none;
+    }
+
+    .delete-icon {
+      & {
+        cursor: pointer;
+      }
+
+      &:hover {
+        color: var(--bs-danger);
+      }
+    }
+  }
+}
+
+.image-zoom {
+  & {
+    cursor: zoom-in;
+    position: relative;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    color: #fff;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    font-size: 15px;
+    left: 0;
+    margin: auto;
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    .overlay {
+      display: flex;
+    }
+  }
+}
+
+.preview-img {
+  max-width: 200px;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+}
+
+.file_preview {
+  position: relative;
+}

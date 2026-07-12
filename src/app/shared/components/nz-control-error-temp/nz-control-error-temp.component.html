@@ -1,0 +1,134 @@
+<ng-container *ngIf="control?.errors">
+  <small *ngIf="control?.errors">
+    <span *ngIf="(control?.errors)!['required']">
+      <ng-container *ngIf="control?.parent?.get('workDays') === control">
+        <span style="color: #ff4d4f"
+          ><i class="isax isax-info-circle"></i
+        ></span>
+      </ng-container>
+      هذا الحقل مطلوب
+    </span>
+
+    <span *ngIf="(control?.errors)!['whitespace']"
+      >هذا الحقل لا يمكن أن يحتوي على مسافات فقط</span
+    >
+
+    <span *ngIf="(control?.errors)!['maxlength']">
+      يجب أن لا يزيد عدد الحروف عن
+      <span>{{ (control?.errors)!['maxlength']?.requiredLength }}</span>
+    </span>
+
+    <span *ngIf="(control?.errors)!['minlength']">
+      يجب أن لا يقـل عدد الحروف عن
+      <span>{{ (control?.errors)!['minlength']?.requiredLength }}</span>
+    </span>
+
+    <span *ngIf="(control?.errors)!['pattern']">
+      <span [ngSwitch]="(control?.errors)!['pattern']?.requiredPattern">
+        <span *ngSwitchCase="userNamePattern">
+          يجب كتابة فقط أحرف إنجليزية ولا تحتوي على مسافات (3 احرف على الأقل)
+        </span>
+        <span *ngSwitchCase="mustNumberPattern"> يجب إدخال أرقام فقط </span>
+        <span *ngSwitchCase="numberMoreThanZeroPattern">
+          يجب إدخال رقم أكبر من الصفــر
+        </span>
+        <span *ngSwitchDefault> مدخل غير صحيح </span>
+      </span>
+    </span>
+
+    <span *ngIf="(control?.errors)!['email']">البريد الإلكتروني غير صحيح</span>
+    <span *ngIf="(control?.errors)!['saudiMobile']"
+      >رقم الجوال يجب أن يكون سعوديًا صحيحًا</span
+    >
+    <span *ngIf="(control?.errors)!['startsWithNumber']"
+      >لا يمكن أن يبدأ النص برقم</span
+    >
+    <span *ngIf="(control?.errors)!['outsideAcademyDays']"
+      >أيام العمل يجب أن تكون ضمن أيام عمل الأكاديمية</span
+    >
+    <span *ngIf="(control?.errors)!['academyDaysMissing']"
+      >يجب تحديد أيام عمل الأكاديمية أولاً من الإعدادات</span
+    >
+    <span *ngIf="(control?.errors)!['outsideAcademyTime']">{{
+      outsideAcademyTimeMessage
+    }}</span>
+    <span *ngIf="(control?.errors)!['academyTimeMissing']"
+      >يجب تحديد وقت بداية ونهاية الأكاديمية أولاً من الإعدادات</span
+    >
+    <span *ngIf="(control?.errors)!['endBeforeStart']"
+      >وقت النهاية يجب أن يكون بعد وقت البداية</span
+    >
+    <span *ngIf="(control?.errors)!['sameAsPrimaryPhone']"
+      >رقم الجوال الإضافي يجب أن يختلف عن الرقم الأساسي</span
+    >
+    <span *ngIf="(control?.errors)!['server']">{{ serverErrorMessage }}</span>
+    <!-- Custom: Date range error for transferForm -->
+    <span *ngIf="(control?.errors)!['invalidDate']">تاريخ غير صالح</span>
+    <span
+      *ngIf="
+        control?.parent?.hasError &&
+        control?.parent?.hasError('sameDate') &&
+        control?.parent?.get('to_date') === control
+      "
+    >
+      لا يمكن أن يكون تاريخ البداية والنهاية نفس اليوم
+    </span>
+    <span
+      *ngIf="
+        control?.parent?.hasError &&
+        control?.parent?.hasError('dateRange') &&
+        control?.parent?.get('to_date') === control
+      "
+    >
+      يجب أن يكون تاريخ النهاية بعد تاريخ البداية
+    </span>
+
+    <span *ngIf="(control?.errors)!['min']">
+      يجب أن لا يقل الرقم عن
+      {{ (control?.errors)!['min']?.min }}
+    </span>
+
+    <span *ngIf="(control?.errors)!['max']">
+      يجب أن لا يزيد الرقم عن
+      {{ (control?.errors)!['max']?.max }}
+    </span>
+    <span *ngIf="(control?.errors)!['maxInWarehouse']">
+      العدد المتوفر في المخزن حاليًا
+      {{ (control?.errors)!['maxInWarehouse']?.max }}
+    </span>
+
+    <span *ngIf="(control?.errors)!['wholePositiveNumber']">
+      يجب إدخال رقم صحيح موجب
+    </span>
+
+    <span
+      *ngIf="
+        !(control?.errors)!['invalidDate'] &&
+        !(control?.parent?.hasError('sameDate') &&
+          control?.parent?.get('to_date') === control) &&
+        !(control?.parent?.hasError('dateRange') &&
+          control?.parent?.get('to_date') === control) &&
+        !(control?.errors)!['maxInWarehouse'] &&
+        !(control?.errors)!['wholePositiveNumber'] &&
+        !(control?.errors)!['required'] &&
+        !(control?.errors)!['maxlength'] &&
+        !(control?.errors)!['minlength'] &&
+        !(control?.errors)!['pattern'] &&
+        !(control?.errors)!['email'] &&
+        !(control?.errors)!['saudiMobile'] &&
+        !(control?.errors)!['startsWithNumber'] &&
+        !(control?.errors)!['outsideAcademyDays'] &&
+        !(control?.errors)!['academyDaysMissing'] &&
+        !(control?.errors)!['outsideAcademyTime'] &&
+        !(control?.errors)!['academyTimeMissing'] &&
+        !(control?.errors)!['endBeforeStart'] &&
+        !(control?.errors)!['sameAsPrimaryPhone'] &&
+        !(control?.errors)!['server'] &&
+        !(control?.errors)!['min'] &&
+        !(control?.errors)!['max']
+      "
+    >
+      المدخل غير صحيح
+    </span>
+  </small>
+</ng-container>

@@ -1,0 +1,762 @@
+@font-face {
+  font-family: 'aya';
+  src:  url('fonts/aya.eot?rz4x17');
+  src:  url('fonts/aya.eot?rz4x17#iefix') format('embedded-opentype'),
+    url('fonts/aya.ttf?rz4x17') format('truetype'),
+    url('fonts/aya.woff?rz4x17') format('woff'),
+    url('fonts/aya.svg?rz4x17#aya') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="aya-"], [class*=" aya-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'aya' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.aya-chevron-left:before {
+  content: "\e900";
+}
+.aya-chevron-right:before {
+  content: "\e901";
+}
+.aya-chevron-down:before {
+  content: "\e902";
+}
+.aya-chevron-up:before {
+  content: "\e903";
+}
+.aya-chevron-up1:before {
+  content: "\e904";
+}
+.aya-chevron-down1:before {
+  content: "\e905";
+}
+.aya-chevron-left1:before {
+  content: "\e906";
+}
+.aya-chevron-right1:before {
+  content: "\e907";
+}
+.aya-forward-2:before {
+  content: "\e908";
+}
+.aya-arrow-up-right:before {
+  content: "\e909";
+}
+.aya-arrow-up-left:before {
+  content: "\e90a";
+}
+.aya-arrow-down-right:before {
+  content: "\e90b";
+}
+.aya-arrow-down-left:before {
+  content: "\e90c";
+}
+.aya-up-to-right:before {
+  content: "\e90d";
+}
+.aya-left-to-up:before {
+  content: "\e90e";
+}
+.aya-arrow-backward:before {
+  content: "\e90f";
+}
+.aya-right-to-up:before {
+  content: "\e910";
+}
+.aya-arrow-forward:before {
+  content: "\e911";
+}
+.aya-right-to-down:before {
+  content: "\e912";
+}
+.aya-down-to-left:before {
+  content: "\e913";
+}
+.aya-left-to-down:before {
+  content: "\e914";
+}
+.aya-arrow-up-double:before {
+  content: "\e915";
+}
+.aya-arrow-down-double:before {
+  content: "\e916";
+}
+.aya-arrow-left-double:before {
+  content: "\e917";
+}
+.aya-arrow-right-double:before {
+  content: "\e918";
+}
+.aya-forward:before {
+  content: "\e919";
+}
+.aya-backward:before {
+  content: "\e91a";
+}
+.aya-arrow-down:before {
+  content: "\e91b";
+}
+.aya-arrow-up:before {
+  content: "\e91c";
+}
+.aya-arrow-left:before {
+  content: "\e91d";
+}
+.aya-arrow-right:before {
+  content: "\e91e";
+}
+.aya-arrow-left-alt:before {
+  content: "\e91f";
+}
+.aya-arrow-right-alt:before {
+  content: "\e920";
+}
+.aya-arrow-up-alt:before {
+  content: "\e921";
+}
+.aya-arrow-down-alt:before {
+  content: "\e922";
+}
+.aya-aroows-x:before {
+  content: "\e923";
+}
+.aya-repost-2:before {
+  content: "\e924";
+}
+.aya-directions:before {
+  content: "\e925";
+}
+.aya-next:before {
+  content: "\e926";
+}
+.aya-next-2:before {
+  content: "\e927";
+}
+.aya-arrow-left-circle:before {
+  content: "\e928";
+}
+.aya-arrow-down-circle:before {
+  content: "\e929";
+}
+.aya-arrow-right-circle:before {
+  content: "\e92a";
+}
+.aya-arrow-right-circle1:before {
+  content: "\e92b";
+}
+.aya-toggle:before {
+  content: "\e92c";
+}
+.aya-toggle-on:before {
+  content: "\e92d";
+}
+.aya-search:before {
+  content: "\e92e";
+}
+.aya-search-minus:before {
+  content: "\e92f";
+}
+.aya-search-plus:before {
+  content: "\e930";
+}
+.aya-notifs:before {
+  content: "\e931";
+}
+.aya-play-circle:before {
+  content: "\e932";
+}
+.aya-stop-circle:before {
+  content: "\e933";
+}
+.aya-pause:before {
+  content: "\e934";
+}
+.aya-backward-2:before {
+  content: "\e935";
+}
+.aya-upload:before {
+  content: "\e936";
+}
+.aya-expand:before {
+  content: "\e937";
+}
+.aya-refresh:before {
+  content: "\e938";
+}
+.aya-arrow-cut:before {
+  content: "\e939";
+}
+.aya-close:before {
+  content: "\e93a";
+}
+.aya-repost:before {
+  content: "\e93b";
+}
+.aya-refresh-2:before {
+  content: "\e93c";
+}
+.aya-trading:before {
+  content: "\e93d";
+}
+.aya-trading-2:before {
+  content: "\e93e";
+}
+.aya-move:before {
+  content: "\e93f";
+}
+.aya-minimize:before {
+  content: "\e940";
+}
+.aya-arrow-3:before {
+  content: "\e941";
+}
+.aya-Path154:before {
+  content: "\e942";
+}
+.aya-q:before {
+  content: "\e943";
+}
+.aya-waves:before {
+  content: "\e944";
+}
+.aya-sliders-v:before {
+  content: "\e945";
+}
+.aya-menu-arrow:before {
+  content: "\e946";
+}
+.aya-menu:before {
+  content: "\e947";
+}
+.aya-menu-dot:before {
+  content: "\e948";
+}
+.aya-menu-dots:before {
+  content: "\e949";
+}
+.aya-sliders:before {
+  content: "\e94a";
+}
+.aya-minu-circles:before {
+  content: "\e94b";
+}
+.aya-dots-2:before {
+  content: "\e94c";
+}
+.aya-download:before {
+  content: "\e94d";
+}
+.aya-edit:before {
+  content: "\e94e";
+}
+.aya-edit-2:before {
+  content: "\e94f";
+}
+.aya-setting-alt:before {
+  content: "\e950";
+}
+.aya-user:before {
+  content: "\e951";
+}
+.aya-user-plus:before {
+  content: "\e952";
+}
+.aya-user-minus:before {
+  content: "\e953";
+}
+.aya-user-check:before {
+  content: "\e954";
+}
+.aya-user-x:before {
+  content: "\e955";
+}
+.aya-users:before {
+  content: "\e956";
+}
+.aya-eye-o:before {
+  content: "\e957";
+}
+.aya-eye-no-2:before {
+  content: "\e958";
+}
+.aya-eye-closed:before {
+  content: "\e959";
+}
+.aya-warning:before {
+  content: "\e95a";
+}
+.aya-error:before {
+  content: "\e95b";
+}
+.aya-plus:before {
+  content: "\e95c";
+}
+.aya-check-circle:before {
+  content: "\e95d";
+}
+.aya-info:before {
+  content: "\e95e";
+}
+.aya-check-circle1:before {
+  content: "\e95f";
+}
+.aya-close-circle:before {
+  content: "\e960";
+}
+.aya-minus-circle:before {
+  content: "\e961";
+}
+.aya-plus-circle:before {
+  content: "\e962";
+}
+.aya-check-square:before {
+  content: "\e963";
+}
+.aya-check-square-2:before {
+  content: "\e964";
+}
+.aya-square-minus:before {
+  content: "\e965";
+}
+.aya-square-plus:before {
+  content: "\e966";
+}
+.aya-close-square:before {
+  content: "\e967";
+}
+.aya-warning-rectangle:before {
+  content: "\e968";
+}
+.aya-tag:before {
+  content: "\e969";
+}
+.aya-tag-x:before {
+  content: "\e96a";
+}
+.aya-check-double:before {
+  content: "\e96b";
+}
+.aya-check:before {
+  content: "\e96c";
+}
+.aya-home:before {
+  content: "\e96d";
+}
+.aya-cloud-down:before {
+  content: "\e96e";
+}
+.aya-cloud-up:before {
+  content: "\e96f";
+}
+.aya-save:before {
+  content: "\e970";
+}
+.aya-archieve-2:before {
+  content: "\e971";
+}
+.aya-archieve:before {
+  content: "\e972";
+}
+.aya-trash-2:before {
+  content: "\e973";
+}
+.aya-trash:before {
+  content: "\e974";
+}
+.aya-guard:before {
+  content: "\e975";
+}
+.aya-guard-no:before {
+  content: "\e976";
+}
+.aya-medal:before {
+  content: "\e977";
+}
+.aya-cube:before {
+  content: "\e978";
+}
+.aya-picker:before {
+  content: "\e979";
+}
+.aya-redo:before {
+  content: "\e97a";
+}
+.aya-star:before {
+  content: "\e97b";
+}
+.aya-crop:before {
+  content: "\e97c";
+}
+.aya-global:before {
+  content: "\e97d";
+}
+.aya-square:before {
+  content: "\e97e";
+}
+.aya-copy:before {
+  content: "\e97f";
+}
+.aya-camera:before {
+  content: "\e980";
+}
+.aya-cast:before {
+  content: "\e981";
+}
+.aya-speaker:before {
+  content: "\e982";
+}
+.aya-printer:before {
+  content: "\e983";
+}
+.aya-compass:before {
+  content: "\e984";
+}
+.aya-folder:before {
+  content: "\e985";
+}
+.aya-folder-minus:before {
+  content: "\e986";
+}
+.aya-folder-plus:before {
+  content: "\e987";
+}
+.aya-file-2:before {
+  content: "\e988";
+}
+.aya-file:before {
+  content: "\e989";
+}
+.aya-file-plus:before {
+  content: "\e98a";
+}
+.aya-agenda:before {
+  content: "\e98b";
+}
+.aya-image:before {
+  content: "\e98c";
+}
+.aya-map:before {
+  content: "\e98d";
+}
+.aya-send-2:before {
+  content: "\e98e";
+}
+.aya-paper:before {
+  content: "\e98f";
+}
+.aya-umbrella:before {
+  content: "\e990";
+}
+.aya-chart:before {
+  content: "\e991";
+}
+.aya-blutooth:before {
+  content: "\e992";
+}
+.aya-car:before {
+  content: "\e993";
+}
+.aya-1:before {
+  content: "\e994";
+}
+.aya-window:before {
+  content: "\e995";
+}
+.aya-brieface:before {
+  content: "\e996";
+}
+.aya-lamp-on:before {
+  content: "\e997";
+}
+.aya-slices:before {
+  content: "\e998";
+}
+.aya-drop-no:before {
+  content: "\e999";
+}
+.aya-doc:before {
+  content: "\e99a";
+}
+.aya-drop:before {
+  content: "\e99b";
+}
+.aya-light:before {
+  content: "\e99c";
+}
+.aya-moon:before {
+  content: "\e99d";
+}
+.aya-flash:before {
+  content: "\e99e";
+}
+.aya-flash-off:before {
+  content: "\e99f";
+}
+.aya-circle-1:before {
+  content: "\e9a0";
+}
+.aya-circle:before {
+  content: "\e9a1";
+}
+.aya-book:before {
+  content: "\e9a2";
+}
+.aya-layers:before {
+  content: "\e9a3";
+}
+.aya-map-pin:before {
+  content: "\e9a4";
+}
+.aya-paperstick:before {
+  content: "\e9a5";
+}
+.aya-gift:before {
+  content: "\e9a6";
+}
+.aya-directions-2:before {
+  content: "\e9a7";
+}
+.aya-thermometer-minus:before {
+  content: "\e9a8";
+}
+.aya-layout:before {
+  content: "\e9a9";
+}
+.aya-web:before {
+  content: "\e9aa";
+}
+.aya-github:before {
+  content: "\e9ab";
+}
+.aya-book-2:before {
+  content: "\e9ac";
+}
+.aya-not-allowed:before {
+  content: "\e9ad";
+}
+.aya-squares:before {
+  content: "\e9ae";
+}
+.aya-store-box:before {
+  content: "\e9af";
+}
+.aya-hash:before {
+  content: "\e9b0";
+}
+.aya-flag:before {
+  content: "\e9b1";
+}
+.aya-layout-2:before {
+  content: "\e9b2";
+}
+.aya-chart-v:before {
+  content: "\e9b3";
+}
+.aya-book-21:before {
+  content: "\e9b4";
+}
+.aya-fire:before {
+  content: "\e9b5";
+}
+.aya-agenda-2:before {
+  content: "\e9b6";
+}
+.aya-calendar:before {
+  content: "\e9b7";
+}
+.aya-loader:before {
+  content: "\e9b8";
+}
+.aya-thermometer-plus:before {
+  content: "\e9b9";
+}
+.aya-thermometer:before {
+  content: "\e9ba";
+}
+.aya-brush:before {
+  content: "\e9bb";
+}
+.aya-art:before {
+  content: "\e9bc";
+}
+.aya-clock:before {
+  content: "\e9bd";
+}
+.aya-clock-2:before {
+  content: "\e9be";
+}
+.aya-credit-card:before {
+  content: "\e9bf";
+}
+.aya-heart:before {
+  content: "\e9c0";
+}
+.aya-bookmark:before {
+  content: "\e9c1";
+}
+.aya-cart:before {
+  content: "\e9c2";
+}
+.aya-bag:before {
+  content: "\e9c3";
+}
+.aya-lock-on:before {
+  content: "\e9c4";
+}
+.aya-lock:before {
+  content: "\e9c5";
+}
+.aya-clear-format:before {
+  content: "\e9c6";
+}
+.aya-filter:before {
+  content: "\e9c7";
+}
+.aya-scissor:before {
+  content: "\e9c8";
+}
+.aya-sort:before {
+  content: "\e9c9";
+}
+.aya-chart-v-2:before {
+  content: "\e9ca";
+}
+.aya-battery-empty:before {
+  content: "\e9cb";
+}
+.aya-battery-charging:before {
+  content: "\e9cc";
+}
+.aya-wifi:before {
+  content: "\e9cd";
+}
+.aya-wifi-no:before {
+  content: "\e9ce";
+}
+.aya-mic-no:before {
+  content: "\e9cf";
+}
+.aya-wireless:before {
+  content: "\e9d0";
+}
+.aya-wireless-2:before {
+  content: "\e9d1";
+}
+.aya-sound:before {
+  content: "\e9d2";
+}
+.aya-sound-low:before {
+  content: "\e9d3";
+}
+.aya-sound-high:before {
+  content: "\e9d4";
+}
+.aya-mute:before {
+  content: "\e9d5";
+}
+.aya-phone-no:before {
+  content: "\e9d6";
+}
+.aya-phone:before {
+  content: "\e9d7";
+}
+.aya-phone-x:before {
+  content: "\e9d8";
+}
+.aya-phone-2:before {
+  content: "\e9d9";
+}
+.aya-headphones:before {
+  content: "\e9da";
+}
+.aya-screen:before {
+  content: "\e9db";
+}
+.aya-music:before {
+  content: "\e9dc";
+}
+.aya-tv:before {
+  content: "\e9dd";
+}
+.aya-video:before {
+  content: "\e9de";
+}
+.aya-video-no:before {
+  content: "\e9df";
+}
+.aya-notifs-no:before {
+  content: "\e9e0";
+}
+.aya-mic:before {
+  content: "\e9e1";
+}
+.aya-expand-2:before {
+  content: "\e9e2";
+}
+.aya-paperstick-2:before {
+  content: "\e9e3";
+}
+.aya-share:before {
+  content: "\e9e4";
+}
+.aya-share-2:before {
+  content: "\e9e5";
+}
+.aya-share-3:before {
+  content: "\e9e6";
+}
+.aya-reply:before {
+  content: "\e9e7";
+}
+.aya-send:before {
+  content: "\e9e8";
+}
+.aya-send-21:before {
+  content: "\e9e9";
+}
+.aya-message:before {
+  content: "\e9ea";
+}
+.aya-email:before {
+  content: "\e9eb";
+}
+.aya-message-2:before {
+  content: "\e9ec";
+}
+.aya-twitter:before {
+  content: "\e9ed";
+}
+.aya-facebook:before {
+  content: "\e9ee";
+}
+.aya-linkedin:before {
+  content: "\e9ef";
+}
+.aya-google:before {
+  content: "\e9f0";
+}
+.aya-behance:before {
+  content: "\e9f1";
+}
+.aya-power-on:before {
+  content: "\e9f2";
+}
+.aya-power-off:before {
+  content: "\e9f4";
+}
+.aya-setting:before {
+  content: "\e9f3";
+}

@@ -1,0 +1,237 @@
+<div class="search-filter-wrapper d-flex flex-wrap gap-3 align-items-center">
+  <!-- Search Input -->
+  <div *ngIf="showSearch">
+    <nz-input-group class="h-40px min-w-md-300px" [nzPrefix]="iconSearch">
+      <input
+        type="text"
+        nz-input
+        [(ngModel)]="searchValue"
+        (keyup)="handleSearch()"
+        [placeholder]="searchPlaceholder"
+      />
+    </nz-input-group>
+    <ng-template #iconSearch>
+      <span class="isax isax-search-favorite"></span>
+    </ng-template>
+  </div>
+
+  <!-- Filter Button with Dropdown -->
+  <div
+    *ngIf="showFilter && filters.length > 0"
+    class="filter-dropdown-wrapper position-relative"
+  >
+    <button
+      class="btn h-40px btn-white d-flex align-items-center gap-2"
+      (click)="toggleFilterDropdown()"
+      [disabled]="isLoading"
+    >
+      <span class="isax isax-filter-search"></span>
+      {{ 'SHARED.FILTERS.FILTER' | translate }}
+      @if (isLoading) {
+        <span class="bx bx-loader bx-spin"></span>
+      } @else if (activeFiltersCount > 0) {
+        <span
+          class="w-20px h-20px p-0 d-flex justify-content-center align-items-center bg-primary text-white fw-normal fs-0_875rem rounded-circle"
+        >
+          {{ activeFiltersCount }}
+        </span>
+      }
+    </button>
+
+    <!-- Filter Dropdown Panel -->
+    @if (isFilterOpen) {
+      <div
+        class="filter-dropdown-panel position-absolute card border shadow-lg rounded-3 p-3"
+        style="z-index: 1000; min-width: 350px; right: 0; top: calc(100% + 8px)"
+      >
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="fs-1_25rem fw-medium mb-0">
+            {{ 'SHARED.FILTERS.FILTER_BY' | translate }}
+          </h6>
+          <button
+            type="button"
+            class="btn btn-link text-decoration-none p-0 text-body fs-1_25rem"
+            (click)="closeFilterDropdown()"
+          >
+            <span class="isax isax-close-circle"></span>
+          </button>
+        </div>
+
+        <!-- Filter Form -->
+        <nz-form [formGroup]="filterForm" class="custom_form">
+          <div class="filter-fields">
+            <nz-form-item class="" *ngFor="let filter of filters">
+              <nz-form-label>{{ filter.label | translate }}</nz-form-label>
+
+              <!-- Text Input -->
+              @if (filter.type === 'text') {
+                <nz-form-control>
+                  <input
+                    type="text"
+                    class="bg-transparent"
+                    nz-input
+                    [formControlName]="filter.key"
+                    [placeholder]="
+                      filter.placeholder || filter.label | translate
+                    "
+                  />
+                </nz-form-control>
+              } @else if (filter.type === 'number') {
+                <!-- Number Input -->
+                <nz-form-control>
+                  <input
+                    type="number"
+                    class="bg-transparent"
+                    nz-input
+                    [formControlName]="filter.key"
+                    [placeholder]="
+                      filter.placeholder || filter.label | translate
+                    "
+                  />
+                </nz-form-control>
+              } @else if (filter.type === 'date') {
+                <!-- Date Picker -->
+                <nz-form-control>
+                  <nz-date-picker
+                    class="w-100 bg-transparent"
+                    nzFormat="yyyy-MM-dd"
+                    [formControlName]="filter.key"
+                    [nzPlaceHolder]="
+                      filter.placeholder || filter.label | translate
+                    "
+                  >
+                  </nz-date-picker>
+                </nz-form-control>
+              } @else if (filter.type === 'dateRange') {
+                <!-- Date Range Picker -->
+                <nz-form-control>
+                  <div [formGroupName]="filter.key">
+                    <div class="input-group border rounded-2 px-12px py-2">
+                      <input
+                        class="form-control p-0 bg-transparent border-0"
+                        [placeholder]="
+                          filter.placeholder || filter.label | translate
+                        "
+                        name="daterange"
+                        [value]="getDateRangeText(filter.key)"
+                        ngbDatepicker
+                        #d="ngbDatepicker"
+                        [displayMonths]="2"
+                        [dayTemplate]="t"
+                        outsideDays="hidden"
+                        [startDate]="fromDate!"
+                        (dateSelect)="onDateSelection($event, filter.key)"
+                        readonly
+                      />
+                      <button
+                        class="btn btn-white p-0 border-0 bg-transparent"
+                        (click)="d.toggle()"
+                        type="button"
+                      >
+                        <span class="isax isax-calendar-1"></span>
+                      </button>
+                    </div>
+
+                    <ng-template #t let-date let-focused="focused">
+                      <span
+                        class="custom-day"
+                        [class.focused]="focused"
+                        [class.range]="isRange(date)"
+                        [class.faded]="isHovered(date) || isInside(date)"
+                        (mouseenter)="hoveredDate = date"
+                        (mouseleave)="hoveredDate = null"
+                      >
+                        {{ date.day }}
+                      </span>
+                    </ng-template>
+                  </div>
+                </nz-form-control>
+              } @else if (filter.type === 'select') {
+                <!-- Select Dropdown -->
+                <nz-form-control>
+                  <ng-select
+                    class="transparent"
+                    [formControlName]="filter.key"
+                    [placeholder]="
+                      (filter.placeholder! | translate) ||
+                      ('SHARED.FILTERS.SELECT' | translate)
+                    "
+                    [multiple]="filter.multiple ? true : false"
+                    [clearable]="true"
+                    [appendTo]="'body'"
+                  >
+                    <ng-option
+                      *ngFor="let option of filter.options"
+                      [value]="option.value"
+                    >
+                      {{ option.label | translate }}
+                    </ng-option>
+                  </ng-select>
+                </nz-form-control>
+              } @else if (filter.type === 'range') {
+                <!-- Range Slider -->
+                <nz-form-control>
+                  <div class="px-2 pt-2">
+                    <div
+                      class="d-flex justify-content-between mb-2 text-gray-600 fs-0_75rem"
+                    >
+                      <span>{{
+                        filterForm.get(filter.key)?.value?.[0] ||
+                          filter.min ||
+                          0
+                      }}</span>
+                      <span>{{
+                        filterForm.get(filter.key)?.value?.[1] ||
+                          filter.max ||
+                          100
+                      }}</span>
+                    </div>
+                    <nz-slider
+                      nzRange
+                      [nzMin]="filter.min || 0"
+                      [nzMax]="filter.max || 100"
+                      [nzStep]="filter.step || 1"
+                      [formControlName]="filter.key"
+                    ></nz-slider>
+                  </div>
+                </nz-form-control>
+              }
+            </nz-form-item>
+          </div>
+        </nz-form>
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-2 mt-4">
+          <button
+            type="button"
+            class="btn btn-primary-gradient h-40px flex-fill"
+            (click)="applyFilters()"
+            [disabled]="isLoading"
+          >
+            <span class="bx bx-loader bx-spin me-2" *ngIf="isLoading"></span>
+            {{ 'SHARED.FILTERS.APPLY' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-white h-40px"
+            (click)="resetFilters()"
+            [disabled]="isLoading"
+          >
+            <span class="isax isax-refresh me-1"></span>
+            {{ 'SHARED.FILTERS.RESET' | translate }}
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Backdrop to close dropdown when clicking outside -->
+@if (isFilterOpen) {
+  <div
+    class="filter-backdrop position-fixed top-0 start-0 w-100 h-100"
+    style="z-index: 999"
+    (click)="closeFilterDropdown()"
+  ></div>
+}

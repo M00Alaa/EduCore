@@ -1,0 +1,77 @@
+@if (userId) {
+<a [ngbPopover]="popContent" container="body" [closeDelay]="500" (shown)="getUserMetadata()"
+    triggers="mouseenter:mouseleave" popoverTitle="بيانات الموظف" [routerLink]="['/employments/employees',userId]"
+    class="d-flex gap-2 align-items-center">
+    <div>
+        <img #breakdownDriverImage (error)="
+                                            breakdownDriverImage.src =
+                                              '/assets/images/users/avatar.png'
+                                          " class="rounded rounded-2  avatar-xs" placeholder nz-image [nzSrc]="(imageUrl ? domain + imageUrl: null) || '/assets/images/users/avatar.png'
+                                          " alt="" />
+    </div>
+
+    <span class="text-primary">
+        {{ fullName || '-' }}
+    </span>
+    @if(Code){
+    <small class="text-truncate">
+        ( {{ Code || '-' }} )
+    </small>
+    }
+</a>
+}@else {
+-
+}
+
+
+<ng-template #popContent>
+    <div class="d-flex gap-2 align-items-center position-relative">
+        <img #viewImage (error)="viewImage.src ='/assets/images/users/avatar.png'" class="avatar-lg border rounded"
+            width="40" cover height="40" placeholder nz-image [nzSrc]="(imageUrl ? domain + imageUrl: null) || '/assets/images/users/avatar.png'
+                                      " alt="" />
+        <div>
+            <h6 class="text-dark">
+                {{ fullName || '-' }}
+            </h6>
+            <p class="mb-0">
+                <small class="text-gray-600">
+                    الكود:
+                </small>
+                {{ Code || '-' }}
+            </p>
+            @if (empData?.jobName) {
+            <p>
+                <small class="text-gray-600">
+                    الوظيفة:
+                </small>
+                {{ empData?.jobName || '-' }}
+            </p>
+            }
+            @if (empData?.jobName) {
+            <p>
+                <small class="text-gray-600">
+                    رقم الهاتف:
+                </small>
+                {{ empData?.phoneNumber || '-' }}
+            </p>
+            }
+            @if (empData?.jobName) {
+            <p>
+                <small class="text-gray-600">
+                    التقييم السنوي:
+                </small>
+                {{ empData?.thisYearRating || '-' }}
+            </p>
+            }
+        </div>
+        @if(gettingUser){
+        <div
+            class="d-flex position-absolute w-100 h-100 start-0 end-0 bg-white bg-opacity-50 justify-content-center my-2 align-items-center">
+            <div class="spinner-border text-primary spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        }
+    </div>
+</ng-template>

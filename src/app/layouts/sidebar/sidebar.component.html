@@ -1,0 +1,289 @@
+<!-- ========== Left Sidebar Start ========== -->
+<!--  border-end border-light border-2 -->
+<div style="grid-template-rows: 1fr auto" class="vertical-menu bg-body">
+  <ngx-simplebar #componentRef>
+    <div class="sidebar_grid">
+      <!-- Profile Section -->
+      <div
+        class="profile py-4 d-flex align-items-center justify-content-center gap-2 position-relative"
+      >
+        <a class="navbar-brand text-center" routerLink="/">
+          @if (!isCondensed) {
+            <span id="logo" class="d-none d-md-inline">
+              <img
+                [src]="logos.light"
+                class=""
+                style="width: auto; height: 50px"
+              />
+            </span>
+          }
+          @if (isCondensed) {
+            <span id="logo" class="d-none d-md-inline">
+              <img
+                [src]="logos.light_sm"
+                class=""
+                style="width: auto; height: 50px"
+              />
+            </span>
+          }
+          <span id="logo" class="d-md-none">
+            <img
+              [src]="logos.light_sm"
+              class=""
+              style="width: auto; height: 40px"
+            />
+          </span>
+        </a>
+
+        <div class="position-absolute d-lg-none top-0 end-0 m-3">
+          <span
+            class="bx bx-x pointer fs-1_6rem"
+            (click)="onToggleMobileMenu()"
+          ></span>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <div id="sidebar-menu">
+        <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
+          <!-- Exit Branch Button -->
+          @if (isBranchMode) {
+            <li class="p-0 mb-3">
+              <a
+                class="btn btn-gray-400 border-0 text-body d-flex align-items-center justify-content-center h-40px gap-2 rounded-3"
+                (click)="exitBranchAction()"
+                [attr.title]="'Return to Main Academy'"
+              >
+                <i class="isax isax-arrow-right-1"></i>
+                <span class="">{{ 'Exit Branch' | translate }}</span>
+              </a>
+            </li>
+          }
+
+          @for (item of menuItems; track item) {
+            <ng-container *appRole="item.roles || []">
+              <ng-template
+                [appPermission]="item.permission || ''"
+                [appPermissionUnless]="item.unlessPermission || ''"
+              >
+                @if (item.isTitle) {
+                  <li class="menu-title">
+                    <div class="d-flex align-items-center">
+                      <span
+                        class="flex-fill bg-light opacity-50 d-inline-flex"
+                        style="height: 1px"
+                      ></span>
+                      <span class="px-2">{{
+                        item?.label || '' | translate
+                      }}</span>
+                      <span
+                        class="flex-fill bg-light opacity-50 d-inline-flex"
+                        style="height: 1px"
+                      ></span>
+                    </div>
+                  </li>
+                }
+                @if (!item.isTitle && !item.isLayout) {
+                  <li (click)="clickElWhenCollapsed()">
+                    @if (item | hasItems) {
+                      <a
+                        href="javascript:void(0);"
+                        class="is-parent"
+                        [ngClass]="{
+                          'has-arrow': !item.badge,
+                          'has-dropdown': item.badge,
+                        }"
+                      >
+                        @if (item.icon) {
+                          <i
+                            style="width: 20px"
+                            class="text-center me-1 {{ item.icon }}"
+                          ></i>
+                        }
+                        <span>{{ item.label || '' | translate }}</span>
+                        @if (item.badge) {
+                          <span
+                            class="badge rounded-pill float-end bg-{{
+                              item.badge.variant
+                            }}"
+                          >
+                            {{ item.badge.text | translate }}
+                          </span>
+                        }
+                      </a>
+                    }
+                    @if (!(item | hasItems)) {
+                      <a
+                        [routerLink]="item.link"
+                        class="side-nav-link-ref"
+                        [routerLinkActiveOptions]="{ exact: !!item?.exact }"
+                        routerLinkActive="active"
+                      >
+                        @if (item.icon) {
+                          <i
+                            style="width: 20px"
+                            class="text-center me-1 {{ item.icon }}"
+                          ></i>
+                        }
+                        <span>{{ item.label || '' | translate }}</span>
+                        @if (item.badge) {
+                          <span
+                            class="badge rounded-pill bg-{{
+                              item.badge.variant
+                            }} float-end"
+                          >
+                            {{ item.badge.text | translate }}
+                          </span>
+                        }
+                      </a>
+                    }
+
+                    @if (item | hasItems) {
+                      <ul class="sub-menu" aria-expanded="false">
+                        @for (subitem of item.subItems; track subitem) {
+                          @if (subitem.isTitle) {
+                            <ng-template
+                              [appPermission]="subitem.permission || ''"
+                              [appPermissionUnless]="
+                                subitem.unlessPermission || ''
+                              "
+                            >
+                              <li class="sub-menu-title">
+                                <div class="d-flex align-items-center">
+                                  <span
+                                    class="flex-fill opacity-25 d-inline-flex"
+                                    style="
+                                      height: 1px;
+                                      background: currentColor;
+                                    "
+                                  ></span>
+                                  <span class="px-2 small">{{
+                                    subitem.label || '' | translate
+                                  }}</span>
+                                  <span
+                                    class="flex-fill opacity-25 d-inline-flex"
+                                    style="
+                                      height: 1px;
+                                      background: currentColor;
+                                    "
+                                  ></span>
+                                </div>
+                              </li>
+                            </ng-template>
+                          }
+                          @if (!subitem.isTitle) {
+                            <ng-container *appRole="subitem.roles || []">
+                              <ng-template
+                                [appPermission]="subitem.permission || ''"
+                                [appPermissionUnless]="
+                                  subitem.unlessPermission || ''
+                                "
+                              >
+                                <li>
+                                  @if (!(subitem | hasItems)) {
+                                    <a
+                                      [routerLink]="subitem.link"
+                                      class="side-nav-link-ref fw-semibold"
+                                      [attr.data-parent]="subitem.parentId"
+                                      [routerLinkActiveOptions]="{
+                                        exact: !!subitem?.exact,
+                                      }"
+                                      routerLinkActive="active"
+                                    >
+                                      {{ subitem.label || '' | translate }}
+                                    </a>
+                                  }
+                                  @if (subitem | hasItems) {
+                                    <a
+                                      class="side-nav-link-a-ref has-arrow"
+                                      href="javascript:void(0);"
+                                      [attr.data-parent]="subitem.parentId"
+                                    >
+                                      {{ subitem.label || '' | translate }}
+                                    </a>
+                                    <ul
+                                      class="sub-menu mm-collapse"
+                                      aria-expanded="false"
+                                    >
+                                      @for (
+                                        subSubitem of subitem.subItems;
+                                        track subSubitem
+                                      ) {
+                                        <ng-container
+                                          *appRole="subSubitem.roles || []"
+                                        >
+                                          <ng-template
+                                            [appPermission]="
+                                              subSubitem.permission || ''
+                                            "
+                                            [appPermissionUnless]="
+                                              subSubitem.unlessPermission || ''
+                                            "
+                                          >
+                                            <li>
+                                              <a
+                                                [attr.data-parent]="
+                                                  subSubitem.parentId
+                                                "
+                                                [routerLinkActiveOptions]="{
+                                                  exact: !!subSubitem?.exact,
+                                                }"
+                                                [routerLink]="subSubitem.link"
+                                                routerLinkActive="active"
+                                                class="side-nav-link-ref"
+                                              >
+                                                {{
+                                                  subSubitem.label || ''
+                                                    | translate
+                                                }}
+                                              </a>
+                                            </li>
+                                          </ng-template>
+                                        </ng-container>
+                                      }
+                                    </ul>
+                                  }
+                                </li>
+                              </ng-template>
+                            </ng-container>
+                          }
+                        }
+                      </ul>
+                    }
+                  </li>
+                }
+              </ng-template>
+            </ng-container>
+          }
+        </ul>
+
+        <div class="card shadow-none">
+          <div class="card-body">
+            <div class="d-flex align-items-center gap-1 mb-2">
+              <span
+                class="bg-gray-600 bg-opacity-75 w-5px h-5px rounded-circle"
+              ></span>
+              <span class="text-gray-600 fs-0_875rem">الباقة الحالية</span>
+            </div>
+
+            <span class="text-primary fw-medium fs-30px">الباقة المتقدمة</span>
+
+            <div class="mt-40px">
+              <button
+                class="btn btn-primary-gradient w-100 d-flex align-items-center justify-content-center gap-2 fw-medium mb-2"
+              >
+                <span class="isax isax-crown-1"></span>
+                <span>ترقية</span>
+              </button>
+
+              <button class="btn btn-white w-100 fw-medium">
+                تجديد الحالية
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-simplebar>
+</div>
+<!-- Left Sidebar End -->

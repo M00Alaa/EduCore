@@ -1,0 +1,11 @@
+.arrow_icon{
+    padding-top: 0.125em;
+    line-height: 1;
+    width: 16px;
+}
+
+.sidebar_grid{
+    display: grid;
+    grid-template-rows: auto 1fr;
+    max-height: 100vh;
+}

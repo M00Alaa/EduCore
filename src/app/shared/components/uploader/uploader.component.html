@@ -1,0 +1,31 @@
+<nz-upload [nzDisabled]="Mode === 'ViewImages' || Mode === 'ViewFiles'" [nzSize]="10 * 1024"
+    [nzAccept]="Mode === 'Imgs' ? 'image/*' : '*/*'" [nzMultiple]="multiple" class="d-block border border-2 rounded p-2"
+    [nzShowUploadList]="true" [nzBeforeUpload]="beforeUpload" [(nzFileList)]="files">
+    <button *ngIf="Mode !== 'ViewImages' && Mode !== 'ViewFiles'" class="btn btn-sm btn-light w-100 rounded-0">
+        <span class="isax isax-document-upload"></span>
+        <span>
+            اضغط لاختيار
+            <span *ngIf="multiple">ملفات عدة</span>
+            <span *ngIf="!multiple">ملف واحد</span>
+            ..
+        </span>
+    </button>
+
+    @if ((Mode == 'ViewFiles' || Mode == 'ViewImages') && !filesUrls.length) {
+    <p>
+        لا يوجد
+    </p>
+    }
+
+
+    <div *ngIf="multiple || (!multiple && !files.length)" class="d-flex flex-wrap gap-2 w-100">
+        <ng-container *ngFor="let url of filesUrls; index as i; last as isLast">
+            <custom-dropzone-preview class="w-100" (click)="$event.stopPropagation()" [removable]="removable"
+                [type]="Mode === 'Imgs' || Mode === 'ViewImages' ? 'IMG' : 'FILE'" [AttachmentModule]="AttachmentModule"
+                [referenceId]="referenceId" [removable]="removable && Mode !== 'ViewImages' && Mode !== 'ViewFiles'"
+                style="min-width: 0" [url]="url">
+            </custom-dropzone-preview>
+            <hr *ngIf="!isLast">
+        </ng-container>
+    </div>
+</nz-upload>

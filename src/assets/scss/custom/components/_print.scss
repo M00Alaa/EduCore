@@ -1,0 +1,54 @@
+//
+// print.scss
+//
+
+// Used invoice page
+@media print {
+  .vertical-menu,
+  .right-bar,
+  .page-title-box,
+  .navbar-header,
+  .footer,
+  .no-print {
+    display: none !important;
+  }
+  .card-body,
+  .main-content,
+  .right-bar,
+  .page-content,
+  body {
+    padding: 0;
+    margin: 0;
+    background: #fff !important;
+  }
+
+  .card {
+    border: 0;
+  }
+}
+
+// Used for online-store order invoice printing
+@media print {
+  body.printing-order-invoice * {
+    visibility: hidden !important;
+  }
+
+  body.printing-order-invoice #order-print-section,
+  body.printing-order-invoice #order-print-section * {
+    visibility: visible !important;
+  }
+
+  body.printing-order-invoice #order-print-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    padding: 24px;
+    z-index: 9999;
+  }
+
+  body.printing-order-invoice .no-print {
+    display: none !important;
+  }
+}

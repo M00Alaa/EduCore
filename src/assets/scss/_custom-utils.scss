@@ -1,0 +1,432 @@
+$grid-values: (
+  auto-1fr-auto: auto 1fr auto,
+  auto-1fr: auto 1fr,
+  auto: auto,
+  fr-fr: 1fr 1fr,
+  fr-fr-fr: 1fr 1fr 1fr,
+  five-three-five: 5fr 3fr 5fr,
+  cols-8: repeat(8, 1fr),
+  cols-7: repeat(7, 1fr),
+  cols-6: repeat(6, 1fr),
+  cols-5: repeat(5, 1fr),
+  cols-4: repeat(4, 1fr),
+  cols-3: repeat(3, 1fr),
+  cols-2: repeat(2, 1fr),
+  cols-1: 1fr,
+);
+$grid-col-values: (
+  1: span 1,
+  2: span 2,
+  3: span 3,
+  4: span 4,
+  5: span 5,
+  6: span 6,
+  7: span 7,
+);
+.grid-col-full {
+  grid-column: 1/-1;
+}
+
+$utilities: map-merge(
+  $utilities,
+  (
+    'max-w': (
+      property: max-width,
+      class: max-w,
+      responsive: true,
+      values: (
+        100: 100%,
+        150px: 9.375rem,
+        200px: 12.5rem,
+        300px: 18.75rem,
+        400px: 25rem,
+        500px: 31.25rem,
+        600px: 37.5rem,
+        800px: 50rem,
+        1100px: 68.75rem,
+        1440px: 90rem,
+        1640px: 102.5rem,
+        1128px: 70.5rem,
+      ),
+    ),
+    'min-w': (
+      property: min-width,
+      class: min-w,
+      responsive: true,
+      values: (
+        100: 100%,
+        75px: 4.6875rem,
+        100px: 6.25rem,
+        200px: 12.5rem,
+        300px: 18.75rem,
+        400px: 25rem,
+        500px: 31.25rem,
+        555px: 34.6875rem,
+        800px: 50rem,
+        1440px: 90rem,
+        1128px: 70.5rem,
+
+        auto: auto,
+      ),
+    ),
+    'min-vh': (
+      property: min-height,
+      class: min-vh,
+      responsive: true,
+      values: (
+        25: 25vh,
+        50: 50vh,
+        75: 75vh,
+        100: 100vh,
+      ),
+    ),
+    'min-h': (
+      property: min-height,
+      class: min-h,
+      responsive: true,
+      values: (
+        40px: 2.5rem,
+        75px: 4.6875rem,
+        100vh: 100vh,
+        94vh: 94vh,
+        50vh: 50vh,
+        25vh: 25vh,
+        170px: 10.625rem,
+        200px: 12.5rem,
+        250px: 15.625rem,
+        300px: 18.75rem,
+        400px: 25rem,
+        500px: 31.25rem,
+        555px: 34.6875rem,
+        800px: 50rem,
+        1440px: 90rem,
+        1128px: 70.5rem,
+      ),
+    ),
+    'grid-rows': (
+      property: grid-template-rows,
+      class: grid-rows,
+      responsive: true,
+      values: $grid-values,
+    ),
+    'grid-columns': (
+      property: grid-template-columns,
+      class: grid-columns,
+      responsive: true,
+      values: $grid-values,
+    ),
+    'grid-col': (
+      property: grid-column,
+      class: grid-col,
+      responsive: true,
+      values: $grid-col-values,
+    ),
+    'minus-m-x': (
+      property: margin-right margin-left,
+      class: minus-m-x,
+      responsive: true,
+      values: (
+        0: 0,
+        15px: -0.9375rem,
+        20px: -1.25rem,
+        30px: -1.875rem,
+        10px: -0.625rem,
+      ),
+    ),
+    'w': (
+      property: width,
+      class: w,
+      responsive: true,
+      values: (
+        100: 100%,
+        80: 80%,
+        1px: 1px,
+        5px: 5px,
+        7px: 0.4375rem,
+        10px: 0.625rem,
+        12px: 0.75rem,
+        15px: 0.9375rem,
+        20px: 1.25rem,
+        25px: 1.5625rem,
+        30px: 1.875rem,
+        40px: 2.5rem,
+        50px: 3.125rem,
+        60px: 3.75rem,
+        70px: 4.375rem,
+        100px: 6.25rem,
+        120px: 7.5rem,
+        150px: 9.375rem,
+        160px: 10rem,
+        170px: 10.625rem,
+        200px: 12.5rem,
+        200: 12.5rem,
+        300px: 18.75rem,
+        400px: 25rem,
+        500px: 31.25rem,
+        555px: 34.6875rem,
+        800px: 50rem,
+        1440px: 90rem,
+        1128px: 70.5rem,
+
+        fit-content: fit-content,
+        auto: auto,
+      ),
+    ),
+    'font-weight': (
+      property: font-weight,
+      class: fw,
+      values: (
+        light: $font-weight-light,
+        lighter: $font-weight-lighter,
+        normal: $font-weight-normal,
+        medium: $font-weight-medium,
+        semibold: $font-weight-semibold,
+        bold: $font-weight-bold,
+        bolder: $font-weight-bolder,
+      ),
+    ),
+    'rounded': (
+      property: border-radius,
+      class: rounded,
+      values: (
+        null: 0.25rem,
+        0: 0,
+        2px: 2px,
+        1: 0.125rem,
+        2: 0.25rem,
+        6px: 0.375rem,
+        3: 0.75rem,
+        4: 1rem,
+        5: 1.5rem,
+        circle: 50%,
+        pill: $border-radius-pill,
+      ),
+    ),
+    'display': (
+      responsive: true,
+      print: true,
+      property: display,
+      class: d,
+      values: inline inline-block block grid table table-row table-cell flex
+        inline-flex none table-header-group table-row-group,
+    ),
+    'height': (
+      property: height,
+      responsive: true,
+      class: h,
+      values: (
+        25: 25%,
+        50: 50%,
+        75: 75%,
+        94vh: 94vh,
+        100: 100%,
+        auto: auto,
+        5px: 5px,
+        7px: 0.4375rem,
+        10px: 0.625rem,
+        12px: 0.75rem,
+        15px: 0.9375rem,
+        20px: 1.25rem,
+        25px: 1.5625rem,
+        30px: 1.875rem,
+        40px: 2.5rem,
+        50px: 3.125rem,
+        60px: 3.75rem,
+        70px: 4.375rem,
+        80px: 5rem,
+        82px: 5.125rem,
+        100px: 6.25rem,
+        110px: 6.875rem,
+        120px: 7.5rem,
+        150px: 9.375rem,
+        160px: 10rem,
+        170px: 10.625rem,
+        200px: 12.5rem,
+        250px: 15.625rem,
+        300px: 18.75rem,
+        350px: 21.875rem,
+        400px: 25rem,
+        500px: 31.25rem,
+        555px: 34.6875rem,
+      ),
+    ),
+    'border-style': (
+      responsive: true,
+      property: border-style,
+      class: border-style,
+      values: (
+        null: solid,
+        solid: solid,
+        dashed: dashed,
+        dotted: dotted,
+        double: double,
+      ),
+    ),
+    'border-width': (
+      responsive: true,
+      property: border-width,
+      class: border,
+      values: $border-widths,
+    ),
+    'max-width': (
+      responsive: true,
+      property: max-width,
+      class: mw,
+      values: (
+        100: 100%,
+        100px: 6.25rem,
+        290px: 18.125rem,
+        1920px: 120rem,
+      ),
+    ),
+    'max-height': (
+      responsive: true,
+      property: max-height,
+      class: mh,
+      values: (
+        100: 100%,
+        200px: 12.5rem,
+        290px: 18.125rem,
+        360px: 22.5rem,
+        465px: 29.0625rem,
+        500px: 31.25rem,
+      ),
+    ),
+    // -------------------------------
+    'position': (
+        responsive: true,
+        print: true,
+        property: position,
+        values: static relative absolute fixed sticky,
+      ),
+    'top': (
+      responsive: true,
+      print: true,
+      property: top,
+      values: $position-values,
+    ),
+    'bottom': (
+      responsive: true,
+      print: true,
+      property: bottom,
+      values: $position-values,
+    ),
+    'end': (
+      responsive: true,
+      print: true,
+      property: right,
+      values: $position-values,
+    ),
+    'start': (
+      responsive: true,
+      print: true,
+      property: left,
+      values: $position-values,
+    ),
+    'translate-middle': (
+      responsive: true,
+      print: true,
+      property: transform,
+      class: translate-middle,
+      values: (
+        null: translate(-50%, -50%),
+        x: translateX(-50%),
+        y: translateY(-50%),
+      ),
+    ),
+    'z-index': (
+      responsive: true,
+      print: true,
+      property: z-index,
+      class: z,
+      values: (
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 5,
+        10: 10,
+        50: 50,
+        500: 500,
+        1000: 1000,
+      ),
+    ),
+  )
+);
+
+@each $color, $value in $theme-colors {
+  .bg-outline-#{$color} {
+    background-color: rgba($value, 0.2) !important;
+    color: $value !important;
+  }
+
+  .btn-outline-#{$color} {
+    background-color: rgba($value, 0.2) !important;
+  }
+  .btn-outline-#{$color}:hover {
+    background-color: rgba($value, 0.4) !important;
+  }
+
+  .btn-soft-#{$color} {
+    background-color: rgba($value, 0.2) !important;
+    color: $value !important;
+    border: none !important;
+  }
+  .btn-soft-#{$color}:hover {
+    background-color: rgba($value, 0.4) !important;
+    color: color-contrast($value) !important;
+  }
+
+  .badge-#{$color} {
+    background-color: rgba($value, 0.15);
+    color: $value !important;
+    border: 1px solid $value;
+  }
+}
+
+// scss-docs-start btn-variant-mixin
+@mixin button-variant(
+  $background,
+  $border,
+  $color: color-contrast($background),
+  $hover-background: if(
+      $color == $color-contrast-light,
+      shade-color($background, $btn-hover-bg-shade-amount),
+      tint-color($background, $btn-hover-bg-tint-amount)
+    ),
+  $hover-border: if(
+      $color == $color-contrast-light,
+      shade-color($border, $btn-hover-border-shade-amount),
+      tint-color($border, $btn-hover-border-tint-amount)
+    ),
+  $hover-color: color-contrast($hover-background),
+  $active-background: if(
+      $color == $color-contrast-light,
+      shade-color($background, $btn-active-bg-shade-amount),
+      tint-color($background, $btn-active-bg-tint-amount)
+    ),
+  $active-border: if(
+      $color == $color-contrast-light,
+      shade-color($border, $btn-active-border-shade-amount),
+      tint-color($border, $btn-active-border-tint-amount)
+    ),
+  $active-color: color-contrast($active-background),
+  $disabled-background: $background,
+  $disabled-border: $border,
+  $disabled-color: color-contrast($disabled-background)
+) {
+  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-bg: #{$background};
+  --#{$prefix}btn-border-color: #{$border};
+  --#{$prefix}btn-hover-color: #{$hover-color};
+  --#{$prefix}btn-hover-bg: #{$hover-background};
+  --#{$prefix}btn-hover-border-color: #{$hover-border};
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb(mix($color, $border, 15%))};
+  --#{$prefix}btn-active-color: #{$active-color};
+  --#{$prefix}btn-active-bg: #{$active-background};
+  --#{$prefix}btn-active-border-color: #{$active-border};
+  --#{$prefix}btn-active-shadow: #{$btn-active-box-shadow};
+  --#{$prefix}btn-disabled-color: #{$disabled-color};
+  --#{$prefix}btn-disabled-bg: #{$disabled-background};
+  --#{$prefix}btn-disabled-border-color: #{$disabled-border};
+}
+// scss-docs-end btn-variant-mixin

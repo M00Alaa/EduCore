@@ -1,0 +1,16 @@
+export { AcademyService } from './services/academy.service';
+export { BalancesReportManualService } from './services/balances-report-manual.service';
+export { BranchManagementPortalUiService } from './services/branch-management-portal-ui.service';
+export { ExpensesReportManualService } from './services/expenses-report-manual.service';
+export { FacilitiesReportManualService } from './services/facilities-report-manual.service';
+export { GeneralReportManualService } from './services/general-report-manual.service';
+export { InvoicesApiVultService } from './services/invoices-api-vult.service';
+export { PlayersReportManualService } from './services/players-report-manual.service';
+export { ActivitiesReportManualService } from './services/activities-report-manual.service';
+export { AttendanceReportManualService } from './services/attendance-report-manual.service';
+export { DeductionsService } from './services/deductions.service';
+export { DeductionsReportManualService } from './services/deductions-report-manual.service';
+export { TeamSalariesManualService } from './services/team-salaries-manual.service';
+export { PromosService } from './services/promos.service';
+export { RevenuesReportManualService } from './services/revenues-report-manual.service';
+export { SubscriptionsReportManualService } from './services/subscriptions-report-manual.service';

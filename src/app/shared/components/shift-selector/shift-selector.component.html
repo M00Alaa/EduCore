@@ -1,0 +1,19 @@
+<ng-select class="w-100" [readonly]="disabled" [loading]="loading" [ngClass]="classes" [placeholder]="placeholder"
+    [(ngModel)]="value" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange($event)">
+    @for (option of shifts; track $index;) {
+    <ng-option [disabled]="!option?.id || skipIds.includes(option?.id!)" [value]="option.id">
+        <div class="d-flex gap-1 align-items-center">
+            <div class="d-flex flex-wrap gap-1 align-items-center">
+                <span class="d-inline-block">
+                    {{option.title}}
+                </span>
+                @if (option.shiftEngineer) {
+                <small class="text-gray-600">
+                    (مهندس: {{option.shiftEngineer?.name}})
+                </small>
+                }
+            </div>
+        </div>
+    </ng-option>
+    }
+</ng-select>
