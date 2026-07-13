@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const PagesRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/courses',
     pathMatch: 'full',
   },
   // Dashboard Module
