@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SWAL } from '../../../app-const';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Course, CourseStatus } from '../courses.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CourseStatus } from '../courses.model';
 import { CoursesService } from '../courses.service';
+import { ShowSWAL } from 'src/app/app-const';
 
 @Component({
   selector: 'app-add-edit-form',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, TranslateModule],
   templateUrl: './add-edit-form.component.html',
   styleUrl: './add-edit-form.component.scss'
 })
@@ -19,27 +23,41 @@ export class AddEditFormComponent implements OnInit {
   submitting = false;
 
   statusOptions: CourseStatus[] = ['Active', 'Draft', 'Archived'];
-  categoryOptions = ['Frontend', 'Backend', 'Design', 'Mobile', 'DevOps', 'Data Science', 'AI', 'Other'];
+  categoryOptions = [
+    'Frontend',
+    'Backend',
+    'Design',
+    'Mobile',
+    'DevOps',
+    'Data Science',
+    'AI',
+    'Other'
+  ];
+
+  maxDescription = 500;
 
   constructor(
     private fb: FormBuilder,
     private coursesService: CoursesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) {
     this.courseForm = this.fb.group({
       courseName: ['', [Validators.required, Validators.minLength(3)]],
-      instructorName: ['', Validators.required],
-      category: ['', Validators.required],
-      duration: ['', [Validators.required, Validators.min(1)]],
-      price: ['', [Validators.required, Validators.min(0)]],
-      status: ['', Validators.required],
-      description: ['', [Validators.maxLength(500)]]
+      instructorName: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+      duration: [null, [Validators.required, Validators.min(1)]],
+      price: [null, [Validators.required, Validators.min(0)]],
+      status: ['Active' as CourseStatus, [Validators.required]],
+      description: ['', [Validators.maxLength(this.maxDescription)]]
     });
   }
 
   ngOnInit(): void {
-    this.courseId = this.route.snapshot.params['id'] ? +this.route.snapshot.params['id'] : null;
+    this.courseId = this.route.snapshot.params['id']
+      ? +this.route.snapshot.params['id']
+      : null;
     this.isEditMode = !!this.courseId;
 
     if (this.isEditMode && this.courseId) {
@@ -51,13 +69,17 @@ export class AddEditFormComponent implements OnInit {
           }
           this.loading = false;
         },
-        error: (err) => {
-          SWAL('error', 'Failed to load course');
+        error: () => {
+          ShowSWAL('error', this.translate.instant('COURSES.UNEXPECTED_ERROR'), this.translate.instant('COURSES.TOAST.LOAD_FAILED'));
           this.loading = false;
           this.router.navigate(['/courses']);
         }
       });
     }
+  }
+
+  get descriptionLength(): number {
+    return this.courseForm.get('description')?.value?.length || 0;
   }
 
   onSubmit(): void {
@@ -67,24 +89,25 @@ export class AddEditFormComponent implements OnInit {
     }
 
     this.submitting = true;
-    const courseData: Course = {
-      ...this.courseForm.value,
-      id: this.isEditMode ? this.courseId! : Date.now(),
-      createdDate: this.isEditMode ? this.courseForm.value.createdDate : new Date().toISOString().split('T')[0]
-    };
+    const formValue = this.courseForm.value;
 
     const operation = this.isEditMode
-      ? this.coursesService.updateCourse(this.courseId!, courseData)
-      : this.coursesService.createCourse(courseData);
+      ? this.coursesService.updateCourse(this.courseId!, formValue)
+      : this.coursesService.createCourse(formValue);
 
     operation.subscribe({
       next: () => {
-        SWAL('success', `Course ${this.isEditMode ? 'updated' : 'created'} successfully`);
+        this.submitting = false;
+        if (this.isEditMode) {
+          ShowSWAL('success', this.translate.instant('COURSES.TOAST.UPDATE_SUCCESS'), formValue.courseName);
+        } else {
+          ShowSWAL('success', this.translate.instant('COURSES.TOAST.CREATE_SUCCESS'), formValue.courseName);
+        }
         this.router.navigate(['/courses']);
       },
-      error: (err) => {
-        SWAL('error', `Failed to ${this.isEditMode ? 'update' : 'create'} course`);
+      error: () => {
         this.submitting = false;
+        ShowSWAL('error', this.translate.instant('COURSES.TOAST.FAILED_SAVE'), this.translate.instant('COURSES.TOAST.SAVE_FAILED_MSG'));
       }
     });
   }
@@ -93,12 +116,7 @@ export class AddEditFormComponent implements OnInit {
     this.router.navigate(['/courses']);
   }
 
-  // Helper methods for template
-  get courseName() { return this.courseForm.get('courseName'); }
-  get instructorName() { return this.courseForm.get('instructorName'); }
-  get category() { return this.courseForm.get('category'); }
-  get duration() { return this.courseForm.get('duration'); }
-  get price() { return this.courseForm.get('price'); }
-  get status() { return this.courseForm.get('status'); }
-  get description() { return this.courseForm.get('description'); }
+  get f() {
+    return this.courseForm.controls;
+  }
 }

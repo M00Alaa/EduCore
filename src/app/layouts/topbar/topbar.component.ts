@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { EIDDESIGN, logo } from 'src/app/app-const';
@@ -32,15 +32,12 @@ import { NotificationsComponent } from '../notifications/notifications.component
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.scss']
 })
-export class TopbarComponent implements OnInit, OnDestroy {
+export class TopbarComponent implements OnInit {
   @Input() withLogo: boolean = false;
 
-  EIDDESIGN = EIDDESIGN;
   logos = logo;
   element: any | undefined;
-  isPM = false;
   acc: MgUser | null = null;
-  now = new Date();
   isDarkMode = false;
   currentLang = 'ar';
 
@@ -50,21 +47,12 @@ export class TopbarComponent implements OnInit, OnDestroy {
   isBranchMode = false;
 
   constructor(
-    private authService: AuthenticationService,
     public languageService: LanguageService,
     private stylesChangerService: StylesChangerService,
     public translate: TranslateService,
     public leftSiderService: LeftSiderService,
-    public _cookiesService: CookieService,
-    private branchService: BranchManagementPortalUiService) {
-    this.authService.identity().subscribe(acc => {
-      this.acc = acc;
-      this.isBranchMode = !!localStorage.getItem('impersonated_branch_id');
-      if (acc) {
-        this.loadBranches();
-      }
-    });
-    this.setDate();
+    public _cookiesService: CookieService) {
+
 
     // Initialize dark mode from localStorage
     const savedTheme = localStorage.getItem('theme-mode') || 'light';
@@ -73,15 +61,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
     // Initialize current language
     this.currentLang = localStorage.getItem('lang') || 'ar';
-  }
-
-  private timeOut: any;
-  private setDate() {
-    this.now = new Date();
-    this.isPM = this.now.getHours() >= 12;
-
-    // Schedule the next update
-    this.timeOut = setTimeout(() => this.setDate(), 1000);
   }
 
 
@@ -102,78 +81,12 @@ export class TopbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    clearTimeout(this.timeOut);
-  }
-
-  /**
-   * Toggles the right sidebar
-   */
-  toggleRightSidebar() {
-    this.settingsButtonClicked.emit();
-  }
-
   /**
    * Toggle the menu bar when having mobile screen
    */
   toggleMobileMenu(event: any) {
     event.preventDefault();
     this.mobileMenuButtonClicked.emit();
-  }
-
-  /**
-   * Logout the user
-   */
-  logout() {
-    this.authService.logout();
-  }
-
-  browserBack() {
-    if (history.length > 1) {
-      history.back();
-    }
-  }
-  browserForward() {
-    if (history.length > 1) {
-      history.forward();
-    }
-  }
-
-
-  toggleLeftSider() {
-    if (this.leftSiderService.shown.getValue()) {
-      this.leftSiderService.hide();
-    } else {
-      this.leftSiderService.show();
-    }
-  }
-
-  /**
-   * Fullscreen method
-   */
-  fullscreen() {
-    document.body.classList.toggle('fullscreen-enable');
-    if (
-      !document.fullscreenElement && !this.element?.mozFullScreenElement &&
-      !this.element.webkitFullscreenElement) {
-      if (this.element.requestFullscreen) {
-        this.element.requestFullscreen();
-      } else if (this.element.mozRequestFullScreen) {
-        /* Firefox */
-        this.element.mozRequestFullScreen();
-      } else if (this.element.webkitRequestFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.element.webkitRequestFullscreen();
-      } else if (this.element.msRequestFullscreen) {
-        /* IE/Edge */
-        this.element.msRequestFullscreen();
-      }
-    }
-    // else {
-    //   if (this.document.exitFullscreen) {
-    //     this.document.exitFullscreen();
-    //   }
-    // }
   }
 
   /**
@@ -199,36 +112,13 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.currentLang = newLang;
   }
 
-  loadBranches(): void {
-    const academyId = this.authService.getCurrentMainAcademyContextId();
-
-    if (!academyId) return;
-    this.branchService.apiV1BranchesGet({
-      parent_id: String(academyId),
-      status: '',
-      subscription_status: '',
-      plan_name: '',
-      search: '',
-      per_page: '100',
-      page: '1'
-    }).subscribe({
-      next: (res) => {
-        this.branches = res?.data || [];
-        // Pre-select current branch if in branch mode
-        const storedId = localStorage.getItem('impersonated_branch_id');
-        if (storedId) {
-          this.selectedBranch = this.branches.find(b => String(b.id) === storedId) || null;
-        }
-      },
-      error: () => { this.branches = []; }
-    });
+  fullscreen() {
+    if (!document.fullscreenElement) {
+      this.element.requestFullscreen().catch((err: any) => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
   }
-
-  onBranchSelect(branch: any | null): void {
-    console.log(branch);
-
-    if (!branch) return;
-    this.authService.switchAcademy(branch.id + '');
-  }
-
 }

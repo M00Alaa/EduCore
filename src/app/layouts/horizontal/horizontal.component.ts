@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { EventService } from '../../core/services/event.service';
 import { TOPBAR } from "../layouts.model";
 import { TopbarComponent } from '../topbar/topbar.component';
 
@@ -22,7 +21,7 @@ export class HorizontalComponent implements OnInit {
 
   topbar = '';
 
-  constructor(private eventService: EventService) { }
+  constructor() { }
 
   ngOnInit() {
 
@@ -38,13 +37,6 @@ export class HorizontalComponent implements OnInit {
     // Initialize theme from localStorage
     const theme = localStorage.getItem('theme-mode') || 'light';
     document.body.setAttribute('data-theme', theme);
-  }
-
-  /**
-   * on settings button clicked from topbar
-   */
-  onSettingsButtonClicked() {
-    document.body.classList.toggle('right-bar-enabled');
   }
 
   changeTopbar(topbar: string) {

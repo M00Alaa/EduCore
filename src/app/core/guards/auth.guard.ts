@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, CanActivateChildFn, CanLoadFn, Route, Router, RouterStateSnapshot, UrlSegment } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -20,31 +20,6 @@ export const authGuard: CanActivateFn = (
   const roles = route.data?.['roles'] as number[] | undefined;
 
   return checkAuth(redirectUrl, roles || [], authService, router, spinnerService);
-};
-
-// Functional Guard for CanActivateChild
-export const authGuardChild: CanActivateChildFn = (
-  childRoute: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): Observable<boolean> | Promise<boolean> | boolean => {
-  const authService = inject(AuthenticationService);
-  const router = inject(Router);
-  const spinnerService = inject(SpinnerService);
-
-  const redirectUrl = state.url;
-  return checkAuth(redirectUrl, childRoute.data?.roles || [], authService, router, spinnerService);
-};
-
-// Functional Guard for CanLoad
-export const authGuardLoad: CanLoadFn = (
-  route: Route,
-  segments: UrlSegment[]
-): Observable<boolean> | Promise<boolean> | boolean => {
-  const authService = inject(AuthenticationService);
-  const router = inject(Router);
-  const spinnerService = inject(SpinnerService);
-
-  return checkAuth('/', route.data?.roles || [], authService, router, spinnerService);
 };
 
 // Shared logic for authentication check

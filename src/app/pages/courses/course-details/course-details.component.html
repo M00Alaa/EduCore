@@ -1,128 +1,142 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <div
-        class="card shadow-none border rounded-3"
-        *ngIf="!loading && !error && course"
-      >
-        <div class="card-header border-bottom bg-white p-3">
-          <div class="d-flex align-items-center justify-content-between">
-            <h4 class="card-title mb-0">
-              <button
-                class="btn btn-icon me-2"
-                (click)="goBack()"
-                nz-tooltip
-                nzTooltipTitle="Back to courses"
-              >
-                <i class="bx bx-arrow-back"></i>
-              </button>
-              Course Details
-            </h4>
-          </div>
-        </div>
-
-        <div class="card-body p-3">
-          <div class="row g-4">
-            <div class="col-12 col-md-6">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Course Name</span>
-                <span class="fs-18px">{{ course.courseName }}</span>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Instructor</span>
-                <span class="fs-18px">{{ course.instructorName }}</span>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Category</span>
-                <span class="fs-18px">{{ course.category }}</span>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Duration</span>
-                <span class="fs-18px">{{ course.duration }} hours</span>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Price</span>
-                <span class="fs-18px">{{ course.price | currency }}</span>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Status</span>
-                <span>
-                  <span
-                    class="badge"
-                    [class.badge-success]="course.status === 'Active'"
-                    [class.badge-warning]="course.status === 'Draft'"
-                    [class.badge-secondary]="course.status === 'Archived'"
-                  >
-                    {{ course.status }}
-                  </span>
-                </span>
-              </div>
-            </div>
-
-            <div class="col-12" *ngIf="course.description">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Description</span>
-                <span class="fs-18px">{{ course.description }}</span>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-              <div class="d-flex flex-column">
-                <span class="text-gray-600 fw-medium mb-1">Created Date</span>
-                <span class="fs-18px">{{ course.createdDate | date }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-footer border-top bg-white p-3">
-          <div class="d-flex justify-content-end gap-3">
-            <button nz-button nzType="default" (click)="goBack()">
-              <i class="bx bx-list-ul me-1"></i>
-              Back to List
-            </button>
-            <button nz-button nzType="primary" (click)="editCourse()">
-              <i class="bx bx-edit me-1"></i>
-              Edit Course
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Loading State -->
-      <div
-        *ngIf="loading"
-        class="d-flex justify-content-center align-items-center min-h-300"
-      >
-        <nz-spin nzTip="Loading..."></nz-spin>
-      </div>
-
-      <!-- Error State -->
-      <div
-        *ngIf="error"
-        class="d-flex align-items-center gap-2 p-3 bg-danger-subtle rounded-3 text-danger"
-      >
-        <i class="bx bx-error-circle fs-4"></i>
-        <span>{{ error }}</span>
-        <button nz-button nzType="primary" (click)="goBack()">
-          Back to List
-        </button>
-      </div>
+<div class="details-page">
+  <!-- Loading -->
+  <div class="card shadow-none rounded-3 border mb-4" *ngIf="loading">
+    <div class="card-body">
+      <nz-skeleton
+        *ngFor="let row of skeletonRows"
+        [nzTitle]="true"
+        [nzParagraph]="{ rows: 1 }"
+        class="d-block mb-3"
+      ></nz-skeleton>
     </div>
   </div>
+
+  <!-- Error -->
+  <div class="card shadow-none rounded-3 border mb-4" *ngIf="error && !loading">
+    <div class="card-body text-center py-5">
+      <i class="isax isax-warning-2 fs-1 text-danger mb-3 d-block"></i>
+      <h5 class="fw-bold">{{ 'COURSES.DETAILS.NOT_FOUND_TITLE' | translate }}</h5>
+      <p class="text-muted mb-3">{{ 'COURSES.DETAILS.NOT_FOUND_DESC' | translate }}</p>
+      <button class="btn btn-primary-gradient h-40px" (click)="goBack()">
+        <i class="isax isax-arrow-left-1 me-1"></i>
+        {{ 'COURSES.DETAILS.BACK_TEXT' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <ng-container *ngIf="course && !loading && !error">
+    <!-- Header -->
+    <div class="card shadow-none rounded-3 border mb-4">
+      <div class="card-body d-flex align-items-center gap-3 flex-wrap">
+        <button class="btn btn-white h-40px" (click)="goBack()" [attr.aria-label]="'COURSES.FORM.BACK' | translate">
+          <i class="isax isax-arrow-left-1"></i>
+        </button>
+        <div class="d-flex align-items-center gap-3 flex-grow-1 min-width-0">
+          <div class="rounded-3 h-50px w-50px d-flex align-items-center justify-content-center fw-bold fs-1_6rem text-white" style="background: linear-gradient(135deg, #4f7cff, #6f9bff);">
+            {{ course.courseName.charAt(0) }}
+          </div>
+          <div class="min-width-0">
+            <h4 class="fw-bold mb-0 text-truncate">{{ course.courseName }}</h4>
+            <p class="text-muted mb-0 fs-0_875rem">
+              {{ 'COURSES.DETAILS.BY_INSTRUCTOR' | translate: { name: course.instructorName, category: course.category } }}
+            </p>
+          </div>
+        </div>
+        <app-course-status-badge [status]="course.status"></app-course-status-badge>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Basic Information -->
+      <div class="col-md-6">
+        <div class="card shadow-none rounded-3 border h-100">
+          <div class="card-body">
+            <h6 class="fw-bold mb-3">
+              <i class="isax isax-info-circle text-primary me-1"></i>
+              {{ 'COURSES.DETAILS.BASIC_INFORMATION' | translate }}
+            </h6>
+            <div class="d-flex flex-column gap-3">
+              <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                <span class="text-muted">{{ 'COURSES.DETAILS.COURSE_NAME' | translate }}</span>
+                <span class="fw-semibold">{{ course.courseName }}</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                <span class="text-muted">{{ 'COURSES.DETAILS.INSTRUCTOR' | translate }}</span>
+                <span class="fw-semibold">{{ course.instructorName }}</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted">{{ 'COURSES.DETAILS.CATEGORY' | translate }}</span>
+                <span class="badge bg-outline-primary">{{ course.category }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Details -->
+      <div class="col-md-6">
+        <div class="card shadow-none rounded-3 border h-100">
+          <div class="card-body">
+            <h6 class="fw-bold mb-3">
+              <i class="isax isax-book text-primary me-1"></i>
+              {{ 'COURSES.DETAILS.COURSE_DETAILS' | translate }}
+            </h6>
+            <div class="d-flex flex-column gap-3">
+              <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                <span class="text-muted">{{ 'COURSES.DETAILS.DURATION' | translate }}</span>
+                <span class="fw-semibold">{{ course.duration }} {{ 'COURSES.DETAILS.HOURS_SUFFIX' | translate }}</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                <span class="text-muted">{{ 'COURSES.DETAILS.PRICE' | translate }}</span>
+                <span class="fw-semibold text-primary">{{ course.price | currency }}</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center pb-2 border-bottom">
+                <span class="text-muted">{{ 'COURSES.DETAILS.STATUS' | translate }}</span>
+                <app-course-status-badge [status]="course.status"></app-course-status-badge>
+              </div>
+              <div *ngIf="course.description">
+                <span class="text-muted d-block mb-1">{{ 'COURSES.DETAILS.DESCRIPTION' | translate }}</span>
+                <p class="mb-0">{{ course.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metadata & Actions -->
+      <div class="col-12">
+        <div class="card shadow-none rounded-3 border">
+          <div class="card-body">
+            <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
+              <div class="d-flex gap-4">
+                <div>
+                  <span class="text-muted d-block fs-0_75rem">{{ 'COURSES.DETAILS.COURSE_ID' | translate }}</span>
+                  <span class="fw-semibold">#{{ course.id }}</span>
+                </div>
+                <div>
+                  <span class="text-muted d-block fs-0_75rem">{{ 'COURSES.DETAILS.CREATED_DATE' | translate }}</span>
+                  <span class="fw-semibold">{{ course.createdDate | date: 'mediumDate' }}</span>
+                </div>
+              </div>
+              <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-soft-primary h-40px" (click)="editCourse()">
+                  <i class="isax isax-edit me-1"></i>
+                  {{ 'COURSES.DETAILS.EDIT_COURSE' | translate }}
+                </button>
+                <button class="btn btn-soft-danger h-40px" (click)="deleteCourse()">
+                  <i class="isax isax-trash me-1"></i>
+                  {{ 'COURSES.DETAILS.DELETE_COURSE' | translate }}
+                </button>
+                <button class="btn btn-white h-40px" (click)="goBack()">
+                  <i class="isax isax-arrow-left-1 me-1"></i>
+                  {{ 'COURSES.DETAILS.BACK_TO_COURSES' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

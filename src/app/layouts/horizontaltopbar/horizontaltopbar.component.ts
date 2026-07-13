@@ -1,16 +1,11 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { LanguageService } from '../../core/services/language.service';
-
 import { AuthenticationService } from '../../core/services/auth.service';
-import { EventService } from '../../core/services/event.service';
 
 import { DOCUMENT } from '@angular/common';
 
 import { logo } from 'src/app/app-const';
 import { MENU } from './menu';
-import { MenuItem } from './menu.model';
 
 @Component({
     selector: 'app-horizontaltopbar',
@@ -30,11 +25,8 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
 
 
   // tslint:disable-next-line: max-line-length
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private eventService: EventService, private authService: AuthenticationService,
-    private authFackservice: AuthenticationService,
-    public languageService: LanguageService,
-    // tslint:disable-next-line: variable-name
-    public _cookiesService: CookieService) {
+  constructor(@Inject(DOCUMENT) private document: any, private router: Router,
+    private authFackservice: AuthenticationService) {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.activateMenu();
@@ -61,21 +53,6 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/account/login']);
   }
 
-  /**
-   * On menu click
-   */
-  onMenuClick(event: any) {
-    const nextEl = event.target.nextElementSibling;
-    if (nextEl) {
-      const parentEl = event.target.parentNode;
-      if (parentEl) {
-        parentEl.classList.remove("show");
-      }
-      nextEl.classList.toggle("show");
-    }
-    return false;
-  }
-
   ngAfterViewInit() {
     this.activateMenu();
   }
@@ -88,14 +65,6 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     while (els[0]) {
       els[0].classList.remove(className);
     }
-  }
-
-  /**
-   * Togglemenu bar
-   */
-  toggleMenubar() {
-    const element = document.getElementById('topnav-menu-content');
-    element?.classList.toggle('show');
   }
 
   /**
@@ -185,13 +154,6 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * on settings button clicked from topbar
-   */
-  onSettingsButtonClicked() {
-    document.body.classList.toggle('right-bar-enabled');
-  }
-
-  /**
    * Fullscreen method
    */
   fullscreen() {
@@ -232,14 +194,6 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    */
   initialize(): void {
     this.menuItems = MENU;
-  }
-
-  /**
-   * Returns true or false if given menu item has child or not
-   * @param item menuItem
-   */
-  hasItems(item: MenuItem) {
-    return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
 
 }

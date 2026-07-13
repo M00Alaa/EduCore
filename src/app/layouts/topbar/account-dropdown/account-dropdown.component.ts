@@ -5,7 +5,6 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthenticationService, MgUser } from 'src/app/core/services/auth.service';
 import { BranchManagementPortalUiListBranchesResponseDataItem } from 'src/app/core/backend/academy/models';
-import { ROLES } from 'src/app/app-const';
 
 @Component({
   selector: 'mg-account-dropdown',

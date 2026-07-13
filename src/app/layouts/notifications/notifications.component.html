@@ -119,39 +119,44 @@
         <i class="bx bx-message-rounded-dots"></i>
       </span>
     </ng-container>
-    <ng-container *ngSwitchCase="NotificationType.AcceptComment">
+    <ng-container *ngSwitchCase="'accept_comment'">
       <span class="avatar-title bg-info rounded-circle font-size-16">
         <i class="bx bx-comment"></i>
       </span>
     </ng-container>
-    <ng-container *ngSwitchCase="NotificationType.AcceptCourse">
+    <ng-container *ngSwitchCase="'accept_course'">
       <span class="avatar-title bg-info rounded-circle font-size-16">
         <i class="bx bx-book-add"></i>
       </span>
     </ng-container>
-    <ng-container *ngSwitchCase="NotificationType.AcceptRegistration">
+    <ng-container *ngSwitchCase="'accept_registration'">
       <span class="avatar-title bg-info rounded-circle font-size-16">
         <i class="bx bx-user-check"></i>
       </span>
     </ng-container>
-    <ng-container *ngSwitchCase="NotificationType.NewComment">
+    <ng-container *ngSwitchCase="'new_comment'">
       <span class="avatar-title bg-info rounded-circle font-size-16">
         <i class="bx bx-comment-add"></i>
       </span>
     </ng-container>
-    <ng-container *ngSwitchCase="NotificationType.RejectComment">
+    <ng-container *ngSwitchCase="'reject_comment'">
       <span class="avatar-title bg-info rounded-circle font-size-16">
         <i class="bx bx-comment-error"></i>
       </span>
     </ng-container>
-    <ng-container *ngSwitchCase="NotificationType.RejectCourse">
+    <ng-container *ngSwitchCase="'reject_course'">
       <span class="avatar-title bg-info rounded-circle font-size-16">
         <i class="bx bx-bookmark-alt-minus"></i>
       </span>
     </ng-container>
-    <ng-container *ngSwitchCase="NotificationType.RejectRegistration">
+    <ng-container *ngSwitchCase="'reject_registration'">
       <span class="avatar-title bg-info rounded-circle font-size-16">
         <i class="bx bx-user-minus"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <span class="avatar-title bg-primary rounded-circle font-size-16">
+        <i class="bx bx-bell"></i>
       </span>
     </ng-container>
   </ng-container>

@@ -1,4 +1,4 @@
-<span class="badge" [ngClass]="badgeClass">
-  <span class="fa-solid me-1" [ngClass]="iconClass"></span>
-  {{ 'contract-status.' + status | translate }}
+<span class="course-badge" [class]="tone">
+  <i [class]="icon"></i>
+  {{ 'COURSES.STATUSES.' + status.toUpperCase() | translate }}
 </span>

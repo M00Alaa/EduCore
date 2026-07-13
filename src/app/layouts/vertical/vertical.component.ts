@@ -6,11 +6,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EIDDESIGN } from 'src/app/app-const';
 import { SIDEBAR_TYPE } from "../layouts.model";
 import { AuthenticationService, MgUser } from 'src/app/core/services/auth.service';
-import { EventService } from '../../core/services/event.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { TopbarComponent } from '../topbar/topbar.component';
 import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
-
 @Component({
   selector: 'app-vertical',
   standalone: true,
@@ -35,7 +33,7 @@ export class VerticalComponent implements OnInit {
   isTrialAcademy = false;
   trialDaysRemaining: number = 0;
 
-  constructor(private router: Router, private eventService: EventService, modalService: NgbModal, private authService: AuthenticationService,
+  constructor(private router: Router, modalService: NgbModal, private authService: AuthenticationService,
   ) {
     this.router.events.forEach((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -64,12 +62,6 @@ export class VerticalComponent implements OnInit {
       }
     });
   }
-
-  isMobile() {
-    const ua = navigator.userAgent;
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua);
-  }
-
 
   checkTrialStatus(user: MgUser | null): void {
     // From backend Academy model: public const SUBSCRIPTION_TYPE_TRIAL = 1;

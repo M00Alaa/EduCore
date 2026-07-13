@@ -36,7 +36,6 @@ export class AuthenticationService {
     sessionStorage.setItem('vultToken', JSON.stringify(value));
   }
 
-  userData = null;
   constructor(
     private router: Router,
     private authService: AuthService,

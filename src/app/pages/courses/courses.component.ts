@@ -1,322 +1,245 @@
-import { Component, DestroyRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Subject, debounceTime, distinctUntilChanged, finalize, take } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
-import { FilterConfig } from 'src/app/shared/components/search-filter/search-filter.component';
-import { exportToExcel, ExportColumn, errorCallback, SWALConfirmation, noWhitespaceValidator } from 'src/app/app-const';
-import { CoursesService } from './courses.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SearchFilterComponent, FilterConfig } from 'src/app/shared/components/search-filter/search-filter.component';
+import { ScrollXComponent } from 'src/app/shared/components/scroll-x/scroll-x.component';
+import { CourseStatusBadgeComponent } from 'src/app/shared/components/status-badge/status-badge.component';
+import { exportToExcel, ExportColumn, SWALConfirmation, SWAL } from 'src/app/app-const';
 import { Course, CourseStatus } from './courses.model';
+import { CoursesService, CourseStats } from './courses.service';
+
+type SortKey = 'id' | 'courseName' | 'instructorName' | 'category' | 'duration' | 'price' | 'status' | 'createdDate';
+type SortDir = 'asc' | 'desc';
 
 @Component({
   selector: 'app-courses',
-  standalone: false,
-  templateUrl: './courses.component.html',
-  styleUrl: './courses.component.scss'
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgbPaginationModule,
+    NzTableModule,
+    NzSkeletonModule,
+    TranslateModule,
+    SearchFilterComponent,
+    ScrollXComponent,
+    CourseStatusBadgeComponent
+  ],
+  templateUrl: './courses.component.html'
 })
 export class CoursesComponent implements OnInit {
-  @ViewChild('addCourseModal') addCourseModal!: TemplateRef<any>;
-  @ViewChild('viewCourseModal') viewCourseModal!: TemplateRef<any>;
-
-  private readonly search$ = new Subject<string>();
-  private readonly destroyRef = inject(DestroyRef);
-  editingCourseId: number | null = null;
-
-  _page = 1;
-  _pageSize = 10;
-  _total = 0;
-  isLoading = false;
-  isSaving = false;
-  selectedCourse: Course | null = null;
-  viewCourseTab = 'details';
-
-  courseList: Course[] = [];
+  stats: CourseStats = { total: 0, active: 0, draft: 0, archived: 0 };
+  allCourses: Course[] = [];
   filteredCourses: Course[] = [];
-  statusOptions: CourseStatus[] = ['Active', 'Draft', 'Archived'];
-  statusSelectOptions: { label: string; value: string }[] = [];
 
+  searchTerm = '';
   private activeFilters: any = {};
-  private searchTerm = '';
 
-  // Filter configuration
+  statusOptions: { label: string; value: CourseStatus | 'All' }[] = [
+    { label: 'SHARED.FILTERS.ALL', value: 'All' },
+    { label: 'COURSES.STATUSES.ACTIVE', value: 'Active' },
+    { label: 'COURSES.STATUSES.DRAFT', value: 'Draft' },
+    { label: 'COURSES.STATUSES.ARCHIVED', value: 'Archived' }
+  ];
+  categoryOptions: { label: string; value: string }[] = [
+    { label: 'SHARED.FILTERS.ALL', value: 'All' },
+    { label: 'Frontend', value: 'Frontend' },
+    { label: 'Backend', value: 'Backend' },
+    { label: 'Design', value: 'Design' },
+    { label: 'Mobile', value: 'Mobile' },
+    { label: 'DevOps', value: 'DevOps' }
+  ];
+
   filterConfigs: FilterConfig[] = [
     {
       key: 'status',
       label: 'COURSES.FILTERS.STATUS',
       type: 'select',
       placeholder: 'COURSES.FILTERS.SELECT_STATUS',
-      options: []
+      options: this.statusOptions
+    },
+    {
+      key: 'category',
+      label: 'COURSES.FILTERS.CATEGORY',
+      type: 'select',
+      placeholder: 'COURSES.FILTERS.SELECT_CATEGORY',
+      options: this.categoryOptions
+    },
+    {
+      key: 'price',
+      label: 'COURSES.FILTERS.PRICE',
+      type: 'range',
+      min: 0,
+      max: 500,
+      step: 10
     }
   ];
 
-  courseForm = this.fb.group({
-    courseName: ['', [Validators.required, noWhitespaceValidator]],
-    instructorName: ['', [Validators.required, noWhitespaceValidator]],
-    category: ['', [Validators.required, noWhitespaceValidator]],
-    duration: [0, [Validators.required, Validators.min(1)]],
-    price: [0, [Validators.min(0)]],
-    status: ['Active' as CourseStatus, [Validators.required]],
-    description: ['']
-  });
+  sortKey: SortKey = 'id';
+  sortDir: SortDir = 'asc';
+
+  page = 1;
+  pageSize = 8;
+  total = 0;
+
+  isLoading = false;
+  isError = false;
+
+  skeletonRows = Array.from({ length: 8 });
 
   constructor(
-    private modalService: NgbModal,
-    private fb: FormBuilder,
     private coursesService: CoursesService,
+    private router: Router,
     private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
-    this.search$
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {
-        this.searchTerm = value || '';
-        this.loadData(1);
-      });
-
-    this.statusSelectOptions = this.statusOptions.map((status) => ({
-      label: `COURSES.STATUSES.${status.toUpperCase()}`,
-      value: status,
-    }));
-
-    this.syncFilterOptions();
-    this.loadData(1);
+    this.loadData();
   }
 
-  onSearch(searchTerm: string): void {
-    this.search$.next(searchTerm || '');
-  }
-
-  onApplyFilters(filterValues: any) {
-    this.activeFilters = filterValues || {};
-    this.loadData(1);
-  }
-
-  onResetFilters() {
-    this.activeFilters = {};
-    this.searchTerm = '';
-    this.loadData(1);
-  }
-
-  onExport(event?: Event): void {
-    const button = event?.target as HTMLElement;
-    const dateStr = this.getExportDate();
-
-    const columns: ExportColumn[] = [
-      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.ID'), key: 'id', width: 10 },
-      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.COURSE_NAME'), key: 'courseName', width: 25 },
-      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.INSTRUCTOR'), key: 'instructorName', width: 20 },
-      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.CATEGORY'), key: 'category', width: 15 },
-      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.DURATION'), key: 'duration', width: 10 },
-      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.PRICE'), key: 'price', width: 10 },
-      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.STATUS'), key: 'status', width: 10 },
-    ];
-
-    const exportRows = this.filteredCourses.map((item) => ({
-      id: item.id,
-      courseName: item.courseName,
-      instructorName: item.instructorName,
-      category: item.category,
-      duration: item.duration,
-      price: item.price,
-      status: item.status,
-    }));
-
-    exportToExcel(exportRows, columns, {
-      fileName: this.translate.instant('COURSES.EXPORT_FILE_NAME', { date: dateStr }),
-      sheetName: this.translate.instant('COURSES.EXPORT_SHEET_NAME'),
-      button: button
+  loadData(): void {
+    this.isLoading = true;
+    this.isError = false;
+    this.coursesService.getAllCourses().subscribe({
+      next: (courses) => {
+        this.allCourses = courses || [];
+        this.stats = this.coursesService.getStats();
+        this.syncPriceFilterBounds();
+        this.applyFilters();
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.isError = true;
+      }
     });
   }
 
-  openAddCourseModal(): void {
-    this.editingCourseId = null;
-    this.resetCourseForm();
-    this.modalService.open(this.addCourseModal, { size: 'lg', centered: true });
+  private syncPriceFilterBounds(): void {
+    if (this.allCourses.length === 0) return;
+    const prices = this.allCourses.map((c) => c.price);
+    const min = Math.floor(Math.min(...prices));
+    const max = Math.ceil(Math.max(...prices));
+    this.filterConfigs = this.filterConfigs.map((f) => (f.key === 'price' ? { ...f, min, max } : f));
   }
 
-  editCourse(course: Course): void {
-    this.editingCourseId = course.id;
-    this.resetCourseForm(course);
-    this.modalService.open(this.addCourseModal, { size: 'lg', centered: true });
+  onSearch(value: string): void {
+    this.searchTerm = value || '';
+    this.page = 1;
+    this.applyFilters();
+  }
+
+  onApplyFilters(filterValues: any): void {
+    this.activeFilters = filterValues || {};
+    this.page = 1;
+    this.applyFilters();
+  }
+
+  onResetFilters(): void {
+    this.activeFilters = {};
+    this.searchTerm = '';
+    this.page = 1;
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    const term = this.searchTerm.trim().toLowerCase();
+    const status = this.activeFilters?.status;
+    const category = this.activeFilters?.category;
+    const price = this.activeFilters?.price;
+    const min = Array.isArray(price) ? price[0] : -Infinity;
+    const max = Array.isArray(price) ? price[1] : Infinity;
+
+    let result = this.allCourses.filter((c) => {
+      const matchesSearch = !term ||
+        c.courseName.toLowerCase().includes(term) ||
+        c.instructorName.toLowerCase().includes(term) ||
+        c.category.toLowerCase().includes(term);
+      const matchesStatus = !status || status === 'All' || c.status === status;
+      const matchesCategory = !category || category === 'All' || c.category === category;
+      const matchesPrice = c.price >= min && c.price <= max;
+      return matchesSearch && matchesStatus && matchesCategory && matchesPrice;
+    });
+
+    result = this.sortCourses(result);
+    this.filteredCourses = result;
+    this.total = result.length;
+  }
+
+  private sortCourses(courses: Course[]): Course[] {
+    const dir = this.sortDir === 'asc' ? 1 : -1;
+    return [...courses].sort((a, b) => {
+      const av = (a as any)[this.sortKey];
+      const bv = (b as any)[this.sortKey];
+      if (typeof av === 'number' && typeof bv === 'number') {
+        return (av - bv) * dir;
+      }
+      return String(av).localeCompare(String(bv)) * dir;
+    });
+  }
+
+  get pagedCourses(): Course[] {
+    const start = (this.page - 1) * this.pageSize;
+    return this.filteredCourses.slice(start, start + this.pageSize);
+  }
+
+  get rangeStart(): number {
+    return this.total === 0 ? 0 : (this.page - 1) * this.pageSize + 1;
+  }
+  get rangeEnd(): number {
+    return Math.min(this.page * this.pageSize, this.total);
   }
 
   viewCourse(course: Course): void {
-    this.selectedCourse = course;
-    this.viewCourseTab = 'details';
-    this.modalService.open(this.viewCourseModal, { size: 'lg', centered: true });
+    this.router.navigate(['/courses/details', course.id]);
+  }
+
+  editCourse(course: Course): void {
+    this.router.navigate(['/courses/edit', course.id]);
+  }
+
+  addCourse(): void {
+    this.router.navigate(['/courses/add']);
   }
 
   deleteCourse(course: Course): void {
-    if (!course?.id) {
-      return;
-    }
-
     SWALConfirmation(
       'warning',
-      'COURSES.DELETE_CONFIRM_TITLE',
+      this.translate.instant('COURSES.DELETE.TITLE'),
       this.coursesService.deleteCourse(course.id),
-      'COURSES.DELETE_SUCCESS',
-      'COURSES.DELETE_CONFIRM_BUTTON'
-    ).then((res) => {
-      if (res) {
-        this.loadData();
-      }
+      this.translate.instant('COURSES.TOAST.DELETE_SUCCESS'),
+      this.translate.instant('COURSES.DELETE.CONFIRM'),
+      this.translate.instant('COURSES.DELETE.MESSAGE')
+    ).then(() => {
+      this.loadData();
     });
   }
 
-  saveCourse(): void {
-    if (this.courseForm.invalid) {
-      Object.keys(this.courseForm.controls).forEach(key => {
-        const control = this.courseForm.get(key);
-        control?.markAsTouched();
-        control?.updateValueAndValidity();
-      });
+  exportCourses(): void {
+    if (this.filteredCourses.length === 0) {
+      SWAL('warning', this.translate.instant('EXPORT.NO_DATA'));
       return;
     }
-
-    const payload = this.buildPayloadFromForm();
-    if (!payload) {
-      return;
-    }
-
-    this.isSaving = true;
-
-    if (this.editingCourseId) {
-      this.coursesService
-        .updateCourse(this.editingCourseId, payload)
-        .pipe(
-          take(1),
-          finalize(() => {
-            this.isSaving = false;
-          })
-        )
-        .subscribe({
-          next: () => {
-            this.modalService.dismissAll();
-            this.loadData();
-          },
-          error: (error: unknown) => errorCallback(error),
-        });
-
-      return;
-    }
-
-    this.coursesService
-      .createCourse(payload)
-      .pipe(
-        take(1),
-        finalize(() => {
-          this.isSaving = false;
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.modalService.dismissAll();
-          this.loadData();
-        },
-        error: (error: unknown) => errorCallback(error),
-      });
-  }
-
-  loadData(page: number = this._page): void {
-    this._page = page;
-
-    this.isLoading = true;
-
-    this.coursesService
-      .getAllCourses()
-      .pipe(
-        take(1),
-        finalize(() => {
-          this.isLoading = false;
-        })
-      )
-      .subscribe({
-        next: (response) => {
-          this.courseList = response || [];
-          this.applyFilters();
-          this._total = this.filteredCourses.length;
-        },
-        error: (error) => errorCallback(error),
-      });
-  }
-
-  private applyFilters(): void {
-    this.filteredCourses = this.courseList.filter(course => {
-      const matchesSearch = !this.searchTerm ||
-        course.courseName.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesStatus = this.activeFilters?.status === 'All' || !this.activeFilters?.status || course.status === this.activeFilters.status;
-      return matchesSearch && matchesStatus;
-    });
-  }
-
-  private syncFilterOptions(): void {
-    this.filterConfigs = [
-      {
-        key: 'status',
-        label: 'COURSES.FILTERS.STATUS',
-        type: 'select',
-        placeholder: 'COURSES.FILTERS.SELECT_STATUS',
-        options: [
-          { label: 'SHARED.FILTERS.ALL', value: 'All' },
-          ...this.statusSelectOptions
-        ],
-      }
+    const columns: ExportColumn[] = [
+      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.ID'), key: 'id' },
+      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.COURSE_NAME'), key: 'courseName' },
+      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.INSTRUCTOR'), key: 'instructorName' },
+      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.CATEGORY'), key: 'category' },
+      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.DURATION'), key: 'duration' },
+      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.PRICE'), key: 'price' },
+      { header: this.translate.instant('COURSES.EXPORT_COLUMNS.STATUS'), key: 'status' }
     ];
-  }
-
-  private resetCourseForm(course?: Course): void {
-    if (!course) {
-      this.courseForm.reset({
-        courseName: '',
-        instructorName: '',
-        category: '',
-        duration: 0,
-        price: 0,
-        status: 'Active',
-        description: '',
-      });
-      return;
-    }
-
-    this.courseForm.reset({
-      courseName: course.courseName,
-      instructorName: course.instructorName,
-      category: course.category,
-      duration: course.duration,
-      price: course.price,
-      status: course.status,
-      description: course.description || '',
-    });
-  }
-
-  private buildPayloadFromForm(): Partial<Course> | null {
-    const formValue = this.courseForm.getRawValue();
-    const courseName = (formValue.courseName || '').trim();
-    const instructorName = (formValue.instructorName || '').trim();
-    const category = (formValue.category || '').trim();
-
-    if (!courseName || !instructorName || !category) {
-      return null;
-    }
-
-    return {
-      courseName,
-      instructorName,
-      category,
-      duration: Number(formValue.duration) || 0,
-      price: Number(formValue.price) || 0,
-      status: formValue.status as CourseStatus,
-      description: formValue.description ? String(formValue.description).trim() : undefined,
-    };
-  }
-
-  private getExportDate(): string {
-    const currentDate = new Date();
-    return currentDate.getFullYear() +
-      String(currentDate.getMonth() + 1).padStart(2, '0') +
-      String(currentDate.getDate()).padStart(2, '0');
+    const date = new Date().toISOString().split('T')[0];
+    exportToExcel(
+      this.filteredCourses,
+      columns,
+      {
+        fileName: this.translate.instant('COURSES.EXPORT_FILE_NAME', { date }),
+        sheetName: this.translate.instant('COURSES.EXPORT_SHEET_NAME')
+      }
+    );
   }
 }

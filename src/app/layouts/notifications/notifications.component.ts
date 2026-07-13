@@ -2,7 +2,6 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SimplebarAngularComponent, SimplebarAngularModule } from 'simplebar-angular';
-import { environment } from 'src/environments/environment';
 import { FirebaseMessagingService, FirebaseMessagePayload } from 'src/app/core/services/firebase-messaging.service';
 import { NotificationsService } from 'src/app/core/backend/common/services/notifications.service';
 import { ChatNotificationBridgeService, ChatNotificationEvent } from 'src/app/core/services/chat-notification-bridge.service';
@@ -24,14 +23,11 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
   @ViewChild('simplebar') simplebar?: SimplebarAngularComponent;
-  NotificationType: any = {};
-  domain = environment.api;
   now = new Date();
   notifs: any[] = [];
   $total = 0;
   $page = 1;
   $pageSize = 10;
-  acc: any | null;
   unreadCount = 0;
   gettingNotifs = false;
   bell = new Audio('assets/audio/noti.wav');
@@ -110,7 +106,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
    */
   private async initializeFirebaseMessaging(): Promise<void> {
     if (!this.notificationsSupported) {
-      console.warn('Firebase Cloud Messaging is not supported in this browser');
       return;
     }
 
@@ -121,17 +116,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         if (token) {
           this.fcmToken = token;
           this.notificationPermission = 'granted';
-
-          // TODO: Send token to backend to associate with user
-          // await this.saveTokenToBackend(token);
-          console.log('FCM Token ready to be saved to backend:', token);
         }
       } else if (this.notificationPermission === 'granted') {
-        // Get existing token
         const token = await this.firebaseMessaging.getToken();
         if (token) {
           this.fcmToken = token;
-          console.log('Existing FCM Token:', token);
         }
       }
 
@@ -139,9 +128,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       this.firebaseMessaging.listenToMessages()
         .pipe(takeUntil(this.destroy$))
         .subscribe((payload: FirebaseMessagePayload) => {
-          console.log('Firebase notification received:', payload);
-
-          // Play notification sound
           this.playNotificationSound();
 
           // Add notification to local list
@@ -162,7 +148,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         });
 
     } catch (error) {
-      console.error('Error initializing Firebase Messaging:', error);
     }
   }
 
@@ -193,17 +178,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         console.warn('Could not play notification sound:', err);
       });
     }, 300);
-  }
-
-  /**
-   * TODO: Save FCM token to backend
-   * This method should be called after getting the FCM token
-   */
-  private async saveTokenToBackend(token: string): Promise<void> {
-    // TODO: Implement API call to save token
-    // Example:
-    // await this.notificationService.saveFcmToken({ token }).toPromise();
-    console.log('TODO: Save FCM token to backend:', token);
   }
 
   handleScroll(event: any) {

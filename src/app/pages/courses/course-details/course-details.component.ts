@@ -1,23 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CoursesService } from '../courses.service';
+import { CommonModule } from '@angular/common';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Course } from '../courses.model';
+import { CoursesService } from '../courses.service';
+import { CourseStatusBadgeComponent } from 'src/app/shared/components/status-badge/status-badge.component';
+import { SWALConfirmation } from 'src/app/app-const';
 
 @Component({
   selector: 'app-course-details',
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    NzSkeletonModule,
+    TranslateModule,
+    CourseStatusBadgeComponent
+  ],
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.scss'
 })
 export class CourseDetailsComponent implements OnInit {
   course: Course | null = null;
   loading = false;
-  error: string | null = null;
+  error = false;
+
+  skeletonRows = Array.from({ length: 4 });
 
   constructor(
     private coursesService: CoursesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -29,15 +43,18 @@ export class CourseDetailsComponent implements OnInit {
 
   loadCourse(id: number): void {
     this.loading = true;
-    this.error = null;
+    this.error = false;
     this.coursesService.getCourseById(id).subscribe({
       next: (course) => {
-        this.course = course!;
+        this.course = course || null;
         this.loading = false;
+        if (!this.course) {
+          this.error = true;
+        }
       },
-      error: (err) => {
-        this.error = 'Failed to load course details.';
+      error: () => {
         this.loading = false;
+        this.error = true;
       }
     });
   }
@@ -50,5 +67,20 @@ export class CourseDetailsComponent implements OnInit {
     if (this.course) {
       this.router.navigate(['/courses', 'edit', this.course.id]);
     }
+  }
+
+  deleteCourse(): void {
+    if (!this.course) return;
+
+    SWALConfirmation(
+      'warning',
+      this.translate.instant('COURSES.DELETE.TITLE'),
+      this.coursesService.deleteCourse(this.course.id),
+      this.translate.instant('COURSES.TOAST.DELETE_SUCCESS'),
+      this.translate.instant('COURSES.DELETE.CONFIRM'),
+      this.translate.instant('COURSES.DELETE.MESSAGE')
+    ).then(() => {
+      this.router.navigate(['/courses']);
+    });
   }
 }

@@ -1,11 +1,5 @@
-.course-details {
-  padding: 20px;
-}
-
-.course-header {
-  margin-bottom: 20px;
-}
-
-.course-content {
-  margin-top: 20px;
+.details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

@@ -1,0 +1,46 @@
+.course-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  min-width: 100px;
+  text-align: center;
+
+  i {
+    font-size: 0.875rem;
+  }
+
+  &.is-active {
+    color: #027a48;
+    background: #ecfdf3;
+    border: 1px solid #abefc6;
+  }
+
+  &.is-draft {
+    color: #b54708;
+    background: #fffaeb;
+    border: 1px solid #fedf89;
+  }
+
+  &.is-archived {
+    color: #344054;
+    background: #f2f4f7;
+    border: 1px solid #e4e7ec;
+  }
+
+  &.is-clickable {
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+}

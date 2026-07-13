@@ -8,8 +8,10 @@
         "SETTINGS": "Settings"
     },
     "COURSES": {
+        "PAGE_TITLE": "Course Management",
+        "PAGE_SUBTITLE": "Manage, organize and monitor all educational courses from one place.",
         "SEARCH_COURSE": "Search by course name",
-        "NEW_COURSE": "New Course",
+        "NEW_COURSE": "Add New Course",
         "EXPORT": "Export",
         "SAVE": "Save",
         "CANCEL": "Cancel",
@@ -20,20 +22,26 @@
         "DELETE_CONFIRM_BUTTON": "Delete",
         "TABLE": {
             "ID": "ID",
+            "NAME": "Course Name",
             "COURSE_NAME": "Course Name",
             "INSTRUCTOR": "Instructor",
             "CATEGORY": "Category",
             "DURATION": "Duration (hrs)",
             "PRICE": "Price",
             "STATUS": "Status",
+            "CREATED_DATE": "Created",
             "ACTIONS": "Actions"
         },
         "FILTERS": {
             "STATUS": "Status",
-            "SELECT_STATUS": "Select Status"
+            "SELECT_STATUS": "Select Status",
+            "CATEGORY": "Category",
+            "SELECT_CATEGORY": "Select Category",
+            "PRICE": "Price Range"
         },
         "PAGINATION": {
             "SHOWING": "Showing",
+            "TO": "to",
             "OF": "of",
             "RESULTS": "results"
         },
@@ -48,6 +56,56 @@
         },
         "EXPORT_FILE_NAME": "courses-{{date}}",
         "EXPORT_SHEET_NAME": "Courses",
+        "FORM": {
+            "SUBTITLE_ADD": "Provide the required information to create a new course.",
+            "SUBTITLE_EDIT": "Update the course information below.",
+            "LOADING": "Loading course…",
+            "BACK": "Back",
+            "COURSE_NAME_HELPER": "Choose a clear, descriptive name for the course.",
+            "ERROR_COURSE_NAME": "Course name is required (min 3 characters).",
+            "ERROR_INSTRUCTOR": "Instructor name is required.",
+            "ERROR_CATEGORY": "Please select a category.",
+            "ERROR_DURATION": "Duration must be at least 1 hour.",
+            "ERROR_PRICE": "Price is required and cannot be negative.",
+            "ERROR_STATUS": "Please select a status.",
+            "ERROR_DESCRIPTION": "Description must be under {{max}} characters.",
+            "PLACEHOLDER_NAME": "e.g. Introduction to Angular",
+            "PLACEHOLDER_INSTRUCTOR": "e.g. John Smith",
+            "PLACEHOLDER_CATEGORY": "Select category",
+            "PLACEHOLDER_STATUS": "Select status",
+            "PLACEHOLDER_DURATION": "0",
+            "PLACEHOLDER_PRICE": "0",
+            "PLACEHOLDER_DESCRIPTION": "Provide a short summary of what this course covers…",
+            "SAVE_CHANGES": "Save Changes",
+            "SAVE_COURSE": "Save Course",
+            "HOURS": "Hours",
+            "CURRENCY_SYMBOL": "$",
+            "DESCRIPTION_LABEL": "Description",
+            "SELECT_CATEGORY": "Select category",
+            "SELECT_STATUS": "Select status"
+        },
+        "DETAILS": {
+            "BASIC_INFORMATION": "Basic Information",
+            "COURSE_DETAILS": "Course Details",
+            "METADATA": "Metadata",
+            "COURSE_NAME": "Course Name",
+            "INSTRUCTOR": "Instructor",
+            "CATEGORY": "Category",
+            "DURATION": "Duration",
+            "PRICE": "Price",
+            "STATUS": "Status",
+            "DESCRIPTION": "Description",
+            "COURSE_ID": "Course ID",
+            "CREATED_DATE": "Created Date",
+            "HOURS_SUFFIX": "hours",
+            "BY_INSTRUCTOR": "by {{name}} · {{category}}",
+            "BACK_TO_COURSES": "Back to Courses",
+            "EDIT_COURSE": "Edit Course",
+            "DELETE_COURSE": "Delete Course",
+            "NOT_FOUND_TITLE": "Course not found",
+            "NOT_FOUND_DESC": "We couldn't find the course you're looking for.",
+            "BACK_TEXT": "Back to Courses"
+        },
         "ADD_COURSE_MODAL": {
             "TITLE": "Add New Course",
             "EDIT_TITLE": "Edit Course",
@@ -71,6 +129,43 @@
             "ACTIVE": "Active",
             "DRAFT": "Draft",
             "ARCHIVED": "Archived"
+        },
+        "STATS": {
+            "TOTAL": "Total Courses",
+            "ACTIVE": "Active Courses",
+            "DRAFT": "Draft Courses",
+            "ARCHIVED": "Archived Courses"
+        },
+        "ACTIONS": {
+            "VIEW": "View",
+            "EDIT": "Edit",
+            "DELETE": "Delete"
+        },
+        "DELETE": {
+            "TITLE": "Delete Course?",
+            "MESSAGE": "Are you sure you want to delete this course? This action cannot be undone.",
+            "CONFIRM": "Delete",
+            "CANCEL": "Cancel"
+        },
+        "TOAST": {
+            "CREATE_SUCCESS": "Course Created Successfully",
+            "UPDATE_SUCCESS": "Course Updated Successfully",
+            "DELETE_SUCCESS": "Course Deleted Successfully",
+            "FAILED_SAVE": "Failed to Save Course",
+            "FAILED_DELETE": "Failed to Delete Course",
+            "UNEXPECTED_ERROR": "An unexpected error occurred",
+            "LOAD_FAILED": "Failed to load course.",
+            "DELETE_FAILED_MSG": "Could not delete the course.",
+            "SAVE_FAILED_MSG": "Please try again."
+        },
+        "EMPTY": {
+            "TITLE": "No Courses Found",
+            "DESCRIPTION": "There are currently no courses available."
+        },
+        "ERROR": {
+            "TITLE": "Something went wrong",
+            "DESCRIPTION": "We couldn't load the course data.",
+            "RETRY": "Retry"
         }
     },
     "SHARED": {
@@ -83,10 +178,15 @@
         "FILTERS": {
             "FILTER": "Filter",
             "FILTER_BY": "Filter by",
+            "FILTERED_BY": "Filtered by",
             "SELECT": "Select",
             "APPLY": "Apply",
             "RESET": "Reset",
+            "CLEAR": "Clear",
             "ALL": "All"
+        },
+        "STAT_CARD": {
+            "VS_LAST_MONTH": "vs last month"
         }
     },
     "SWAL": {

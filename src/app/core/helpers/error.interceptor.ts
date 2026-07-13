@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { promptSessionEndedAndReload, promptSessionExpiredAndReload, isSessionReplacedError, SWAL } from 'src/app/app-const'; // Adjust path as needed
+import { SWAL } from 'src/app/app-const'; // Adjust path as needed
 
 // Define the functional interceptor
 export const errorInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
@@ -14,22 +14,6 @@ export const errorInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, n
       if (shouldSkipGlobalError(request)) {
         return throwError(() => err);
       }
-
-      // if (err.status === 401) {
-      //   // For auth/login endpoints a 401 means wrong credentials — let the
-      //   // component's errorCallback handle it so the real message is shown.
-      //   if (isLoginRequest(request.url)) {
-      //     return throwError(() => err);
-      //   }
-
-      //   if (isSessionReplacedError(err)) {
-      //     promptSessionEndedAndReload();
-      //     return throwError(() => ({ errorCode: 'SESSION_REPLACED' }));
-      //   }
-
-      //   promptSessionExpiredAndReload();
-      //   return throwError(() => ({ errorCode: 'SESSION_EXPIRED' }));
-      // }
 
       const error = normalizeErrorPayload(err);
       if (error?.isLockout) {
@@ -174,9 +158,4 @@ function isEscapedRequest(url: string) {
     return true;
   }
   return false;
-}
-
-function isLoginRequest(url: string): boolean {
-  const lower = url.toLowerCase();
-  return lower.includes('/auth/manager-login') || lower.includes('/auth/login');
 }

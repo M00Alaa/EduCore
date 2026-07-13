@@ -46,20 +46,6 @@
       <!-- Sidebar Menu -->
       <div id="sidebar-menu">
         <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
-          <!-- Exit Branch Button -->
-          @if (isBranchMode) {
-            <li class="p-0 mb-3">
-              <a
-                class="btn btn-gray-400 border-0 text-body d-flex align-items-center justify-content-center h-40px gap-2 rounded-3"
-                (click)="exitBranchAction()"
-                [attr.title]="'Return to Main Academy'"
-              >
-                <i class="isax isax-arrow-right-1"></i>
-                <span class="">{{ 'Exit Branch' | translate }}</span>
-              </a>
-            </li>
-          }
-
           @for (item of menuItems; track item) {
             @if (item.isTitle) {
               <li class="menu-title">

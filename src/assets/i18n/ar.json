@@ -8,8 +8,10 @@
         "SETTINGS": "الإعدادات"
     },
     "COURSES": {
+        "PAGE_TITLE": "إدارة الدورات",
+        "PAGE_SUBTITLE": "إدارة وتنظيم ومراقبة جميع الدورات التعليمية من مكان واحد.",
         "SEARCH_COURSE": "البحث باسم الدورة",
-        "NEW_COURSE": "دورة جديدة",
+        "NEW_COURSE": "إضافة دورة جديدة",
         "EXPORT": "تصدير",
         "SAVE": "حفظ",
         "CANCEL": "إلغاء",
@@ -20,20 +22,26 @@
         "DELETE_CONFIRM_BUTTON": "حذف",
         "TABLE": {
             "ID": "الرقم",
+            "NAME": "اسم الدورة",
             "COURSE_NAME": "اسم الدورة",
             "INSTRUCTOR": "المدرب",
             "CATEGORY": "الفئة",
             "DURATION": "المدة (ساعات)",
             "PRICE": "السعر",
             "STATUS": "الحالة",
+            "CREATED_DATE": "تاريخ الإنشاء",
             "ACTIONS": "الإجراءات"
         },
         "FILTERS": {
             "STATUS": "الحالة",
-            "SELECT_STATUS": "اختر الحالة"
+            "SELECT_STATUS": "اختر الحالة",
+            "CATEGORY": "الفئة",
+            "SELECT_CATEGORY": "اختر الفئة",
+            "PRICE": "نطاق السعر"
         },
         "PAGINATION": {
             "SHOWING": "عرض",
+            "TO": "إلى",
             "OF": "من",
             "RESULTS": "نتائج"
         },
@@ -48,29 +56,111 @@
         },
         "EXPORT_FILE_NAME": "الدورات-{{date}}",
         "EXPORT_SHEET_NAME": "الدورات",
-        "ADD_COURSE_MODAL": {
-            "TITLE": "إضافة دورة جديدة",
-            "EDIT_TITLE": "تعديل الدورة",
+        "FORM": {
+            "SUBTITLE_ADD": "أدخل المعلومات المطلوبة لإنشاء دورة جديدة.",
+            "SUBTITLE_EDIT": "حدّث معلومات الدورة أدناه.",
+            "LOADING": "جاري تحميل الدورة…",
+            "BACK": "رجوع",
+            "COURSE_NAME_HELPER": "اختر اسماً واضحاً وصفياً للدورة.",
+            "ERROR_COURSE_NAME": "اسم الدورة مطلوب (٣ أحرف على الأقل).",
+            "ERROR_INSTRUCTOR": "اسم المدرب مطلوب.",
+            "ERROR_CATEGORY": "يرجى اختيار الفئة.",
+            "ERROR_DURATION": "المدة يجب أن تكون ساعة واحدة على الأقل.",
+            "ERROR_PRICE": "السعر مطلوب ولا يمكن أن يكون سالباً.",
+            "ERROR_STATUS": "يرجى اختيار الحالة.",
+            "ERROR_DESCRIPTION": "يجب أن يكون الوصف أقل من {{max}} حرفاً.",
+            "PLACEHOLDER_NAME": "مثلاً: مقدمة في Angular",
+            "PLACEHOLDER_INSTRUCTOR": "مثلاً: محمد أحمد",
+            "PLACEHOLDER_CATEGORY": "اختر الفئة",
+            "PLACEHOLDER_STATUS": "اختر الحالة",
+            "PLACEHOLDER_DURATION": "0",
+            "PLACEHOLDER_PRICE": "0",
+            "PLACEHOLDER_DESCRIPTION": "أدخل ملخصاً موجزاً لما تغطيه هذه الدورة…",
+            "SAVE_CHANGES": "حفظ التعديلات",
+            "SAVE_COURSE": "حفظ الدورة",
+            "HOURS": "ساعات",
+            "CURRENCY_SYMBOL": "$",
+            "DESCRIPTION_LABEL": "الوصف",
+            "SELECT_CATEGORY": "اختر الفئة",
+            "SELECT_STATUS": "اختر الحالة"
+        },
+        "DETAILS": {
+            "BASIC_INFORMATION": "المعلومات الأساسية",
+            "COURSE_DETAILS": "تفاصيل الدورة",
+            "METADATA": "البيانات الوصفية",
             "COURSE_NAME": "اسم الدورة",
-            "COURSE_NAME_PLACEHOLDER": "أدخل اسم الدورة",
             "INSTRUCTOR": "المدرب",
-            "INSTRUCTOR_PLACEHOLDER": "أدخل اسم المدرب",
             "CATEGORY": "الفئة",
-            "CATEGORY_PLACEHOLDER": "أدخل الفئة",
-            "DURATION": "المدة (ساعات)",
+            "DURATION": "المدة",
             "PRICE": "السعر",
             "STATUS": "الحالة",
-            "STATUS_PLACEHOLDER": "اختر الحالة",
             "DESCRIPTION": "الوصف",
-            "DESCRIPTION_PLACEHOLDER": "أدخل الوصف"
+            "COURSE_ID": "رقم الدورة",
+            "CREATED_DATE": "تاريخ الإنشاء",
+            "HOURS_SUFFIX": "ساعات",
+            "BY_INSTRUCTOR": "بقلم {{name}} · {{category}}",
+            "BACK_TO_COURSES": "العودة للدورات",
+            "EDIT_COURSE": "تعديل الدورة",
+            "DELETE_COURSE": "حذف الدورة",
+            "NOT_FOUND_TITLE": "الدورة غير موجودة",
+            "NOT_FOUND_DESC": "لم نتمكن من العثور على الدورة التي تبحث عنها.",
+            "BACK_TEXT": "العودة للدورات"
         },
-        "VIEW_COURSE_MODAL": {
-            "TITLE": "تفاصيل الدورة"
-        },
+        "TITLE": "إضافة دورة جديدة",
+        "EDIT_TITLE": "تعديل الدورة",
+        "COURSE_NAME": "اسم الدورة",
+        "COURSE_NAME_PLACEHOLDER": "أدخل اسم الدورة",
+        "INSTRUCTOR": "المدرب",
+        "INSTRUCTOR_PLACEHOLDER": "أدخل اسم المدرب",
+        "CATEGORY": "الفئة",
+        "CATEGORY_PLACEHOLDER": "أدخل الفئة",
+        "DURATION": "المدة (ساعات)",
+        "PRICE": "السعر",
+        "STATUS": "الحالة",
+        "STATUS_PLACEHOLDER": "اختر الحالة",
+        "DESCRIPTION": "الوصف",
+        "DESCRIPTION_PLACEHOLDER": "أدخل الوصف",
         "STATUSES": {
             "ACTIVE": "نشط",
             "DRAFT": "مسودة",
             "ARCHIVED": "مؤرشف"
+        },
+        "STATS": {
+            "TOTAL": "إجمالي الدورات",
+            "ACTIVE": "الدورات النشطة",
+            "DRAFT": "المسودات",
+            "ARCHIVED": "الدورات المؤرشفة"
+        },
+        "ACTIONS": {
+            "VIEW": "عرض",
+            "EDIT": "تعديل",
+            "DELETE": "حذف"
+        },
+        "DELETE": {
+            "TITLE": "هل تريد حذف الدورة؟",
+            "MESSAGE": "هل أنت متأكد أنك تريد حذف هذه الدورة؟ لا يمكن التراجع عن هذا الإجراء.",
+            "CONFIRM": "حذف",
+            "CANCEL": "إلغاء"
+        },
+        "TOAST": {
+            "CREATE_SUCCESS": "تم إنشاء الدورة بنجاح",
+            "UPDATE_SUCCESS": "تم تحديث الدورة بنجاح",
+            "DELETE_SUCCESS": "تم حذف الدورة بنجاح",
+            "FAILED_SAVE": "فشل في حفظ الدورة",
+            "FAILED_DELETE": "فشل في حذف الدورة",
+            "UNEXPECTED_ERROR": "حدث خطأ غير متوقع",
+            "LOAD_FAILED": "فشل في تحميل الدورة.",
+            "DELETE_FAILED_MSG": "لم يتم حذف الدورة.",
+            "SAVE_FAILED_MSG": "يرجى المحاولة مرة أخرى."
+        },
+        "EMPTY": {
+            "TITLE": "لا توجد دورات",
+            "DESCRIPTION": "لا توجد دورات متاحة حالياً."
+        },
+        "ERROR": {
+            "TITLE": "حدث خطأ",
+            "DESCRIPTION": "لم نتمكن من تحميل بيانات الدورات.",
+            "RETRY": "إعادة المحاولة"
         }
     },
     "SHARED": {
@@ -83,10 +173,15 @@
         "FILTERS": {
             "FILTER": "تصفية",
             "FILTER_BY": "تصفية حسب",
+            "FILTERED_BY": "تم التصفية حسب",
             "SELECT": "اختر",
             "APPLY": "تطبيق",
             "RESET": "إعادة تعيين",
+            "CLEAR": "إزالة",
             "ALL": "الكل"
+        },
+        "STAT_CARD": {
+            "VS_LAST_MONTH": "مقارنة بالشهر الماضي"
         }
     },
     "SWAL": {

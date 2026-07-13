@@ -1,3 +1,31 @@
+<!-- Page Header -->
+<div class="mb-4">
+  <div>
+    <h3 class="mb-0">{{ 'COURSES.PAGE_TITLE' | translate }}</h3>
+    <!-- <p class="text-gray-600 mb-0">
+      {{ 'COURSES.PAGE_SUBTITLE' | translate }}
+    </p> -->
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="card shadow-none rounded-3 border mb-4" *ngIf="isError">
+  <div class="card-body">
+    <div class="text-center py-5">
+      <i class="isax isax-warning-2 fs-1 text-danger mb-3 d-block"></i>
+      <h5 class="fw-bold">{{ 'COURSES.ERROR.TITLE' | translate }}</h5>
+      <p class="text-muted mb-3">
+        {{ 'COURSES.ERROR.DESCRIPTION' | translate }}
+      </p>
+      <button class="btn btn-primary-gradient h-40px" (click)="loadData()">
+        <i class="isax isax-refresh me-1"></i>
+        {{ 'COURSES.ERROR.RETRY' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
 <div class="table-v2">
   <div
     class="mg-toolbar d-flex flex-wrap gap-3 justify-content-between align-items-center"
@@ -15,22 +43,23 @@
 
     <div class="d-flex flex-wrap gap-2 align-items-center">
       <button
-        class="btn btn-primary-gradient h-40px d-flex align-items-center gap-2"
-        (click)="openAddCourseModal()"
-      >
-        <span class="bx bx-plus"></span>
-        {{ 'COURSES.NEW_COURSE' | translate }}
-      </button>
-      <button
         class="btn btn-white h-40px d-flex align-items-center gap-2"
-        (click)="onExport($event)"
+        (click)="exportCourses()"
       >
         <span class="isax isax-export"></span>
         {{ 'COURSES.EXPORT' | translate }}
       </button>
+      <button
+        class="btn btn-primary-gradient h-40px d-flex align-items-center gap-2"
+        (click)="addCourse()"
+      >
+        <span class="isax isax-add"></span>
+        {{ 'COURSES.NEW_COURSE' | translate }}
+      </button>
     </div>
   </div>
 
+  <!-- Table -->
   <mg-scroll-x>
     <nz-table
       nzSize="small"
@@ -38,7 +67,7 @@
       #basicTable
       [nzBordered]="false"
       [nzTableLayout]="'auto'"
-      [nzData]="filteredCourses"
+      [nzData]="pagedCourses"
       [nzLoading]="isLoading"
       [nzFrontPagination]="false"
       [nzShowPagination]="false"
@@ -52,47 +81,45 @@
           <th>{{ 'COURSES.TABLE.DURATION' | translate }}</th>
           <th>{{ 'COURSES.TABLE.PRICE' | translate }}</th>
           <th>{{ 'COURSES.TABLE.STATUS' | translate }}</th>
+          <th>{{ 'COURSES.TABLE.CREATED_DATE' | translate }}</th>
           <th>{{ 'COURSES.TABLE.ACTIONS' | translate }}</th>
         </tr>
       </thead>
       <tbody>
-        @for (item of basicTable.data; track item.id) {
+        @for (course of basicTable.data; track course.id) {
           <tr>
-            <td>{{ item.id }}</td>
-            <td>{{ item.courseName }}</td>
-            <td>{{ item.instructorName }}</td>
-            <td>{{ item.category }}</td>
-            <td>{{ item.duration }}</td>
-            <td>{{ item.price | currency }}</td>
+            <td>#{{ course.id }}</td>
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.instructorName }}</td>
+            <td>{{ course.category }}</td>
+            <td>{{ course.duration }}h</td>
+            <td>{{ course.price | currency }}</td>
             <td>
-              <span
-                class="badge min-w-100px"
-                [class.bg-primary]="item.status === 'Active'"
-                [class.bg-warning]="item.status === 'Draft'"
-                [class.bg-secondary]="item.status === 'Archived'"
-              >
-                {{
-                  'COURSES.STATUSES.' + (item.status | uppercase) | translate
-                }}
-              </span>
+              <app-course-status-badge
+                [status]="course.status"
+              ></app-course-status-badge>
             </td>
+            <td>{{ course.createdDate }}</td>
             <td>
-              <div class="d-flex gap-1">
+              <div class="d-flex gap-1 justify-content-center">
                 <button
                   class="btn btn-icon btn-soft-primary"
-                  (click)="viewCourse(item)"
+                  (click)="viewCourse(course)"
+                  [title]="'COURSES.ACTIONS.VIEW' | translate"
                 >
                   <span class="isax isax-eye fs-1_25rem"></span>
                 </button>
                 <button
                   class="btn btn-icon btn-soft-secondary"
-                  (click)="editCourse(item)"
+                  (click)="editCourse(course)"
+                  [title]="'COURSES.ACTIONS.EDIT' | translate"
                 >
                   <span class="isax isax-edit fs-1_25rem"></span>
                 </button>
                 <button
                   class="btn btn-icon btn-soft-danger"
-                  (click)="deleteCourse(item)"
+                  (click)="deleteCourse(course)"
+                  [title]="'COURSES.ACTIONS.DELETE' | translate"
                 >
                   <span class="isax isax-trash fs-1_25rem"></span>
                 </button>
@@ -106,411 +133,28 @@
 </div>
 
 <!-- Pagination -->
-<div class="mt-4 d-flex justify-content-between align-items-center">
+<div
+  class="mt-4 d-flex justify-content-between align-items-center"
+  *ngIf="total > 0"
+>
   <ngb-pagination
     [maxSize]="4"
     [boundaryLinks]="false"
-    [collectionSize]="_total"
-    [page]="_page"
-    [pageSize]="_pageSize"
-    (pageChange)="loadData($event)"
-  />
+    [collectionSize]="total"
+    [page]="page"
+    [pageSize]="pageSize"
+    (pageChange)="page = $event"
+  ></ngb-pagination>
 
   <div>
     <span class="fw-medium">
       {{ 'COURSES.PAGINATION.SHOWING' | translate }}
-      <span class="text-primary">{{ filteredCourses.length }}</span>
-      {{ 'COURSES.PAGINATION.OF' | translate }} {{ _total }}
+      <span class="text-primary">{{ rangeStart }}</span>
+      {{ 'COURSES.PAGINATION.TO' | translate }}
+      <span class="text-primary">{{ rangeEnd }}</span>
+      {{ 'COURSES.PAGINATION.OF' | translate }}
+      <span class="text-primary">{{ total }}</span>
       {{ 'COURSES.PAGINATION.RESULTS' | translate }}
     </span>
   </div>
 </div>
-
-<!-- Add Course Modal -->
-<ng-template #addCourseModal let-modal>
-  <div class="modal-body p-4">
-    <div
-      class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3"
-    >
-      <h5 class="modal-title">
-        {{
-          (editingCourseId
-            ? 'COURSES.ADD_COURSE_MODAL.EDIT_TITLE'
-            : 'COURSES.ADD_COURSE_MODAL.TITLE'
-          ) | translate
-        }}
-      </h5>
-      <button
-        type="button"
-        class="btn-close mx-0"
-        (click)="modal.dismiss()"
-      ></button>
-    </div>
-
-    <nz-form class="row custom_form g-3" [formGroup]="courseForm">
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'courseName'">{{
-          'COURSES.ADD_COURSE_MODAL.COURSE_NAME' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <input
-            nz-input
-            formControlName="courseName"
-            [placeholder]="
-              'COURSES.ADD_COURSE_MODAL.COURSE_NAME_PLACEHOLDER' | translate
-            "
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item class="col-md-6">
-        <nz-form-label
-          [nzRequired]="courseForm | isRequired: 'instructorName'"
-          >{{
-            'COURSES.ADD_COURSE_MODAL.INSTRUCTOR' | translate
-          }}</nz-form-label
-        >
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <input
-            nz-input
-            formControlName="instructorName"
-            [placeholder]="
-              'COURSES.ADD_COURSE_MODAL.INSTRUCTOR_PLACEHOLDER' | translate
-            "
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'category'">{{
-          'COURSES.ADD_COURSE_MODAL.CATEGORY' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <input
-            nz-input
-            formControlName="category"
-            [placeholder]="
-              'COURSES.ADD_COURSE_MODAL.CATEGORY_PLACEHOLDER' | translate
-            "
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'duration'">{{
-          'COURSES.ADD_COURSE_MODAL.DURATION' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <input
-            nz-input
-            type="number"
-            formControlName="duration"
-            placeholder="0"
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'price'">{{
-          'COURSES.ADD_COURSE_MODAL.PRICE' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <nz-input-group [nzSuffix]="'COURSES.CURRENCY' | translate">
-            <input
-              nz-input
-              type="number"
-              formControlName="price"
-              placeholder="0"
-            />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'status'">{{
-          'COURSES.ADD_COURSE_MODAL.STATUS' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <ng-select
-            formControlName="status"
-            [placeholder]="
-              'COURSES.ADD_COURSE_MODAL.STATUS_PLACEHOLDER' | translate
-            "
-          >
-            <ng-option
-              *ngFor="let status of statusSelectOptions"
-              [value]="status.value"
-            >
-              {{ status.label | translate }}
-            </ng-option>
-          </ng-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item class="col-md-12">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'description'">{{
-          'COURSES.ADD_COURSE_MODAL.DESCRIPTION' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <textarea
-            nz-input
-            formControlName="description"
-            rows="3"
-            [placeholder]="
-              'COURSES.ADD_COURSE_MODAL.DESCRIPTION_PLACEHOLDER' | translate
-            "
-          ></textarea>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-form>
-  </div>
-  <div class="modal-footer border-0">
-    <button
-      class="btn btn-primary-gradient h-40px px-5"
-      (click)="saveCourse()"
-      [disabled]="isSaving"
-    >
-      @if (isSaving) {
-        <span class="spinner-border spinner-border-sm text-primary"></span>
-      }
-      {{ 'COURSES.SAVE' | translate }}
-    </button>
-    <button class="btn btn-white h-40px" (click)="modal.dismiss()">
-      {{ 'COURSES.CANCEL' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<!-- View Course Modal -->
-<ng-template #viewCourseModal let-modal>
-  <div class="modal-body p-4">
-    <!-- Header -->
-    <div
-      class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3"
-    >
-      <h5 class="modal-title">
-        {{
-          selectedCourse?.courseName ||
-            ('COURSES.VIEW_COURSE_MODAL.TITLE' | translate)
-        }}
-      </h5>
-      <button
-        type="button"
-        class="btn-close m-0"
-        (click)="modal.dismiss()"
-      ></button>
-    </div>
-
-    <!-- Tabs + actions row -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <ul
-        ngbNav
-        #viewCourseNav="ngbNav"
-        [(activeId)]="viewCourseTab"
-        class="custom_tabs"
-      >
-        <li [ngbNavItem]="'details'">
-          <button ngbNavLink>
-            {{ 'COURSES.VIEW_COURSE_MODAL.TITLE' | translate }}
-          </button>
-          <ng-template ngbNavContent>
-            <div class="p-4 bg-gray-100 rounded-3 border">
-              <div class="row row-cols-1 g-3">
-                <!-- ID -->
-                <div class="col">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{ 'COURSES.TABLE.ID' | translate }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body fw-bold">
-                          {{ selectedCourse?.id || '-' }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Course Name -->
-                <div class="col">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{ 'COURSES.TABLE.COURSE_NAME' | translate }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body fw-bold">
-                          {{ selectedCourse?.courseName || '-' }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Instructor -->
-                <div class="col">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{ 'COURSES.TABLE.INSTRUCTOR' | translate }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body fw-bold">
-                          {{ selectedCourse?.instructorName || '-' }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Category -->
-                <div class="col">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{ 'COURSES.TABLE.CATEGORY' | translate }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body fw-bold">
-                          {{ selectedCourse?.category || '-' }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Duration -->
-                <div class="col">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{ 'COURSES.TABLE.DURATION' | translate }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body fw-bold">
-                          {{ selectedCourse?.duration || 0 }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Price -->
-                <div class="col">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{ 'COURSES.TABLE.PRICE' | translate }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body fw-bold">
-                          {{ selectedCourse?.price || 0 }}
-                          <img
-                            src="assets/images/icon/SR_light.svg"
-                            height="14"
-                            alt=""
-                          />
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Status -->
-                <div class="col">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{ 'COURSES.TABLE.STATUS' | translate }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body fw-bold">
-                          <ng-container
-                            *ngIf="selectedCourse?.status; else dash"
-                          >
-                            {{
-                              'COURSES.STATUSES.' +
-                                (selectedCourse?.status | uppercase) | translate
-                            }}
-                          </ng-container>
-                          <ng-template #dash>-</ng-template>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Description -->
-                <div class="col" *ngIf="selectedCourse?.description">
-                  <div class="w-100">
-                    <div
-                      class="d-flex align-items-center justify-content-between text-gray-600"
-                    >
-                      <div class="col-md-6">
-                        <p class="mb-0">
-                          {{
-                            'COURSES.ADD_COURSE_MODAL.DESCRIPTION' | translate
-                          }}
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="mb-0 text-body">
-                          {{ selectedCourse?.description }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </li>
-      </ul>
-
-      <div class="d-flex gap-2">
-        <button
-          class="btn btn-white h-40px"
-          (click)="modal.close(); editCourse(selectedCourse!)"
-        >
-          <span class="isax isax-edit-2 me-1 fs-1_25rem"></span>
-          {{ 'COURSES.EDIT' | translate }}
-        </button>
-      </div>
-    </div>
-
-    <div [ngbNavOutlet]="viewCourseNav" class="mt-3"></div>
-  </div>
-</ng-template>
-
-<ng-template #nzErrorTip let-control>
-  <app-nz-control-error-temp [control]="control"></app-nz-control-error-temp>
-</ng-template>

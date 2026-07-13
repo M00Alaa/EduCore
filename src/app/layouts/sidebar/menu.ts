@@ -1,4 +1,3 @@
-import { ROLES } from 'src/app/app-const';
 import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [

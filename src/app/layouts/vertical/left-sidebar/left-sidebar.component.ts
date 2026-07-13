@@ -5,7 +5,6 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { BehaviorSubject } from 'rxjs';
-import { logo } from 'src/app/app-const';
 
 @Injectable({ providedIn: 'root' })
 export class LeftSiderService {
@@ -37,8 +36,6 @@ export class LeftSiderService {
 })
 export class LeftSidebarComponent {
   @ViewChild('sider') sider!: ElementRef<HTMLDivElement>;
-  sidebartype = '';
-  logos = logo;
   notification: any[] = [
 
   ]
@@ -63,10 +60,6 @@ export class LeftSidebarComponent {
         }, 10);
       }
     )
-  }
-
-  toggleView() {
-    this.sider.nativeElement.classList.toggle('active')
   }
 
   toggleLeftSider() {

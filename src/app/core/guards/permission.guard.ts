@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, CanActivateChildFn, CanLoadFn, Route, Router, UrlSegment } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -15,30 +15,6 @@ export const permissionGuard: CanActivateFn = (
 
     const permission = route.data?.['permission'] as string | undefined;
 
-    return checkPermission(permission || '', authService, router);
-};
-
-// Functional Guard for CanActivateChild
-export const permissionGuardChild: CanActivateChildFn = (
-    childRoute: ActivatedRouteSnapshot,
-    state: import('@angular/router').RouterStateSnapshot
-): Observable<boolean> | Promise<boolean> | boolean => {
-    const authService = inject(AuthenticationService);
-    const router = inject(Router);
-
-    const permission = childRoute.data?.['permission'] as string | undefined;
-    return checkPermission(permission || '', authService, router);
-};
-
-// Functional Guard for CanLoad
-export const permissionGuardLoad: CanLoadFn = (
-    route: Route,
-    segments: UrlSegment[]
-): Observable<boolean> | Promise<boolean> | boolean => {
-    const authService = inject(AuthenticationService);
-    const router = inject(Router);
-
-    const permission = route.data?.['permission'] as string | undefined;
     return checkPermission(permission || '', authService, router);
 };
 

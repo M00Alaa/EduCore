@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MetisMenu } from 'metismenujs';
-import { EventService } from '../../core/services/event.service';
-import { HttpClient } from '@angular/common/http';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { logo } from 'src/app/app-const';
 import { AuthenticationService, MgUser } from 'src/app/core/services/auth.service';
@@ -34,7 +32,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('componentRef') scrollRef!: SimplebarAngularComponent;
   @Input() isCondensed = false;
   private metisMenu: MetisMenu | null = null;
-  data: any;
   logos = logo;
   menuItems: MenuItem[] = [];
 
@@ -43,18 +40,11 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   constructor(
     private authService: AuthenticationService,
-    private eventService: EventService,
     private router: Router,
     private auth: AuthenticationService,
     public translate: TranslateService,
-    public languageService: LanguageService,
-    private http: HttpClient
+    public languageService: LanguageService
   ) {
-    this.authService.identity().subscribe(acc => {
-      this.acc = acc;
-      this.isBranchMode = !!localStorage.getItem('impersonated_branch_id');
-    });
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();

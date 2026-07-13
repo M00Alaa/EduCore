@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
     }
 
     setTitle(): void {
-        const appTitle = this.titleService.getTitle();
         this.router
             .events.pipe(
                 filter(event => event instanceof NavigationEnd),
