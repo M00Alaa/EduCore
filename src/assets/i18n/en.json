@@ -82,6 +82,7 @@
             "CURRENCY_SYMBOL": "$",
             "DESCRIPTION_LABEL": "Course Description",
             "DESCRIPTION_HELPER": "This will be displayed on the course overview page.",
+            "CHANGE_IMAGE": "Change Image",
             "IMAGE_LABEL": "Course Image",
             "IMAGE_PLACEHOLDER": "Click or drag to upload course image",
             "REMOVE_IMAGE": "Remove image",

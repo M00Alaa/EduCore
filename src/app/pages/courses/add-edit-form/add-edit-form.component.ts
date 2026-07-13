@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CourseStatus } from 'src/app/core/backend/courses/models/courses.model';
 import { CoursesBackendService } from 'src/app/core/backend/courses/services/courses.service';
 import { ShowSWAL } from 'src/app/app-const';
 import { FormSharedModule } from 'src/app/shared/modules/nz-form-full/nz-form-full.module';
-import { CustomDropzonePreviewComponent } from 'src/app/shared/components/custom-image-previewer/custom-dropzone-preview.component';
+import { NzSpinModule } from "ng-zorro-antd/spin";
 
 @Component({
   selector: 'app-add-edit-form',
   standalone: true,
-  imports: [CommonModule, TranslateModule, FormSharedModule, CustomDropzonePreviewComponent],
+  imports: [CommonModule, TranslateModule, FormSharedModule, NzSpinModule],
   templateUrl: './add-edit-form.component.html',
   styleUrl: './add-edit-form.component.scss'
 })
 export class AddEditFormComponent implements OnInit {
-  courseForm: FormGroup;
   isEditMode = false;
   courseId: number | null = null;
   loading = false;
@@ -38,6 +37,19 @@ export class AddEditFormComponent implements OnInit {
 
   maxDescription = 500;
 
+  courseForm: FormGroup = new FormGroup({
+    courseName: new FormControl<string | undefined>(undefined, [Validators.required, Validators.maxLength(100)]),
+    instructorName: new FormControl<string | undefined>(undefined, [Validators.required]),
+    category: new FormControl<string | undefined>(undefined, [Validators.required]),
+    duration: new FormControl<number | undefined>(undefined, [Validators.required, Validators.min(1)]),
+    price: new FormControl<number | undefined>(undefined, [Validators.required, Validators.min(0)]),
+    status: new FormControl<CourseStatus | undefined>(undefined, [Validators.required]),
+    imageUrl: new FormControl<string | undefined>(undefined),
+    description: new FormControl<string | undefined>(undefined, [Validators.maxLength(this.maxDescription)])
+  });
+
+
+
   constructor(
     private fb: FormBuilder,
     private coursesBackend: CoursesBackendService,
@@ -45,16 +57,6 @@ export class AddEditFormComponent implements OnInit {
     private route: ActivatedRoute,
     private translate: TranslateService
   ) {
-    this.courseForm = this.fb.group({
-      courseName: ['', [Validators.required, Validators.minLength(3)]],
-      instructorName: ['', [Validators.required]],
-      category: ['', [Validators.required]],
-      duration: [null, [Validators.required, Validators.min(1)]],
-      price: [null, [Validators.required, Validators.min(0)]],
-      status: ['Active' as CourseStatus, [Validators.required]],
-      imageUrl: [''],
-      description: ['', [Validators.maxLength(this.maxDescription)]]
-    });
   }
 
   ngOnInit(): void {

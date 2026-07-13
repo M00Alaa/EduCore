@@ -1,12 +1,5 @@
 <!-- Page Header -->
-<div class="mb-4">
-  <div>
-    <h3 class="mb-0">{{ 'COURSES.PAGE_TITLE' | translate }}</h3>
-    <!-- <p class="text-gray-600 mb-0">
-      {{ 'COURSES.PAGE_SUBTITLE' | translate }}
-    </p> -->
-  </div>
-</div>
+<h3 class="mb-4 fw-medium">{{ 'COURSES.PAGE_TITLE' | translate }}</h3>
 
 <!-- Error State -->
 <div class="card shadow-none rounded-3 border mb-4" *ngIf="isError">
@@ -74,7 +67,8 @@
     >
       <thead>
         <tr>
-          <th>{{ 'COURSES.TABLE.ID' | translate }}</th>
+          <!-- <th>{{ 'COURSES.TABLE.ID' | translate }}</th> -->
+          <th>#</th>
           <th>{{ 'COURSES.TABLE.COURSE_NAME' | translate }}</th>
           <th>{{ 'COURSES.TABLE.INSTRUCTOR' | translate }}</th>
           <th>{{ 'COURSES.TABLE.CATEGORY' | translate }}</th>
@@ -88,12 +82,12 @@
       <tbody>
         @for (course of basicTable.data; track course.id) {
           <tr>
-            <td>#{{ course.id }}</td>
+            <td>{{ course.id }}</td>
             <td>{{ course.courseName }}</td>
             <td>{{ course.instructorName }}</td>
             <td>{{ course.category }}</td>
             <td>{{ course.duration }}h</td>
-            <td>{{ course.price | currency }}</td>
+            <td>{{ course.price | currency: '$' }}</td>
             <td>
               <app-course-status-badge
                 [status]="course.status"

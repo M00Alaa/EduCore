@@ -1,254 +1,212 @@
-<div class="form-page">
-  <div class="form-card">
-    <!-- Header -->
-    <div class="form-card__header">
-      <button
-        class="back-btn"
-        (click)="onCancel()"
-        [attr.aria-label]="'COURSES.FORM.BACK' | translate"
-      >
-        <i class="isax isax-arrow-left-1"></i>
-      </button>
-      <div>
-        <h1 class="form-card__title">
-          {{
-            isEditMode
-              ? ('COURSES.ADD_COURSE_MODAL.EDIT_TITLE' | translate)
-              : ('COURSES.ADD_COURSE_MODAL.TITLE' | translate)
-          }}
-        </h1>
-        <p class="form-card__subtitle">
-          {{
-            isEditMode
-              ? ('COURSES.FORM.SUBTITLE_EDIT' | translate)
-              : ('COURSES.FORM.SUBTITLE_ADD' | translate)
-          }}
-        </p>
+<h3 class="mb-4 fw-medium">
+  {{
+    isEditMode
+      ? ('COURSES.ADD_COURSE_MODAL.EDIT_TITLE' | translate)
+      : ('COURSES.ADD_COURSE_MODAL.TITLE' | translate)
+  }}
+</h3>
+<div class="card shadow-none rounded-3 border">
+  <div class="card-body">
+    <div class="d-flex flex-column flex-md-row align-items-start">
+      <!-- Image Section -->
+      <div class="col-md-4 col-lg-3 p-4 mb-4 mb-md-0 text-center">
+        <img
+          [src]="imagePreviewUrl || 'assets/images/noimg.png'"
+          class="w-170px h-170px object-fit-cover object-position-center rounded-circle shadow"
+          alt=""
+        />
+        <button
+          type="button"
+          class="btn h-40px btn-white fw-medium mt-4 d-flex align-items-center gap-2 mx-auto"
+          (click)="fileInput.click()"
+        >
+          <span class="isax isax-gallery-edit"></span>
+          {{ 'COURSES.FORM.CHANGE_IMAGE' | translate }}
+        </button>
+        <input
+          #fileInput
+          type="file"
+          accept="image/*"
+          class="d-none"
+          (change)="onFileSelect($event)"
+        />
+      </div>
+
+      <!-- Form Section -->
+      <div class="col-md-8 col-lg-9 p-4">
+        <nz-form
+          class="row custom_form g-3 row-cols-1 row-cols-md-2"
+          [formGroup]="courseForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <!-- Course Name -->
+          <nz-form-item class="w-100">
+            <nz-form-label [nzRequired]="courseForm | isRequired: 'courseName'">
+              {{ 'COURSES.ADD_COURSE_MODAL.COURSE_NAME' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="nzErrorTip">
+              <input
+                nz-input
+                formControlName="courseName"
+                [placeholder]="'COURSES.FORM.PLACEHOLDER_NAME' | translate"
+              />
+            </nz-form-control>
+            <span class="fs-0_75rem text-gray-600 mt-1">{{
+              'COURSES.FORM.COURSE_NAME_HELPER' | translate
+            }}</span>
+          </nz-form-item>
+
+          <!-- Instructor Name -->
+          <nz-form-item>
+            <nz-form-label
+              [nzRequired]="courseForm | isRequired: 'instructorName'"
+            >
+              {{ 'COURSES.ADD_COURSE_MODAL.INSTRUCTOR' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="nzErrorTip">
+              <input
+                nz-input
+                formControlName="instructorName"
+                [placeholder]="
+                  'COURSES.FORM.PLACEHOLDER_INSTRUCTOR' | translate
+                "
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Category -->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="courseForm | isRequired: 'category'">
+              {{ 'COURSES.ADD_COURSE_MODAL.CATEGORY' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="nzErrorTip">
+              <ng-select
+                class="w-100"
+                formControlName="category"
+                [items]="categoryOptions"
+                [placeholder]="'COURSES.FORM.PLACEHOLDER_CATEGORY' | translate"
+              ></ng-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Duration -->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="courseForm | isRequired: 'duration'">
+              {{ 'COURSES.ADD_COURSE_MODAL.DURATION' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="nzErrorTip">
+              <input
+                nz-input
+                type="number"
+                formControlName="duration"
+                [placeholder]="'COURSES.FORM.PLACEHOLDER_DURATION' | translate"
+                min="1"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Price -->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="courseForm | isRequired: 'price'">
+              {{ 'COURSES.ADD_COURSE_MODAL.PRICE' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="nzErrorTip">
+              <nz-input-group [nzSuffix]="suffixTemplate">
+                <input
+                  nz-input
+                  type="number"
+                  formControlName="price"
+                  [placeholder]="'COURSES.FORM.PLACEHOLDER_PRICE' | translate"
+                  min="0"
+                />
+              </nz-input-group>
+              <ng-template #suffixTemplate>
+                <span class="text-gray-600">{{
+                  'COURSES.FORM.CURRENCY_SYMBOL' | translate
+                }}</span>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Status -->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="courseForm | isRequired: 'status'">
+              {{ 'COURSES.ADD_COURSE_MODAL.STATUS' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="nzErrorTip">
+              <ng-select
+                class="w-100"
+                formControlName="status"
+                [placeholder]="'COURSES.FORM.PLACEHOLDER_STATUS' | translate"
+                [clearable]="false"
+                [searchable]="false"
+              >
+                @for (item of statusOptions; track $index) {
+                  <ng-option [value]="item">
+                    {{ 'COURSES.STATUSES.' + item.toUpperCase() | translate }}
+                  </ng-option>
+                }
+              </ng-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Description -->
+          <nz-form-item class="w-100">
+            <nz-form-label>{{
+              'COURSES.FORM.DESCRIPTION_LABEL' | translate
+            }}</nz-form-label>
+            <div
+              class="fs-0_75rem text-gray-600 w-100 d-flex justify-content-end"
+            >
+              <span class="char-count"
+                >{{ descriptionLength }}/{{ maxDescription }}</span
+              >
+            </div>
+            <nz-form-control [nzErrorTip]="nzErrorTip">
+              <textarea
+                nz-input
+                formControlName="description"
+                rows="3"
+                [placeholder]="
+                  'COURSES.ADD_COURSE_MODAL.DESCRIPTION_PLACEHOLDER' | translate
+                "
+              ></textarea>
+            </nz-form-control>
+            <span class="fs-0_75rem text-gray-600 mt-1">{{
+              'COURSES.FORM.DESCRIPTION_HELPER' | translate
+            }}</span>
+          </nz-form-item>
+
+          <!-- Action Buttons -->
+          <div class="w-100 d-flex justify-content-end gap-2 mt-4">
+            <button
+              type="button"
+              class="btn btn-white h-40px d-flex align-items-center gap-2"
+              (click)="onCancel()"
+            >
+              {{ 'COURSES.CANCEL' | translate }}
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary-gradient h-40px d-flex align-items-center gap-2"
+              [disabled]="submitting"
+              (click)="onSubmit()"
+            >
+              <span
+                *ngIf="submitting"
+                class="spinner-border spinner-border-sm me-2"
+              ></span>
+              {{
+                isEditMode
+                  ? ('COURSES.FORM.SAVE_CHANGES' | translate)
+                  : ('COURSES.FORM.SAVE_COURSE' | translate)
+              }}
+              <span class="isax isax-arrow-left"></span>
+            </button>
+          </div>
+        </nz-form>
       </div>
     </div>
-
-    <!-- Loading -->
-    <div *ngIf="loading" class="form-card__loading">
-      <div class="spinner-border text-primary" role="status"></div>
-      <span>{{ 'COURSES.FORM.LOADING' | translate }}</span>
-    </div>
-
-    <!-- Form -->
-    <nz-form
-      *ngIf="!loading"
-      [formGroup]="courseForm"
-      (ngSubmit)="onSubmit()"
-      class="row custom_form g-3"
-    >
-      <!-- Course Name -->
-      <nz-form-item class="col-12">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'courseName'">{{
-          'COURSES.ADD_COURSE_MODAL.COURSE_NAME' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <input
-            nz-input
-            formControlName="courseName"
-            [placeholder]="'COURSES.FORM.PLACEHOLDER_NAME' | translate"
-          />
-        </nz-form-control>
-        <span class="form-helper">{{
-          'COURSES.FORM.COURSE_NAME_HELPER' | translate
-        }}</span>
-      </nz-form-item>
-
-      <!-- Instructor Name -->
-      <nz-form-item class="col-md-6">
-        <nz-form-label
-          [nzRequired]="courseForm | isRequired: 'instructorName'"
-          >{{
-            'COURSES.ADD_COURSE_MODAL.INSTRUCTOR' | translate
-          }}</nz-form-label
-        >
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <input
-            nz-input
-            formControlName="instructorName"
-            [placeholder]="'COURSES.FORM.PLACEHOLDER_INSTRUCTOR' | translate"
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <!-- Category -->
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'category'">{{
-          'COURSES.ADD_COURSE_MODAL.CATEGORY' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <ng-select
-            formControlName="category"
-            [items]="categoryOptions"
-            [placeholder]="'COURSES.FORM.PLACEHOLDER_CATEGORY' | translate"
-          ></ng-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <!-- Duration -->
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'duration'">{{
-          'COURSES.ADD_COURSE_MODAL.DURATION' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <input
-            nz-input
-            type="number"
-            formControlName="duration"
-            [placeholder]="'COURSES.FORM.PLACEHOLDER_DURATION' | translate"
-            min="1"
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <!-- Price -->
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'price'">{{
-          'COURSES.ADD_COURSE_MODAL.PRICE' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <nz-input-group [nzPrefix]="prefixTemplate">
-            <input
-              nz-input
-              type="number"
-              formControlName="price"
-              [placeholder]="'COURSES.FORM.PLACEHOLDER_PRICE' | translate"
-              min="0"
-            />
-          </nz-input-group>
-          <ng-template #prefixTemplate>
-            <span style="font-weight: 600; color: #98a2b3">{{
-              'COURSES.FORM.CURRENCY_SYMBOL' | translate
-            }}</span>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-
-      <!-- Status -->
-      <nz-form-item class="col-md-6">
-        <nz-form-label [nzRequired]="courseForm | isRequired: 'status'">{{
-          'COURSES.ADD_COURSE_MODAL.STATUS' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <ng-select
-            formControlName="status"
-            [items]="statusOptions"
-            [placeholder]="'COURSES.FORM.PLACEHOLDER_STATUS' | translate"
-            [clearable]="false"
-            [searchable]="false"
-          ></ng-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <!-- Image Upload -->
-      <nz-form-item class="col-6">
-        <nz-form-label>{{
-          'COURSES.FORM.IMAGE_LABEL' | translate
-        }}</nz-form-label>
-        <nz-form-control>
-          <ngx-dropzone
-            (change)="onFileSelect($event)"
-            accept="image/*"
-            class="dropzone-area"
-          >
-            @if (imagePreviewUrl) {
-              @if (imagePreviewUrl.startsWith('blob:')) {
-                <div class="preview-wrapper">
-                  <img
-                    [src]="imagePreviewUrl"
-                    alt="preview"
-                    class="preview-img"
-                  />
-                  <ngx-dropzone-remove-badge
-                    (click)="onRemoveImage()"
-                  ></ngx-dropzone-remove-badge>
-                </div>
-              } @else {
-                <custom-dropzone-preview
-                  type="IMG"
-                  [url]="imagePreviewUrl"
-                  [referenceId]="courseId || 0"
-                  [AttachmentModule]="null"
-                ></custom-dropzone-preview>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-outline-danger mt-2"
-                  (click)="onRemoveImage()"
-                >
-                  <span class="isax isax-trash me-1"></span>
-                  {{ 'COURSES.FORM.REMOVE_IMAGE' | translate }}
-                </button>
-              }
-            }
-            <ngx-dropzone-label>
-              <div class="upload-placeholder">
-                <span class="isax isax-gallery fs-2 text-muted"></span>
-                <span class="text-muted">{{
-                  'COURSES.FORM.IMAGE_PLACEHOLDER' | translate
-                }}</span>
-              </div>
-            </ngx-dropzone-label>
-          </ngx-dropzone>
-        </nz-form-control>
-      </nz-form-item>
-
-      <!-- Description -->
-      <nz-form-item class="col-12">
-        <nz-form-label>{{
-          'COURSES.FORM.DESCRIPTION_LABEL' | translate
-        }}</nz-form-label>
-        <nz-form-control [nzErrorTip]="nzErrorTip">
-          <textarea
-            nz-input
-            formControlName="description"
-            rows="4"
-            [placeholder]="
-              'COURSES.ADD_COURSE_MODAL.DESCRIPTION_PLACEHOLDER' | translate
-            "
-          ></textarea>
-        </nz-form-control>
-        <span class="form-helper">{{
-          'COURSES.FORM.DESCRIPTION_HELPER' | translate
-        }}</span>
-        <div class="form-counter">
-          <span class="char-count"
-            >{{ descriptionLength }}/{{ maxDescription }}</span
-          >
-        </div>
-      </nz-form-item>
-
-      <!-- Footer -->
-      <nz-form-item class="col-12">
-        <div class="form-footer">
-          <button
-            type="button"
-            class="btn btn-white h-40px"
-            (click)="onCancel()"
-          >
-            {{ 'COURSES.CANCEL' | translate }}
-          </button>
-          <button
-            type="submit"
-            class="btn btn-primary-gradient h-40px"
-            (click)="onSubmit()"
-            [disabled]="submitting"
-          >
-            <span
-              *ngIf="submitting"
-              class="spinner-border spinner-border-sm me-2"
-            ></span>
-            {{
-              isEditMode
-                ? ('COURSES.FORM.SAVE_CHANGES' | translate)
-                : ('COURSES.FORM.SAVE_COURSE' | translate)
-            }}
-          </button>
-        </div>
-      </nz-form-item>
-    </nz-form>
   </div>
 </div>
 
