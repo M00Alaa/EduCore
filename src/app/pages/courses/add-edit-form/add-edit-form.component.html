@@ -2,15 +2,27 @@
   <div class="form-card">
     <!-- Header -->
     <div class="form-card__header">
-      <button class="back-btn" (click)="onCancel()" [attr.aria-label]="'COURSES.FORM.BACK' | translate">
+      <button
+        class="back-btn"
+        (click)="onCancel()"
+        [attr.aria-label]="'COURSES.FORM.BACK' | translate"
+      >
         <i class="isax isax-arrow-left-1"></i>
       </button>
       <div>
         <h1 class="form-card__title">
-          {{ isEditMode ? ('COURSES.ADD_COURSE_MODAL.EDIT_TITLE' | translate) : ('COURSES.ADD_COURSE_MODAL.TITLE' | translate) }}
+          {{
+            isEditMode
+              ? ('COURSES.ADD_COURSE_MODAL.EDIT_TITLE' | translate)
+              : ('COURSES.ADD_COURSE_MODAL.TITLE' | translate)
+          }}
         </h1>
         <p class="form-card__subtitle">
-          {{ isEditMode ? ('COURSES.FORM.SUBTITLE_EDIT' | translate) : ('COURSES.FORM.SUBTITLE_ADD' | translate) }}
+          {{
+            isEditMode
+              ? ('COURSES.FORM.SUBTITLE_EDIT' | translate)
+              : ('COURSES.FORM.SUBTITLE_ADD' | translate)
+          }}
         </p>
       </div>
     </div>
@@ -22,189 +34,224 @@
     </div>
 
     <!-- Form -->
-    <form
+    <nz-form
       *ngIf="!loading"
       [formGroup]="courseForm"
       (ngSubmit)="onSubmit()"
-      class="course-form"
+      class="row custom_form g-3"
     >
-      <div class="course-form__grid">
-        <!-- Course Name -->
-        <div class="form-group form-group--full">
-          <label class="form-label" for="courseName">
-            {{ 'COURSES.ADD_COURSE_MODAL.COURSE_NAME' | translate }} <span class="req">*</span>
-          </label>
+      <!-- Course Name -->
+      <nz-form-item class="col-12">
+        <nz-form-label [nzRequired]="courseForm | isRequired: 'courseName'">{{
+          'COURSES.ADD_COURSE_MODAL.COURSE_NAME' | translate
+        }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="nzErrorTip">
           <input
-            id="courseName"
-            type="text"
-            class="form-control-custom"
+            nz-input
             formControlName="courseName"
             [placeholder]="'COURSES.FORM.PLACEHOLDER_NAME' | translate"
-            [class.is-invalid]="
-              f['courseName'].invalid && f['courseName'].touched
-            "
           />
-          <p class="form-helper">
-            {{ 'COURSES.FORM.COURSE_NAME_HELPER' | translate }}
-          </p>
-          <p
-            class="form-error"
-            *ngIf="f['courseName'].invalid && f['courseName'].touched"
-          >
-            {{ 'COURSES.FORM.ERROR_COURSE_NAME' | translate }}
-          </p>
-        </div>
+        </nz-form-control>
+        <span class="form-helper">{{
+          'COURSES.FORM.COURSE_NAME_HELPER' | translate
+        }}</span>
+      </nz-form-item>
 
-        <!-- Instructor Name -->
-        <div class="form-group">
-          <label class="form-label" for="instructorName">
-            {{ 'COURSES.ADD_COURSE_MODAL.INSTRUCTOR' | translate }} <span class="req">*</span>
-          </label>
+      <!-- Instructor Name -->
+      <nz-form-item class="col-md-6">
+        <nz-form-label
+          [nzRequired]="courseForm | isRequired: 'instructorName'"
+          >{{
+            'COURSES.ADD_COURSE_MODAL.INSTRUCTOR' | translate
+          }}</nz-form-label
+        >
+        <nz-form-control [nzErrorTip]="nzErrorTip">
           <input
-            id="instructorName"
-            type="text"
-            class="form-control-custom"
+            nz-input
             formControlName="instructorName"
             [placeholder]="'COURSES.FORM.PLACEHOLDER_INSTRUCTOR' | translate"
-            [class.is-invalid]="
-              f['instructorName'].invalid && f['instructorName'].touched
-            "
           />
-          <p
-            class="form-error"
-            *ngIf="f['instructorName'].invalid && f['instructorName'].touched"
-          >
-            {{ 'COURSES.FORM.ERROR_INSTRUCTOR' | translate }}
-          </p>
-        </div>
+        </nz-form-control>
+      </nz-form-item>
 
-        <!-- Category -->
-        <div class="form-group">
-          <label class="form-label" for="category">
-            {{ 'COURSES.ADD_COURSE_MODAL.CATEGORY' | translate }} <span class="req">*</span>
-          </label>
+      <!-- Category -->
+      <nz-form-item class="col-md-6">
+        <nz-form-label [nzRequired]="courseForm | isRequired: 'category'">{{
+          'COURSES.ADD_COURSE_MODAL.CATEGORY' | translate
+        }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="nzErrorTip">
           <ng-select
-            [items]="categoryOptions"
             formControlName="category"
+            [items]="categoryOptions"
             [placeholder]="'COURSES.FORM.PLACEHOLDER_CATEGORY' | translate"
-            [class.is-invalid]="f['category'].invalid && f['category'].touched"
           ></ng-select>
-          <p
-            class="form-error"
-            *ngIf="f['category'].invalid && f['category'].touched"
-          >
-            {{ 'COURSES.FORM.ERROR_CATEGORY' | translate }}
-          </p>
-        </div>
+        </nz-form-control>
+      </nz-form-item>
 
-        <!-- Duration -->
-        <div class="form-group">
-          <label class="form-label" for="duration">
-            {{ 'COURSES.ADD_COURSE_MODAL.DURATION' | translate }} <span class="req">*</span>
-          </label>
+      <!-- Duration -->
+      <nz-form-item class="col-md-6">
+        <nz-form-label [nzRequired]="courseForm | isRequired: 'duration'">{{
+          'COURSES.ADD_COURSE_MODAL.DURATION' | translate
+        }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="nzErrorTip">
           <input
-            id="duration"
+            nz-input
             type="number"
-            class="form-control-custom"
             formControlName="duration"
             [placeholder]="'COURSES.FORM.PLACEHOLDER_DURATION' | translate"
             min="1"
-            [class.is-invalid]="f['duration'].invalid && f['duration'].touched"
           />
-          <p
-            class="form-error"
-            *ngIf="f['duration'].invalid && f['duration'].touched"
-          >
-            {{ 'COURSES.FORM.ERROR_DURATION' | translate }}
-          </p>
-        </div>
+        </nz-form-control>
+      </nz-form-item>
 
-        <!-- Price -->
-        <div class="form-group">
-          <label class="form-label" for="price">
-            {{ 'COURSES.ADD_COURSE_MODAL.PRICE' | translate }} <span class="req">*</span>
-          </label>
-          <div class="input-prefix">
-            <span class="input-prefix__symbol">{{ 'COURSES.FORM.CURRENCY_SYMBOL' | translate }}</span>
+      <!-- Price -->
+      <nz-form-item class="col-md-6">
+        <nz-form-label [nzRequired]="courseForm | isRequired: 'price'">{{
+          'COURSES.ADD_COURSE_MODAL.PRICE' | translate
+        }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="nzErrorTip">
+          <nz-input-group [nzPrefix]="prefixTemplate">
             <input
-              id="price"
+              nz-input
               type="number"
-              class="form-control-custom"
               formControlName="price"
               [placeholder]="'COURSES.FORM.PLACEHOLDER_PRICE' | translate"
               min="0"
-              [class.is-invalid]="f['price'].invalid && f['price'].touched"
             />
-          </div>
-          <p
-            class="form-error"
-            *ngIf="f['price'].invalid && f['price'].touched"
-          >
-            {{ 'COURSES.FORM.ERROR_PRICE' | translate }}
-          </p>
-        </div>
+          </nz-input-group>
+          <ng-template #prefixTemplate>
+            <span style="font-weight: 600; color: #98a2b3">{{
+              'COURSES.FORM.CURRENCY_SYMBOL' | translate
+            }}</span>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
 
-        <!-- Status -->
-        <div class="form-group">
-          <label class="form-label" for="status">
-            {{ 'COURSES.ADD_COURSE_MODAL.STATUS' | translate }} <span class="req">*</span>
-          </label>
+      <!-- Status -->
+      <nz-form-item class="col-md-6">
+        <nz-form-label [nzRequired]="courseForm | isRequired: 'status'">{{
+          'COURSES.ADD_COURSE_MODAL.STATUS' | translate
+        }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="nzErrorTip">
           <ng-select
-            [items]="statusOptions"
             formControlName="status"
+            [items]="statusOptions"
             [placeholder]="'COURSES.FORM.PLACEHOLDER_STATUS' | translate"
             [clearable]="false"
             [searchable]="false"
-            [class.is-invalid]="f['status'].invalid && f['status'].touched"
           ></ng-select>
-          <p
-            class="form-error"
-            *ngIf="f['status'].invalid && f['status'].touched"
-          >
-            {{ 'COURSES.FORM.ERROR_STATUS' | translate }}
-          </p>
-        </div>
+        </nz-form-control>
+      </nz-form-item>
 
-        <!-- Description -->
-        <div class="form-group form-group--full">
-          <label class="form-label" for="description">{{ 'COURSES.FORM.DESCRIPTION_LABEL' | translate }}</label>
+      <!-- Image Upload -->
+      <nz-form-item class="col-6">
+        <nz-form-label>{{
+          'COURSES.FORM.IMAGE_LABEL' | translate
+        }}</nz-form-label>
+        <nz-form-control>
+          <ngx-dropzone
+            (change)="onFileSelect($event)"
+            accept="image/*"
+            class="dropzone-area"
+          >
+            @if (imagePreviewUrl) {
+              @if (imagePreviewUrl.startsWith('blob:')) {
+                <div class="preview-wrapper">
+                  <img
+                    [src]="imagePreviewUrl"
+                    alt="preview"
+                    class="preview-img"
+                  />
+                  <ngx-dropzone-remove-badge
+                    (click)="onRemoveImage()"
+                  ></ngx-dropzone-remove-badge>
+                </div>
+              } @else {
+                <custom-dropzone-preview
+                  type="IMG"
+                  [url]="imagePreviewUrl"
+                  [referenceId]="courseId || 0"
+                  [AttachmentModule]="null"
+                ></custom-dropzone-preview>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger mt-2"
+                  (click)="onRemoveImage()"
+                >
+                  <span class="isax isax-trash me-1"></span>
+                  {{ 'COURSES.FORM.REMOVE_IMAGE' | translate }}
+                </button>
+              }
+            }
+            <ngx-dropzone-label>
+              <div class="upload-placeholder">
+                <span class="isax isax-gallery fs-2 text-muted"></span>
+                <span class="text-muted">{{
+                  'COURSES.FORM.IMAGE_PLACEHOLDER' | translate
+                }}</span>
+              </div>
+            </ngx-dropzone-label>
+          </ngx-dropzone>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Description -->
+      <nz-form-item class="col-12">
+        <nz-form-label>{{
+          'COURSES.FORM.DESCRIPTION_LABEL' | translate
+        }}</nz-form-label>
+        <nz-form-control [nzErrorTip]="nzErrorTip">
           <textarea
-            id="description"
-            class="form-control-custom"
+            nz-input
             formControlName="description"
             rows="4"
-            [placeholder]="'COURSES.ADD_COURSE_MODAL.DESCRIPTION_PLACEHOLDER' | translate"
-            [class.is-invalid]="
-              f['description'].invalid && f['description'].touched
+            [placeholder]="
+              'COURSES.ADD_COURSE_MODAL.DESCRIPTION_PLACEHOLDER' | translate
             "
           ></textarea>
-          <div class="form-counter">
-            <span
-              class="form-error"
-              *ngIf="f['description'].invalid && f['description'].touched"
-            >
-              {{ 'COURSES.FORM.ERROR_DESCRIPTION' | translate: { max: maxDescription } }}
-            </span>
-            <span class="char-count"
-              >{{ descriptionLength }}/{{ maxDescription }}</span
-            >
-          </div>
+        </nz-form-control>
+        <span class="form-helper">{{
+          'COURSES.FORM.DESCRIPTION_HELPER' | translate
+        }}</span>
+        <div class="form-counter">
+          <span class="char-count"
+            >{{ descriptionLength }}/{{ maxDescription }}</span
+          >
         </div>
-      </div>
+      </nz-form-item>
 
       <!-- Footer -->
-      <div class="form-footer">
-        <button type="button" class="btn btn-cancel" (click)="onCancel()">
-          {{ 'COURSES.CANCEL' | translate }}
-        </button>
-        <button type="submit" class="btn btn-save" [disabled]="submitting">
-          <span
-            *ngIf="submitting"
-            class="spinner-border spinner-border-sm me-2"
-          ></span>
-          {{ isEditMode ? ('COURSES.FORM.SAVE_CHANGES' | translate) : ('COURSES.FORM.SAVE_COURSE' | translate) }}
-        </button>
-      </div>
-    </form>
+      <nz-form-item class="col-12">
+        <div class="form-footer">
+          <button
+            type="button"
+            class="btn btn-white h-40px"
+            (click)="onCancel()"
+          >
+            {{ 'COURSES.CANCEL' | translate }}
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary-gradient h-40px"
+            (click)="onSubmit()"
+            [disabled]="submitting"
+          >
+            <span
+              *ngIf="submitting"
+              class="spinner-border spinner-border-sm me-2"
+            ></span>
+            {{
+              isEditMode
+                ? ('COURSES.FORM.SAVE_CHANGES' | translate)
+                : ('COURSES.FORM.SAVE_COURSE' | translate)
+            }}
+          </button>
+        </div>
+      </nz-form-item>
+    </nz-form>
   </div>
 </div>
+
+<ng-template #nzErrorTip let-control>
+  <app-nz-control-error-temp [control]="control"></app-nz-control-error-temp>
+</ng-template>

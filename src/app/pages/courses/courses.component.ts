@@ -9,8 +9,8 @@ import { SearchFilterComponent, FilterConfig } from 'src/app/shared/components/s
 import { ScrollXComponent } from 'src/app/shared/components/scroll-x/scroll-x.component';
 import { CourseStatusBadgeComponent } from 'src/app/shared/components/status-badge/status-badge.component';
 import { exportToExcel, ExportColumn, SWALConfirmation, SWAL } from 'src/app/app-const';
-import { Course, CourseStatus } from './courses.model';
-import { CoursesService, CourseStats } from './courses.service';
+import { Course, CourseStatus } from 'src/app/core/backend/courses/models/courses.model';
+import { CoursesBackendService, CourseStats } from 'src/app/core/backend/courses/services/courses.service';
 
 type SortKey = 'id' | 'courseName' | 'instructorName' | 'category' | 'duration' | 'price' | 'status' | 'createdDate';
 type SortDir = 'asc' | 'desc';
@@ -91,7 +91,7 @@ export class CoursesComponent implements OnInit {
   skeletonRows = Array.from({ length: 8 });
 
   constructor(
-    private coursesService: CoursesService,
+    private coursesBackend: CoursesBackendService,
     private router: Router,
     private translate: TranslateService
   ) { }
@@ -103,10 +103,10 @@ export class CoursesComponent implements OnInit {
   loadData(): void {
     this.isLoading = true;
     this.isError = false;
-    this.coursesService.getAllCourses().subscribe({
+    this.coursesBackend.getAll().subscribe({
       next: (courses) => {
         this.allCourses = courses || [];
-        this.stats = this.coursesService.getStats();
+        this.stats = this.coursesBackend.getStats();
         this.syncPriceFilterBounds();
         this.applyFilters();
         this.isLoading = false;
@@ -209,7 +209,7 @@ export class CoursesComponent implements OnInit {
     SWALConfirmation(
       'warning',
       this.translate.instant('COURSES.DELETE.TITLE'),
-      this.coursesService.deleteCourse(course.id),
+      this.coursesBackend.delete(course.id),
       this.translate.instant('COURSES.TOAST.DELETE_SUCCESS'),
       this.translate.instant('COURSES.DELETE.CONFIRM'),
       this.translate.instant('COURSES.DELETE.MESSAGE')

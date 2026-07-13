@@ -1701,3 +1701,47 @@ span.ant-radio + * {
 .ant-timeline-item-head-custom {
   top: 6.5px !important;
 }
+
+.image-zoom {
+  & {
+    cursor: zoom-in;
+    position: relative;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    color: #fff;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    font-size: 15px;
+    left: 0;
+    margin: auto;
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    .overlay {
+      display: flex;
+    }
+  }
+}
+
+.preview-img {
+  max-width: 200px;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+}
+
+.file_preview {
+  position: relative;
+}

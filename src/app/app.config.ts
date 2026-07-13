@@ -8,7 +8,7 @@ import {
 import { HighContrastMode, HighContrastModeDetector } from '@angular/cdk/a11y';
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, DEFAULT_CURRENCY_CODE, importProvidersFrom, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
@@ -16,9 +16,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ar as dateLocale } from 'date-fns/locale';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { ar_EG, en_US, NZ_DATE_LOCALE, NZ_I18N } from 'ng-zorro-antd/i18n';
-import { environment } from '../environments/environment';
-import { routes } from './app-routes'; // Adjust path if necessary
-import { CommonApiModule } from './core/backend/common/common-api.module';
+import { routes } from './app-routes';
 import { CustomTitleStrategy } from './core/services/CustomTitleStrategy.provider';
 import { setGlobalTranslateService } from './app-const';
 // Register locale data (still needed for Angular's common module)
@@ -27,7 +25,6 @@ import ar from '@angular/common/locales/ar';
 import en from '@angular/common/locales/en';
 import { errorInterceptor } from './core/helpers/error.interceptor';
 import { jwtInterceptor } from './core/helpers/jwt.interceptor';
-import { AcademyApiModule } from './core/backend/academy/academy-api.module';
 registerLocaleData(ar);
 registerLocaleData(en);
 
@@ -139,10 +136,6 @@ export const appConfig: ApplicationConfig = {
         // Services use providedIn: 'root' so they are automatically available
         // No additional providers needed - they will be lazily instantiated when injected
 
-        // API modules with root configuration
-        importProvidersFrom(
-            CommonApiModule.forRoot({ rootUrl: environment.api }),
-            AcademyApiModule.forRoot({ rootUrl: environment.api }),
-        )
+
     ],
 };

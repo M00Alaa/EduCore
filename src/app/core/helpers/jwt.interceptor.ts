@@ -16,51 +16,14 @@ export const jwtInterceptor: HttpInterceptorFn = (request: HttpRequest<any>, nex
 
   // Add authorization header with JWT token if available
   try {
-    const token = JSON.parse(localStorage.getItem('vultToken') || sessionStorage.getItem('vultToken') || 'null') || auth._token;
+    const token = JSON.parse(localStorage.getItem('eduToken') || sessionStorage.getItem('eduToken') || 'null') || auth._token;
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const parseContextId = (rawValue: string | null): number => {
-      if (!rawValue) {
-        return 0;
-      }
-
-      const numericRaw = Number(rawValue);
-      if (Number.isInteger(numericRaw) && numericRaw > 0) {
-        return numericRaw;
-      }
-
-      try {
-        const parsed = JSON.parse(rawValue);
-        if (typeof parsed === 'number' && Number.isInteger(parsed) && parsed > 0) {
-          return parsed;
-        }
-
-        const parsedId = Number((parsed as any)?.id);
-        if (Number.isInteger(parsedId) && parsedId > 0) {
-          return parsedId;
-        }
-      } catch {
-        // Ignore malformed storage values.
-      }
-
-      return 0;
-    };
-
-    const impersonatedBranchId = parseContextId(localStorage.getItem('impersonated_branch_id'));
-    if (impersonatedBranchId > 0) {
-      headers['X-Current-Branch-Id'] = String(impersonatedBranchId);
-      headers['X-Current-Academy-Id'] = String(impersonatedBranchId);
-    }
-
-    const impersonatedMainId = parseContextId(localStorage.getItem('impersonated_main_academy_id'));
-    if (impersonatedMainId > 0) {
-      headers['X-Main-Academy-Id'] = String(impersonatedMainId);
-    }
   } catch (e) {
-    localStorage.removeItem('vultToken');
-    sessionStorage.removeItem('vultToken');
+    localStorage.removeItem('eduToken');
+    sessionStorage.removeItem('eduToken');
   }
 
   request = request.clone({ setHeaders: headers });

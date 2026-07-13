@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SimplebarAngularComponent, SimplebarAngularModule } from 'simplebar-angular';
 import { FirebaseMessagingService, FirebaseMessagePayload } from 'src/app/core/services/firebase-messaging.service';
-import { NotificationsService } from 'src/app/core/backend/common/services/notifications.service';
+
 import { ChatNotificationBridgeService, ChatNotificationEvent } from 'src/app/core/services/chat-notification-bridge.service';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -47,7 +47,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private firebaseMessaging: FirebaseMessagingService,
-    private notificationsService: NotificationsService,
+
     private chatBridge: ChatNotificationBridgeService,
     private translate: TranslateService
   ) {
@@ -198,33 +198,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
    * Get all notifications from backend
    */
   getAll() {
-    this.gettingNotifs = true;
-    this.notificationsService.apiV1NotificationsGet({
-      page: String(this.$page),
-      per_page: String(this.$pageSize)
-    }).subscribe({
-      next: (res: any) => {
-        this.gettingNotifs = false;
-        const items = res?.data?.notifications || [];
-        const mapped = items.map((n: any) => ({
-          id: n.id,
-          title: n.title_ar || n.title_en || n.title || 'إشعار',
-          message: n.message_ar || n.message_en || n.message || '',
-          type: n.key_id,
-          read: n.seen === 1 || n.read === true,
-          createdate: n.created_at,
-          route: n.route,
-          payload: n.payload,
-          module: n.module,
-          module_id: n.module_id,
-        }));
-        this.notifs.push(...mapped);
-        this.$total = res?.data?.pagination?.total || 0;
-      },
-      error: () => {
-        this.gettingNotifs = false;
-      }
-    });
+    this.gettingNotifs = false;
   }
 
   /**
@@ -236,45 +210,22 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     not.read = true;
     this.unreadCount = Math.max(0, this.unreadCount - 1);
 
-    // Local chat notifications have no backend record — skip API call
     if (not.type === 'chat_message') return;
-
-    this.notificationsService.apiV1NotificationsIdReadPut({
-      id: String(not.id)
-    }).subscribe({
-      error: () => {
-        this.unreadCount++;
-        not.read = false;
-      }
-    });
   }
 
   /**
    * Mark all notifications as read
    */
   readAll() {
-    const prevCount = this.unreadCount;
-    const prevNotifs = this.notifs.map(n => ({ ...n }));
     this.unreadCount = 0;
     this.notifs = this.notifs.map(n => ({ ...n, read: true }));
-
-    this.notificationsService.apiV1NotificationsReadAllPut().subscribe({
-      error: () => {
-        this.unreadCount = prevCount;
-        this.notifs = prevNotifs;
-      }
-    });
   }
 
   /**
    * Get unread notification count from backend
    */
   getUnreadCount() {
-    this.notificationsService.apiV1NotificationsUnreadCountGet().subscribe({
-      next: (res: any) => {
-        this.unreadCount = res?.data?.count || 0;
-      }
-    });
+    this.unreadCount = 0;
   }
 
   /**

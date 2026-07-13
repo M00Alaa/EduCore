@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CourseStatus } from '../../../pages/courses/courses.model';
+import { CourseStatus } from '../../../core/backend/courses/models/courses.model';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

@@ -2,12 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { EIDDESIGN, logo } from 'src/app/app-const';
-import { AuthenticationService, MgUser } from 'src/app/core/services/auth.service';
+import { MgUser } from 'src/app/core/services/auth.service';
 import { LanguageService } from '../../core/services/language.service';
 import { StylesChangerService } from '../../core/services/style.service';
 import { LeftSiderService } from '../vertical/left-sidebar/left-sidebar.component';
-import { BranchManagementPortalUiService } from 'src/app/core/backend/academy/services';
-import { BranchManagementPortalUiListBranchesResponseDataItem } from 'src/app/core/backend/academy/models';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -40,11 +38,6 @@ export class TopbarComponent implements OnInit {
   acc: MgUser | null = null;
   isDarkMode = false;
   currentLang = 'ar';
-
-  // Branch selector
-  branches: BranchManagementPortalUiListBranchesResponseDataItem[] = [];
-  selectedBranch: BranchManagementPortalUiListBranchesResponseDataItem | null = null;
-  isBranchMode = false;
 
   constructor(
     public languageService: LanguageService,

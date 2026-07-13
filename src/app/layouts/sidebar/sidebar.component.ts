@@ -60,11 +60,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
 
-  isBranchMode = false;
-  exitBranchAction() {
-    this.authService.exitBranch();
-  }
-
   ngOnInit() {
     this.initialize();
     this._scrollElement();

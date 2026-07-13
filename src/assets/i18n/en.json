@@ -57,15 +57,15 @@
         "EXPORT_FILE_NAME": "courses-{{date}}",
         "EXPORT_SHEET_NAME": "Courses",
         "FORM": {
-            "SUBTITLE_ADD": "Provide the required information to create a new course.",
+            "SUBTITLE_ADD": "Create a new learning module for the platform.",
             "SUBTITLE_EDIT": "Update the course information below.",
             "LOADING": "Loading course…",
             "BACK": "Back",
-            "COURSE_NAME_HELPER": "Choose a clear, descriptive name for the course.",
+            "COURSE_NAME_HELPER": "Keep it clear and descriptive.",
             "ERROR_COURSE_NAME": "Course name is required (min 3 characters).",
             "ERROR_INSTRUCTOR": "Instructor name is required.",
             "ERROR_CATEGORY": "Please select a category.",
-            "ERROR_DURATION": "Duration must be at least 1 hour.",
+            "ERROR_DURATION": "Duration must be at least 1 week.",
             "ERROR_PRICE": "Price is required and cannot be negative.",
             "ERROR_STATUS": "Please select a status.",
             "ERROR_DESCRIPTION": "Description must be under {{max}} characters.",
@@ -80,7 +80,11 @@
             "SAVE_COURSE": "Save Course",
             "HOURS": "Hours",
             "CURRENCY_SYMBOL": "$",
-            "DESCRIPTION_LABEL": "Description",
+            "DESCRIPTION_LABEL": "Course Description",
+            "DESCRIPTION_HELPER": "This will be displayed on the course overview page.",
+            "IMAGE_LABEL": "Course Image",
+            "IMAGE_PLACEHOLDER": "Click or drag to upload course image",
+            "REMOVE_IMAGE": "Remove image",
             "SELECT_CATEGORY": "Select category",
             "SELECT_STATUS": "Select status"
         },
@@ -107,20 +111,20 @@
             "BACK_TEXT": "Back to Courses"
         },
         "ADD_COURSE_MODAL": {
-            "TITLE": "Add New Course",
+            "TITLE": "Add Course",
             "EDIT_TITLE": "Edit Course",
             "COURSE_NAME": "Course Name",
             "COURSE_NAME_PLACEHOLDER": "Enter course name",
             "INSTRUCTOR": "Instructor",
             "INSTRUCTOR_PLACEHOLDER": "Enter instructor name",
             "CATEGORY": "Category",
-            "CATEGORY_PLACEHOLDER": "Enter category",
-            "DURATION": "Duration (hrs)",
-            "PRICE": "Price",
+            "CATEGORY_PLACEHOLDER": "Select category",
+            "DURATION": "Duration (Weeks)",
+            "PRICE": "Price (USD)",
             "STATUS": "Status",
             "STATUS_PLACEHOLDER": "Select status",
             "DESCRIPTION": "Description",
-            "DESCRIPTION_PLACEHOLDER": "Enter description"
+            "DESCRIPTION_PLACEHOLDER": "Provide a comprehensive overview of the course…"
         },
         "VIEW_COURSE_MODAL": {
             "TITLE": "Course Details"

@@ -16,12 +16,6 @@ export const PagesRoutes: Routes = [
     path: 'courses',
     loadChildren: () => import('./courses/courses.module').then((m) => m.CoursesModule),
   },
-  // Equipment Management Module
-  {
-    path: 'equipment',
-    loadChildren: () => import('./equipment/equipment.module').then((m) => m.EquipmentModule),
-  },
-
   {
     path: '**',
     redirectTo: 'error/404',

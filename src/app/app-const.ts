@@ -93,10 +93,8 @@ let sessionEndedDialogShown = false;
 let sessionReloadStarted = false;
 
 function clearStoredAuthState(): void {
-  localStorage.removeItem('vultToken');
-  sessionStorage.removeItem('vultToken');
-  localStorage.removeItem('impersonated_branch_id');
-  localStorage.removeItem('impersonated_main_academy_id');
+  localStorage.removeItem('eduToken');
+  sessionStorage.removeItem('eduToken');
 }
 
 function reloadToLogin(): void {
@@ -154,8 +152,8 @@ export const errorCallback = (err: any) => {
   const hasStoredToken = (() => {
     try {
       return !!(
-        JSON.parse(localStorage.getItem('vultToken') || 'null') ||
-        JSON.parse(sessionStorage.getItem('vultToken') || 'null')
+        JSON.parse(localStorage.getItem('eduToken') || 'null') ||
+        JSON.parse(sessionStorage.getItem('eduToken') || 'null')
       );
     } catch {
       return false;

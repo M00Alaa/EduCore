@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Course } from '../courses.model';
-import { CoursesService } from '../courses.service';
+import { Course } from 'src/app/core/backend/courses/models/courses.model';
+import { CoursesBackendService } from 'src/app/core/backend/courses/services/courses.service';
 import { CourseStatusBadgeComponent } from 'src/app/shared/components/status-badge/status-badge.component';
 import { SWALConfirmation } from 'src/app/app-const';
 
@@ -28,7 +28,7 @@ export class CourseDetailsComponent implements OnInit {
   skeletonRows = Array.from({ length: 4 });
 
   constructor(
-    private coursesService: CoursesService,
+    private coursesBackend: CoursesBackendService,
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService
@@ -44,7 +44,7 @@ export class CourseDetailsComponent implements OnInit {
   loadCourse(id: number): void {
     this.loading = true;
     this.error = false;
-    this.coursesService.getCourseById(id).subscribe({
+    this.coursesBackend.getById(id).subscribe({
       next: (course) => {
         this.course = course || null;
         this.loading = false;
@@ -75,7 +75,7 @@ export class CourseDetailsComponent implements OnInit {
     SWALConfirmation(
       'warning',
       this.translate.instant('COURSES.DELETE.TITLE'),
-      this.coursesService.deleteCourse(this.course.id),
+      this.coursesBackend.delete(this.course.id),
       this.translate.instant('COURSES.TOAST.DELETE_SUCCESS'),
       this.translate.instant('COURSES.DELETE.CONFIRM'),
       this.translate.instant('COURSES.DELETE.MESSAGE')
