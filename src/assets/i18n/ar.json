@@ -1,6 +1,8 @@
 {
     "APP_TITLE": "EduCore - نظام إدارة الكورسات",
     "APP_TITLE_BASE": "EduCore - نظام إدارة الكورسات",
+    "LOADING": "جاري التحميل...",
+    "GO_BACK": "العودة للكورسات",
     "MENU": {
         "DASHBOARD": "لوحة التحكم",
         "COURSES": "الكورسات",
@@ -28,7 +30,7 @@
             "COURSE_NAME": "اسم الكورس",
             "INSTRUCTOR": "المدرب",
             "CATEGORY": "الفئة",
-            "DURATION": "المدة (ساعات)",
+            "DURATION": "المدة (أسبوع)",
             "PRICE": "السعر",
             "STATUS": "الحالة",
             "CREATED_DATE": "تاريخ الإنشاء",

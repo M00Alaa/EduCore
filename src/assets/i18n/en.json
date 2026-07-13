@@ -1,6 +1,8 @@
 {
     "APP_TITLE": "EduCore - Courses Management System",
     "APP_TITLE_BASE": "EduCore - Courses Management System",
+    "LOADING": "Loading...",
+    "GO_BACK": "Back to Courses",
     "MENU": {
         "DASHBOARD": "Dashboard",
         "COURSES": "Courses",
@@ -28,7 +30,7 @@
             "COURSE_NAME": "Course Name",
             "INSTRUCTOR": "Instructor",
             "CATEGORY": "Category",
-            "DURATION": "Duration (hrs)",
+            "DURATION": "Duration (Weeks)",
             "PRICE": "Price",
             "STATUS": "Status",
             "CREATED_DATE": "Created",

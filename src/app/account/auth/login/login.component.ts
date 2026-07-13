@@ -21,8 +21,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
   logo = logo.light;
 
   loginForm = new FormGroup({
-    userName: new FormControl(isDevMode() ? 'Jeel@gmail.com' : '', [Validators.required, noWhitespaceValidator]),
-    password: new FormControl(isDevMode() ? '12345678' : '', [Validators.required]),
+    // userName: new FormControl(isDevMode() ? 'moalaa@educore.com' : '', [Validators.required, noWhitespaceValidator]),
+    // password: new FormControl(isDevMode() ? '12345678' : '', [Validators.required]),
+    userName: new FormControl('moalaa@educore.com', [Validators.required, noWhitespaceValidator]),
+    password: new FormControl('12345678', [Validators.required]),
     rememberMe: new FormControl(false),
   });
 

@@ -1,44 +1,6 @@
-<div class="container-fluid p-4">
-  <div class="card shadow-none p-4 border-0">
-    <div class="row row-cols-1 row-cols-md-2 g-0 gy-5 gx-md-5 min-h-94vh">
-      <div class="col align-self-center">
-        <router-outlet></router-outlet>
-      </div>
-
-      <div class="col">
-        <div class="card shadow-none border-0 mo-gradient h-100">
-          <div class="overlay"></div>
-          <div
-            class="card-body h-100 d-flex flex-column align-items-start p-4 p-md-5"
-          >
-            <img [src]="logo" height="50" alt="Vult Logo" />
-
-            <h2 class="text-white fw-bold my-3">
-              {{ 'AUTH_WRAPPER.TITLE' | translate }}
-            </h2>
-
-            <p class="text-white opacity-75 fs-1_6rem">
-              {{ 'AUTH_WRAPPER.DESCRIPTION' | translate }}
-            </p>
-
-            <!-- Packages Carousel -->
-            <div class="mt-auto w-100">
-              <owl-carousel-o [options]="carouselOptions">
-                <ng-template carouselSlide *ngFor="let package of packages">
-                  <div class="package-card">
-                    <h4 class="text-white fw-bold mb-2">
-                      {{ package.name | translate }}
-                    </h4>
-                    <p class="text-white opacity-75 mb-0">
-                      {{ package.description | translate }}
-                    </p>
-                  </div>
-                </ng-template>
-              </owl-carousel-o>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div
+  class="vh-100 d-flex align-items-center justify-content-center"
+  style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+>
+  <router-outlet></router-outlet>
 </div>

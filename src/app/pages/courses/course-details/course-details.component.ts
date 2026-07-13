@@ -7,6 +7,7 @@ import { Course } from 'src/app/core/backend/courses/models/courses.model';
 import { CoursesBackendService } from 'src/app/core/backend/courses/services/courses.service';
 import { CourseStatusBadgeComponent } from 'src/app/shared/components/status-badge/status-badge.component';
 import { SWALConfirmation } from 'src/app/app-const';
+import { NzSpinComponent } from "ng-zorro-antd/spin";
 
 interface SyllabusLesson {
     number: number;
@@ -21,7 +22,8 @@ interface SyllabusLesson {
         CommonModule,
         NzSkeletonModule,
         TranslateModule,
-        CourseStatusBadgeComponent
+        CourseStatusBadgeComponent,
+        NzSpinComponent
     ],
     templateUrl: './course-details.component.html'
 })
