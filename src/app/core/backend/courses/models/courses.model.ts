@@ -9,6 +9,10 @@ export interface Course {
     description?: string;
     imageUrl?: string;
     createdDate?: string;
+    rating?: number;
+    studentsCount?: number;
+    updatedDate?: string;
+    updatedBy?: string;
 }
 
 export type CourseStatus = 'Active' | 'Draft' | 'Archived';

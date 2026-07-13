@@ -41,8 +41,8 @@ export const translateAlertText = (
 };
 
 export const projectName = {
-  en: 'Vult - Academies Management System',
-  ar: 'ڤولت - نظام إدارة الأكاديميات'
+  en: 'EduCore - Courses Management System',
+  ar: 'EduCore - نظام إدارة الكورسات'
 };
 
 export const ROLES = {

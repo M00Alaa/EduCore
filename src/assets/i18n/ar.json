@@ -1,4 +1,6 @@
 {
+    "APP_TITLE": "EduCore - نظام إدارة الكورسات",
+    "APP_TITLE_BASE": "EduCore - نظام إدارة الكورسات",
     "MENU": {
         "DASHBOARD": "لوحة التحكم",
         "COURSES": "الكورسات",
@@ -92,6 +94,9 @@
         "DETAILS": {
             "BASIC_INFORMATION": "المعلومات الأساسية",
             "COURSE_DETAILS": "تفاصيل الكورس",
+            "COURSE_DESCRIPTION": "وصف الكورس",
+            "SYLLABUS_OVERVIEW": "نظرة عامة على المنهج",
+            "SYSTEM_INFO": "معلومات النظام",
             "METADATA": "البيانات الوصفية",
             "COURSE_NAME": "اسم الكورس",
             "INSTRUCTOR": "المدرب",
@@ -102,9 +107,13 @@
             "DESCRIPTION": "الوصف",
             "COURSE_ID": "رقم الكورس",
             "CREATED_DATE": "تاريخ الإنشاء",
+            "LAST_UPDATED": "آخر تحديث",
             "HOURS_SUFFIX": "ساعات",
             "BY_INSTRUCTOR": "بقلم {{name}} · {{category}}",
             "BACK_TO_COURSES": "العودة للكورسات",
+            "PAGE_SUBTITLE": "تفاصيل الكورس وإدارته",
+            "STUDENTS": "طالب",
+            "BY": "بواسطة",
             "EDIT_COURSE": "تعديل الكورس",
             "DELETE_COURSE": "حذف الكورس",
             "NOT_FOUND_TITLE": "الكورس غير موجودة",

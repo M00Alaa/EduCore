@@ -1,4 +1,6 @@
 {
+    "APP_TITLE": "EduCore - Courses Management System",
+    "APP_TITLE_BASE": "EduCore - Courses Management System",
     "MENU": {
         "DASHBOARD": "Dashboard",
         "COURSES": "Courses",
@@ -92,6 +94,9 @@
         "DETAILS": {
             "BASIC_INFORMATION": "Basic Information",
             "COURSE_DETAILS": "Course Details",
+            "COURSE_DESCRIPTION": "Course Description",
+            "SYLLABUS_OVERVIEW": "Syllabus Overview",
+            "SYSTEM_INFO": "System Info",
             "METADATA": "Metadata",
             "COURSE_NAME": "Course Name",
             "INSTRUCTOR": "Instructor",
@@ -102,9 +107,13 @@
             "DESCRIPTION": "Description",
             "COURSE_ID": "Course ID",
             "CREATED_DATE": "Created Date",
+            "LAST_UPDATED": "Last Updated",
             "HOURS_SUFFIX": "hours",
             "BY_INSTRUCTOR": "by {{name}} · {{category}}",
             "BACK_TO_COURSES": "Back to Courses",
+            "PAGE_SUBTITLE": "Course details and management",
+            "STUDENTS": "students",
+            "BY": "by",
             "EDIT_COURSE": "Edit Course",
             "DELETE_COURSE": "Delete Course",
             "NOT_FOUND_TITLE": "Course not found",
