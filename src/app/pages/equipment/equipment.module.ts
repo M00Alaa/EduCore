@@ -14,7 +14,6 @@ import { SearchFilterModule } from 'src/app/shared/components/search-filter/sear
 import { EquipmentComponent } from './equipment.component';
 import { EquipmentListComponent } from './equipment-list/equipment-list.component';
 import { ClassificationsComponent } from './classifications/classifications.component';
-import { PermissionDirective } from 'src/app/shared/directives/permission.directive';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { IsRequiredPipe } from 'src/app/shared/pipes/is-required.pipe';
 import { FormSharedModule } from "src/app/shared/modules/nz-form-full/nz-form-full.module";
@@ -46,7 +45,6 @@ const routes: Routes = [
     TranslateModule,
     ScrollXComponent,
     SearchFilterModule,
-    PermissionDirective,
     NzTabsModule,
     IsRequiredPipe,
     FormSharedModule

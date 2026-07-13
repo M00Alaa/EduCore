@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'mo-equipment',
@@ -15,18 +14,7 @@ export class EquipmentComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthenticationService,
   ) { }
-
-  get equipmentManagementVisible(): boolean {
-    const perms = new Set(this.authService.currentUserValue?.permissions || []);
-    return perms.has('*') || perms.has('equipment.management.view');
-  }
-
-  get equipmentClassificationsVisible(): boolean {
-    const perms = new Set(this.authService.currentUserValue?.permissions || []);
-    return perms.has('*') || perms.has('equipment.classifications.view');
-  }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
@@ -43,9 +31,5 @@ export class EquipmentComponent implements OnInit {
       queryParams: { tab: this.tabKeys[index] },
       queryParamsHandling: 'merge',
     });
-  }
-
-  get classificationsTabIndex(): number {
-    return this.equipmentManagementVisible ? 1 : 0;
   }
 }

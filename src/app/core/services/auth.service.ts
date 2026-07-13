@@ -10,7 +10,6 @@ import { AuthGetCurrentUserMeResponseDataUser } from '../backend/common/models';
 
 export type MgUser = Partial<AuthGetCurrentUserMeResponseDataUser> & {
   roles?: number[] | null | undefined;
-  permissions?: string[];
   landing_route?: string | null;
 };
 @Injectable({ providedIn: 'root' })
@@ -87,7 +86,6 @@ export class AuthenticationService {
                 }
               }
 
-              const permissions = this.normalizePermissions(res.data?.user?.permissions);
               const landingRoute = this.normalizeLandingRoute((res.data?.user as { landing_route?: unknown })?.landing_route);
               const userCopy = { ...res.data?.user };
               if (isImpersonating && impersonatedBranchId) {
@@ -118,7 +116,7 @@ export class AuthenticationService {
               }
 
               this.currentUserSubject.next(
-                res ? { ...userCopy, academy: userCopy.academy || academy, roles: [userRole], permissions, landing_route: landingRoute } : null,
+                res ? { ...userCopy, academy: userCopy.academy || academy, roles: [userRole], landing_route: landingRoute } : null,
               );
             }
             return (this.currentUserSubject.getValue() ||
@@ -134,27 +132,6 @@ export class AuthenticationService {
 
   public get currentUserValue(): MgUser | null {
     return this.currentUserSubject.value;
-  }
-
-  hasPermission(required: string | string[] | null | undefined): boolean {
-    if (!required) {
-      return true;
-    }
-
-    const userPermissions = new Set((this.currentUserSubject.value?.permissions || []).filter(Boolean));
-    if (userPermissions.has('*')) {
-      return true;
-    }
-
-    const requiredPermissions = (Array.isArray(required) ? required : [required])
-      .map((permission) => String(permission || '').trim())
-      .filter(Boolean);
-
-    if (requiredPermissions.length === 0) {
-      return true;
-    }
-
-    return requiredPermissions.some((permission) => userPermissions.has(permission));
   }
 
   login(username: string, password: string, rememberMe = false) {
@@ -190,7 +167,6 @@ export class AuthenticationService {
 
   redirectUser() {
     const userRoles = this.currentUserSubject.getValue()?.roles;
-    const userPermissions = new Set((this.currentUserSubject.value?.permissions || []).filter(Boolean));
 
     if (userRoles?.includes(ROLES.MasterAcademy)) {
       this.router.navigate(['/master-academies']);
@@ -199,61 +175,15 @@ export class AuthenticationService {
       userRoles?.includes(ROLES.BranchManager) ||
       userRoles?.includes(ROLES.CustomRole)
     ) {
-      if (userPermissions.has('*') || userPermissions.has('dashboard.view')) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        const landingRoute = this.currentUserSubject.getValue()?.landing_route;
-        const normalizedLanding =
-          landingRoute && landingRoute !== '/403' ? landingRoute : null;
-        const targetRoute = normalizedLanding || this.resolveFirstAccessibleRoute(userPermissions);
-        void this.router.navigateByUrl(targetRoute);
-      }
+      const landingRoute = this.currentUserSubject.getValue()?.landing_route;
+      const normalizedLanding =
+        landingRoute && landingRoute !== '/403' ? landingRoute : null;
+      void this.router.navigateByUrl(normalizedLanding || '/dashboard');
     } else if (userRoles?.includes(ROLES.Trainer)) {
       this.router.navigate(['/dashboard']);
-
-
     } else {
       this.router.navigate(['/403']);
     }
-  }
-
-  private resolveFirstAccessibleRoute(permissions: Set<string>): string {
-    const routeChecks = [
-      { route: '/dashboard', permission: 'dashboard.view' },
-      { route: '/financial/salaries', permission: 'team_salaries.view' },
-      { route: '/activities?tab=deductions', permission: 'deductions.view' },
-      { route: '/reports/general', permission: 'reports.view' },
-      { route: '/reports/general', permission: 'reports.general.view' },
-      { route: '/reports/subscriptions', permission: 'reports.subscriptions.view' },
-      { route: '/reports/facilities', permission: 'reports.facilities.view' },
-      { route: '/reports/players', permission: 'reports.players.view' },
-      { route: '/reports/activities', permission: 'reports.activities.view' },
-      { route: '/reports/deductions', permission: 'deductions.view' },
-      { route: '/reports/salaries', permission: 'team_salaries.view' },
-      { route: '/reports/attendance', permission: 'reports.attendance.view' },
-      { route: '/reports/revenues', permission: 'reports.financial.view' },
-      { route: '/reports/revenues', permission: 'reports.revenues.view' },
-      { route: '/reports/expenses', permission: 'reports.expenses.view' },
-      { route: '/reports/balances', permission: 'reports.balances.view' },
-      { route: '/subscriptions', permission: 'subscriptions.view' },
-      { route: '/subscriptions', permission: 'subscription-management-parent/view' },
-      { route: '/activities', permission: 'activities.view' },
-      { route: '/players-attendance', permission: 'players.attendance.view' },
-      { route: '/players', permission: 'players.management.view' },
-      { route: '/players', permission: 'players.teams.view' },
-      { route: '/players', permission: 'players.view' },
-      { route: '/trainers', permission: 'trainers.view' },
-      { route: '/administrators', permission: 'administrators.view' },
-      { route: '/trainer/appointments', permission: 'appointments.view' },
-      { route: '/financial', permission: 'financial.view' },
-      { route: '/equipment', permission: 'equipment.view' },
-      { route: '/permissions', permission: 'permissions.view' },
-      { route: '/settings', permission: 'settings.view' },
-      { route: '/communication', permission: 'communication.view' },
-      { route: '/branches', permission: 'branches.view' },
-      { route: '/invoices', permission: 'invoices.view' },
-    ];
-    return routeChecks.find(r => permissions.has(r.permission))?.route ?? '/403';
   }
 
   logout() {
@@ -326,20 +256,6 @@ export class AuthenticationService {
         window.location.href = '/branches';
       },
     });
-  }
-
-  private normalizePermissions(permissions: unknown): string[] {
-    if (!Array.isArray(permissions)) {
-      return [];
-    }
-
-    return Array.from(
-      new Set(
-        permissions
-          .map((permission) => String(permission || '').trim())
-          .filter((permission) => !!permission)
-      )
-    );
   }
 
   private normalizeLandingRoute(route: unknown): string | null {

@@ -13,7 +13,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CustomDropzonePreviewComponent } from 'src/app/shared/components/custom-image-previewer/custom-dropzone-preview.component';
-import { RoleDirective } from 'src/app/shared/directives/app-permissions.directive';
 import { FormSharedModule } from 'src/app/shared/modules/nz-form-full/nz-form-full.module';
 import { IsRequiredPipe } from 'src/app/shared/pipes/is-required.pipe';
 import { AuthRoutes } from './auth-routing';
@@ -47,7 +46,6 @@ import { RouterModule } from '@angular/router';
     NgbAlertModule,
     NgOtpInputModule,
     NzButtonModule,
-    RoleDirective,
     NzRadioModule,
     NzSelectModule,
     NgbPopoverModule,

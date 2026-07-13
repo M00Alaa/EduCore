@@ -15,7 +15,6 @@
 
     <div class="d-flex flex-wrap gap-2 align-items-center">
       <button
-        *appPermission="'equipment.management.add'"
         class="btn btn-primary-gradient h-40px d-flex align-items-center gap-2"
         (click)="openAddEquipmentModal()"
       >
@@ -77,14 +76,12 @@
                   <span class="isax isax-eye fs-1_25rem"></span>
                 </button>
                 <button
-                  *appPermission="'equipment.management.edit'"
                   class="btn btn-icon btn-soft-secondary"
                   (click)="editEquipment(item)"
                 >
                   <span class="isax isax-edit fs-1_25rem"></span>
                 </button>
                 <button
-                  *appPermission="'equipment.management.delete'"
                   class="btn btn-icon btn-soft-danger"
                   (click)="deleteEquipment(item)"
                 >
@@ -331,7 +328,6 @@
   </div>
   <div class="modal-footer border-0">
     <button
-      *appPermission="['equipment.management.add', 'equipment.management.edit']"
       class="btn btn-primary-gradient h-40px px-5"
       (click)="saveEquipment()"
       [disabled]="isSaving"
@@ -608,7 +604,6 @@
 
       <div class="d-flex gap-2">
         <button
-          *appPermission="'equipment.management.edit'"
           class="btn btn-white h-40px"
           (click)="modal.close(); editEquipment(selectedEquipment!)"
         >

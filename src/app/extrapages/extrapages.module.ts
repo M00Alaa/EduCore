@@ -3,7 +3,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { NgbDropdownModule, NgbModalModule, NgbNavModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgOtpInputModule } from 'ng-otp-input';
-import { SwiperDirective } from '../shared/directives/swiper.directive';
 import { ExtrapagesRoutingModule } from './extrapages-routing.module';
 import { Page403Component } from './page403/page403.component';
 import { Page404Component } from './page404/page404.component';
@@ -21,7 +20,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { register } from 'swiper/element/bundle';
 import { ScrollXComponent } from '../shared/components/scroll-x/scroll-x.component';
-import { RoleDirective } from '../shared/directives/app-permissions.directive';
 import { IsRequiredPipe } from '../shared/pipes/is-required.pipe';
 
 // Step 2: Add the following line...
@@ -31,13 +29,11 @@ register();
     CommonModule,
     TranslateModule,
     ExtrapagesRoutingModule,
-    SwiperDirective,
     CarouselModule,
     NgOtpInputModule,
     NgbPaginationModule,
     NzTableModule,
     NzSwitchModule,
-    RoleDirective,
     NzDatePickerModule,
     FormsModule,
     NgbNavModule,

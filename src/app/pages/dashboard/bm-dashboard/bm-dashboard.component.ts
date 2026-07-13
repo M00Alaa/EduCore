@@ -22,7 +22,6 @@ type QuickAction = {
     key: string;
     icon: string;
     route: string;
-    permissions: string[];
 };
 
 type DonutChartOptions = {
@@ -91,37 +90,31 @@ export class BmDashboardComponent {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_COURSE',
             icon: 'isax-add-circle',
             route: '/courses',
-            permissions: ['courses.add', 'courses.view'],
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.VIEW_COURSES',
             icon: 'isax-document-text',
             route: '/courses',
-            permissions: ['courses.view'],
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_INSTRUCTOR',
             icon: 'isax-teacher',
             route: '/instructors',
-            permissions: ['instructors.add', 'instructors.view'],
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.VIEW_INSTRUCTORS',
             icon: 'isax-user-group',
             route: '/instructors',
-            permissions: ['instructors.view'],
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_STUDENT',
             icon: 'isax-user-add',
             route: '/students',
-            permissions: ['students.add', 'students.view'],
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.VIEW_STUDENTS',
             icon: 'isax-users',
             route: '/students',
-            permissions: ['students.view'],
         },
     ];
 

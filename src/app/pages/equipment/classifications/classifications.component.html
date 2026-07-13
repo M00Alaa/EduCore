@@ -15,7 +15,6 @@
 
     <div class="d-flex flex-wrap gap-2 align-items-center">
       <button
-        *appPermission="'equipment.classifications.add'"
         class="btn btn-primary-gradient h-40px d-flex align-items-center gap-2"
         (click)="openAddClassificationModal()"
       >
@@ -74,14 +73,12 @@
             <td>
               <div class="d-flex gap-1">
                 <button
-                  *appPermission="'equipment.classifications.edit'"
                   class="btn btn-icon btn-soft-secondary"
                   (click)="editClassification(item)"
                 >
                   <span class="isax isax-edit fs-1_25rem"></span>
                 </button>
                 <button
-                  *appPermission="'equipment.classifications.delete'"
                   class="btn btn-icon btn-soft-danger"
                   (click)="deleteClassification(item)"
                 >
@@ -245,10 +242,6 @@
   </div>
   <div class="modal-footer border-0">
     <button
-      *appPermission="[
-        'equipment.classifications.add',
-        'equipment.classifications.edit',
-      ]"
       class="btn btn-primary-gradient px-4"
       (click)="saveClassification()"
       [disabled]="isSaving"

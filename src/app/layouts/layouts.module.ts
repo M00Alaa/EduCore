@@ -12,8 +12,6 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { RoleDirective } from '../shared/directives/app-permissions.directive';
-import { PermissionDirective } from '../shared/directives/permission.directive';
 import { FooterComponent } from './footer/footer.component';
 import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.component';
 import { LayoutComponent } from './layout.component';
@@ -38,8 +36,6 @@ import { HasItemsPipe } from './sidebar/has-items.pipe';
     HasItemsPipe,
     RouterModule,
     NgbDropdownModule,
-    RoleDirective,
-    PermissionDirective,
     ClickOutsideModule,
     NgbCollapseModule,
     NgbTooltipModule,
