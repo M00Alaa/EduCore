@@ -1,0 +1,87 @@
+<div
+  class="d-flex align-items-center justify-content-center h-100 py-5 position-relative overflow-hidden bg-neutral-color"
+>
+  <!-- Decorative background -->
+  <div
+    class="position-absolute rounded-circle"
+    style="
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(
+        circle,
+        rgba(79, 124, 255, 0.04) 0%,
+        transparent 70%
+      );
+      top: -200px;
+      right: -150px;
+      pointer-events: none;
+    "
+  ></div>
+  <div
+    class="position-absolute rounded-circle"
+    style="
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(
+        circle,
+        rgba(73, 182, 255, 0.04) 0%,
+        transparent 70%
+      );
+      bottom: -150px;
+      left: -100px;
+      pointer-events: none;
+    "
+  ></div>
+
+  <div class="position-relative" style="max-width: 580px">
+    <!-- Illustration -->
+    <div class="text-center mb-3">
+      <span style="font-size: 4.5rem; line-height: 1; display: inline-block">{{
+        pageContent.icon
+      }}</span>
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-center fw-bold mb-2" style="font-size: 1.75rem">
+      {{ pageContent.titleKey | translate }}
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-center fs-1_25rem fw-medium mb-1 text-primary">
+      {{ pageContent.subtitleKey | translate }}
+    </p>
+
+    <!-- Message -->
+    <div class="text-center px-3 mb-4">
+      <p class="text-gray-600 mb-0" style="line-height: 1.8">
+        {{ pageContent.messageKey | translate }}
+      </p>
+    </div>
+
+    <hr class="my-4" />
+
+    <!-- Quote -->
+    <p class="text-center text-gray-600 fst-italic mb-3 fs-0_875rem">
+      {{ 'COMING_SOON.QUOTE' | translate }}
+    </p>
+
+    <!-- Easter egg -->
+    <div class="text-center mb-3">
+      <span class="text-gray-600" style="font-size: 0.75rem; opacity: 0.5">
+        {{ 'COMING_SOON.COFFEE' | translate }}
+        <span *ngFor="let _ of coffeeCups">☕</span>
+      </span>
+    </div>
+
+    <!-- Back button -->
+    <div class="text-center">
+      <button
+        class="btn btn-primary-gradient fw-medium h-50px px-5"
+        (click)="goHome()"
+      >
+        <i class="isax isax-arrow-left-1 me-2"></i>
+        {{ 'COMING_SOON.BACK_BUTTON' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

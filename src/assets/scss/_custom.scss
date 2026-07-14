@@ -1745,3 +1745,19 @@ span.ant-radio + * {
 .file_preview {
   position: relative;
 }
+
+// ── Coming Soon Animations ─────────────────────────────────────────────────
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79,124,255,.4); }
+  50% { box-shadow: 0 0 0 20px rgba(79,124,255,0); }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { transform: scale(1); opacity: .5; }
+  50% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}

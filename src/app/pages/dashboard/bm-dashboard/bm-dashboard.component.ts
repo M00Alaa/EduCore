@@ -103,8 +103,13 @@ export class BmDashboardComponent {
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.VIEW_INSTRUCTORS',
-            icon: 'isax-user-group',
+            icon: 'isax-people',
             route: '/instructors',
+        },
+        {
+            key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_COURSE',
+            icon: 'isax-add-circle',
+            route: '/courses',
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_STUDENT',
@@ -112,8 +117,13 @@ export class BmDashboardComponent {
             route: '/students',
         },
         {
+            key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_INSTRUCTOR',
+            icon: 'isax-teacher',
+            route: '/instructors',
+        },
+        {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.VIEW_STUDENTS',
-            icon: 'isax-users',
+            icon: 'isax-people',
             route: '/students',
         },
     ];

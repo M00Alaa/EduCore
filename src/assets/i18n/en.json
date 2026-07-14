@@ -312,5 +312,43 @@
                 "VIEW_ALL": "View All"
             }
         }
+    },
+    "COMING_SOON": {
+        "BACK_BUTTON": "Back to Course Management",
+        "QUOTE": "Good software is never finished—only released.",
+        "COFFEE": "Coffee consumed:",
+        "ROADMAP": {
+            "TITLE": "Platform Roadmap",
+            "DONE": "Live",
+            "ETA": "Next Release",
+            "DASHBOARD": "Dashboard",
+            "COURSES": "Course Management",
+            "STUDENTS": "Student Management",
+            "INSTRUCTORS": "Instructor Workspace",
+            "REPORTS": "Reports & Analytics",
+            "SETTINGS": "Settings"
+        },
+        "PAGES": {
+            "STUDENTS": {
+                "TITLE": "No students... yet.",
+                "SUBTITLE": "Looks like everyone skipped class today.",
+                "MESSAGE": "Don't worry—this module is scheduled for the next release. Soon you'll be able to track enrollment, monitor progress, and manage the entire student lifecycle."
+            },
+            "INSTRUCTORS": {
+                "TITLE": "All instructors are currently on vacation.",
+                "SUBTITLE": "We definitely didn't forget to build this module.",
+                "MESSAGE": "The instructor workspace will arrive in a future update. When it does, you'll be able to manage assignments, schedules, and performance all in one place."
+            },
+            "REPORTS": {
+                "TITLE": "Reports are taking a coffee break.",
+                "SUBTITLE": "They'll return with charts and analytics soon.",
+                "MESSAGE": "This module will generate insights, exports, and visual analytics in a future release. Data-driven decisions are on their way."
+            },
+            "SETTINGS": {
+                "TITLE": "There are currently zero ways to break the application.",
+                "SUBTITLE": "Mostly because there's nothing to configure yet. 😄",
+                "MESSAGE": "Settings will arrive in a future version. You'll be able to manage platform preferences, user roles, and integrations from one place."
+            }
+        }
     }
 }
