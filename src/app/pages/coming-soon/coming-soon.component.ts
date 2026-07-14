@@ -36,25 +36,25 @@ export class ComingSoonComponent implements OnInit {
 
     private pageContentMap: Record<string, PageContent> = {
         students: {
-            icon: '🎓',
+            icon: 'assets/images/students.svg',
             titleKey: 'COMING_SOON.PAGES.STUDENTS.TITLE',
             subtitleKey: 'COMING_SOON.PAGES.STUDENTS.SUBTITLE',
             messageKey: 'COMING_SOON.PAGES.STUDENTS.MESSAGE',
         },
         instructors: {
-            icon: '👨‍🏫',
+            icon: 'assets/images/teachers.svg',
             titleKey: 'COMING_SOON.PAGES.INSTRUCTORS.TITLE',
             subtitleKey: 'COMING_SOON.PAGES.INSTRUCTORS.SUBTITLE',
             messageKey: 'COMING_SOON.PAGES.INSTRUCTORS.MESSAGE',
         },
         reports: {
-            icon: '📊',
+            icon: 'assets/images/reports.svg',
             titleKey: 'COMING_SOON.PAGES.REPORTS.TITLE',
             subtitleKey: 'COMING_SOON.PAGES.REPORTS.SUBTITLE',
             messageKey: 'COMING_SOON.PAGES.REPORTS.MESSAGE',
         },
         settings: {
-            icon: '⚙️',
+            icon: 'assets/images/settings.svg',
             titleKey: 'COMING_SOON.PAGES.SETTINGS.TITLE',
             subtitleKey: 'COMING_SOON.PAGES.SETTINGS.SUBTITLE',
             messageKey: 'COMING_SOON.PAGES.SETTINGS.MESSAGE',

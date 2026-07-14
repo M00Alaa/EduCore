@@ -89,12 +89,12 @@ export class BmDashboardComponent {
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_COURSE',
             icon: 'isax-add-circle',
-            route: '/courses',
+            route: '/courses/add',
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.VIEW_COURSES',
             icon: 'isax-document-text',
-            route: '/courses',
+            route: '/',
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_INSTRUCTOR',
@@ -109,7 +109,7 @@ export class BmDashboardComponent {
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_COURSE',
             icon: 'isax-add-circle',
-            route: '/courses',
+            route: '/courses/add',
         },
         {
             key: 'DASHBOARD_PAGE.BM.QUICK_ACTIONS.NEW_STUDENT',
