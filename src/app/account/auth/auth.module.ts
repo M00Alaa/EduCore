@@ -17,23 +17,11 @@ import { FormSharedModule } from 'src/app/shared/modules/nz-form-full/nz-form-fu
 import { IsRequiredPipe } from 'src/app/shared/pipes/is-required.pipe';
 import { AuthRoutes } from './auth-routing';
 import { AuthWrapperComponent } from './auth-wrapper/auth-wrapper.component';
-import { ConfirmmailComponent } from './confirmmail/confirmmail.component';
 import { LoginComponent } from './login/login.component';
-import { PasswordresetComponent } from './passwordreset/passwordreset.component';
-import { Recoverpwd2Component } from './recoverpwd2/recoverpwd2.component';
-import { SuccessRegisterComponent } from './success-register/success-register.component';
-import { VerificationComponent } from './verification/verification.component';
-import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     LoginComponent,
-    Recoverpwd2Component,
-    PasswordresetComponent,
-    VerifyEmailComponent,
-    SuccessRegisterComponent,
-    VerificationComponent,
-    ConfirmmailComponent,
   ],
   imports: [
     CommonModule,
