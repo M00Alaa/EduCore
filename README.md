@@ -1,187 +1,153 @@
-# Course Management Dashboard
+# EduCore — Course Management Dashboard
 
-A clean and modern Angular application for managing courses in an educational platform, built with NG-ZORRO and following the Vult Frontend project structure.
+A clean and modern Angular 19 application for managing courses in an educational platform, built with NG-ZORRO and Bootstrap 5.
 
 ## Project Description
 
 This application allows users to:
 
-- View courses in a table layout
-- Search courses by course name
+- View courses in a table layout with pagination
+- Search courses by name
 - Filter courses by status (Active, Draft, Archived)
-- Add a new course with validation
-- Edit an existing course
-- Delete a course with confirmation
-- View course details
+- Add, edit, and delete courses with full validation
+- View course details with premium two-column layout
+- Authenticate via mock login
+- Explore the platform roadmap via hidden easter egg pages
 
 ## Technologies Used
 
-- **Angular 19** - Latest stable Angular version
-- **NG-ZORRO** (Ant Design for Angular) v19 - UI component library
-- **Bootstrap 5** - Styling with custom utilities
-- **Boxicons** - Icons
-- **TypeScript** - Type-safe JavaScript
-- **RxJS** - Reactive programming
-- **JSON Server** - Mock API for development
+- **Angular 19** — Standalone + module hybrid
+- **NG-ZORRO** (Ant Design for Angular) v19
+- **Bootstrap 5** — Styling with custom utilities
+- **Boxicons** + **ISAX Icons** — Icon sets
+- **@ngx-translate/core** — i18n (English / Arabic)
+- **SweetAlert2** — Confirmation dialogs
+- **localStorage** — Data persistence (no backend required)
 
 ## Features Implemented
 
 ### Core Features
 
-- [x] Courses List Page with NG-ZORRO table
-- [x] Search by course name
-- [x] Filter by status
-- [x] Add Course with Reactive Forms
-- [x] Edit Course with Reactive Forms
-- [x] Delete Course with confirmation modal
-- [x] Course Details Page
-- [x] Loading, empty, and error states
+- [x] Login page with mock authentication
+- [x] Courses list with NG-ZORRO table, search, filter, pagination
+- [x] Add / Edit course with Reactive Forms and validation
+- [x] Delete course with SweetAlert2 confirmation
+- [x] Course details page with premium SaaS layout
+- [x] Loading, empty, and error states throughout
+- [x] Auth guard protecting all pages except login
+- [x] Arabic and English translations
 - [x] Responsive design for mobile and desktop
-- [x] Pagination support
 
 ### Bonus Features
 
-- [x] Confirmation modal for delete operations
-- [x] Toast notifications (NzMessageService)
-- [x] Clean and scalable folder structure
+- [x] localStorage backend (zero external dependencies)
+- [x] Confirmation dialogs with SweetAlert2
+- [x] Toast notifications for CRUD operations
 - [x] Reusable error template component
+- [x] Custom title strategy for dynamic page titles
+- [x] Easter egg pages with developer humor
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js v18+
+- npm v9+
+- Angular CLI v19 (`npm install -g @angular/cli`)
+
+### Setup
+
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd EduCore
+
+# 2. Install dependencies
+npm install --f
+
+# 3. Start the development server
+npm start
+```
+
+The application will be available at `http://localhost:4200`.
+
+### Login
+
+Use any of these credentials:
+
+| Username             | Password       |
+| -------------------- | -------------- |
+| `moalaa@educore.com` | `12345678`     |
+| (any username)       | (any password) |
+
+> The login accepts any credentials. The username is used as the display name.
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+The output will be in the `dist/browser/` directory.
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── pages/
-│   │   └── courses/
-│   │       ├── courses.model.ts           # Course interface and types
-│   │       ├── courses.service.ts         # CRUD operations service
-│   │       ├── courses.component.ts       # Courses list page
-│   │       ├── courses.component.html     # List template
-│   │       ├── courses.component.scss     # List styles
-│   │       ├── courses.module.ts          # Module with routing
-│   │       ├── add-edit-form/             # Add/Edit course page
-│   │       │   ├── add-edit-form.component.ts
-│   │       │   ├── add-edit-form.component.html
-│   │       │   └── add-edit-form.component.scss
-│   │       └── course-details/            # Course details page
-│   │           ├── course-details.component.ts
-│   │           ├── course-details.component.html
-│   │           └── course-details.component.scss
-│   ├── shared/
-│   │   └── modules/
-│   │       └── nz-form-full/             # Shared form module
+│   ├── account/
+│   │   └── auth/
+│   │       ├── login/                    # Login page
+│   │       └── auth-wrapper/             # Auth layout wrapper
 │   ├── core/
-│   │   └── guards/
-│   │       └── auth.guard.ts              # Auth guard
-│   ├── layouts/
-│   │   └── vertical/                      # Main layout
-│   └── app-routes.ts                      # Application routing
-├── db.json                                # Mock API data
+│   │   ├── backend/
+│   │   │   └── courses/                  # localStorage CRUD
+│   │   │       ├── models/courses.model.ts
+│   │   │       └── services/courses.service.ts
+│   │   ├── guards/auth.guard.ts          # Route protection
+│   │   └── services/
+│   │       ├── auth.service.ts           # Mock auth with localStorage
+│   │       └── language.service.ts       # i18n switching
+│   ├── pages/
+│   │   ├── courses/                      # Courses feature module
+│   │   │   ├── courses.component.ts      # List page
+│   │   │   ├── add-edit-form/            # Add / Edit page
+│   │   │   ├── course-details/           # Details page
+│   │   │   └── courses.module.ts
+│   │   ├── coming-soon/                  # Easter egg pages
+│   │   ├── dashboard/                    # Dashboard module
+│   │   └── routes.ts                    # Feature routes
+│   ├── layouts/vertical/                 # Main app layout
+│   └── shared/                           # Shared components / modules
+├── assets/
+│   ├── i18n/                             # en.json / ar.json
+│   ├── images/                           # SVGs, logos
+│   └── scss/                             # Bootstrap theme
+├── vercel.json                           # Vercel deployment config
 └── main.ts
 ```
 
-## How to Run the Project
+## Data Persistence
 
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm (v9 or higher)
-- Angular CLI (v19)
-
-### Installation
-
-1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd EduCore
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the mock API server:
-
-```bash
-npm run mock-api
-```
-
-4. In a new terminal, start the Angular application:
-
-```bash
-npm start
-```
-
-Or run both together:
-
-```bash
-npm run serve:all
-```
-
-The application will be available at `http://localhost:4200` and the mock API at `http://localhost:3000`.
-
-## Mock API / Local Storage Explanation
-
-This project uses **JSON Server** as a mock API for development. The `db.json` file contains sample course data that simulates a REST API.
-
-### API Endpoints
-
-- `GET /courses` - Get all courses
-- `GET /courses/:id` - Get a single course
-- `POST /courses` - Create a new course
-- `PUT /courses/:id` - Update a course
-- `DELETE /courses/:id` - Delete a course
+All course data is stored in **localStorage** under the key `eduCourses`. No database or mock API server is needed. The application seeds 12 sample courses on first load.
 
 ## Validation Rules
 
-The course form includes the following validation rules:
+| Field           | Validation                         |
+| --------------- | ---------------------------------- |
+| Course Name     | Required, min 3 characters         |
+| Instructor Name | Required                           |
+| Category        | Required                           |
+| Duration        | Required, number, > 0              |
+| Price           | Required, number, >= 0             |
+| Status          | Required (Active, Draft, Archived) |
+| Description     | Optional, max 500 characters       |
 
-| Field           | Validation                            |
-| --------------- | ------------------------------------- |
-| Course Name     | Required, Minimum 3 characters        |
-| Instructor Name | Required                              |
-| Category        | Required                              |
-| Duration        | Required, Number, Greater than 0      |
-| Price           | Required, Number, Minimum 0           |
-| Status          | Required (Active, Draft, or Archived) |
-| Description     | Optional, Maximum 500 characters      |
+## Deployment
 
-## Assumptions
-
-- The application uses NG-ZORRO for UI components
-- The mock API runs on port 3000
-- Course IDs are auto-generated using timestamp
-- The application is designed to be responsive on both desktop and mobile devices
-- Uses the existing project structure and styling system
-
-## Bonus Features
-
-- **Confirmation Modal**: Uses NG-ZORRO Modal for delete confirmation
-- **Toast Notifications**: Uses NzMessageService for success/error messages
-- **Loading States**: Shows spinner during API operations
-- **Error Handling**: Displays error messages with retry option
-- **Empty States**: User-friendly messages when no data is available
-- **Pagination**: Built-in NG-ZORRO table pagination
-
-## Build
-
-To build the project for production:
+The project includes a `vercel.json` for Vercel deployment:
 
 ```bash
-npm run build:prod
+outputDirectory: dist/browser
+rewrites: all routes → index.html (SPA support)
 ```
-
-## Test
-
-To run unit tests:
-
-```bash
-npm test
-```
-
-## License
-
-This project is created for educational purposes as part of a technical assessment.
